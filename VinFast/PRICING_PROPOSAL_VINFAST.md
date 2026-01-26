@@ -501,8 +501,8 @@ Pembayaran dilakukan dalam 3 tahap:
 Berikut adalah beberapa project mapping & geospatial yang pernah kami kerjakan:
 
 ### 1. Project Detail MAP - Hybrid & Satellite Views
-![Project Detail MAP Hybrid](./assets/images/porfolio/Project%20Detail%20MAP%20Hybrid.png)
-![Project Detail MAP Satelit](./assets/images/porfolio/Project%20Detail%20MAP%20Satelit.png)
+![Project Detail MAP Hybrid](./images/porfolio/Project%20Detail%20MAP%20Hybrid.png)
+![Project Detail MAP Satelit](./images/porfolio/Project%20Detail%20MAP%20Satelit.png)
 
 **Features:**
 - Multiple map layer support (Hybrid, Satellite, Streets)
@@ -512,9 +512,9 @@ Berikut adalah beberapa project mapping & geospatial yang pernah kami kerjakan:
 ---
 
 ### 2. KML Tagging & Map Preview
-![Tagging KML MAP Preview](./assets/images/porfolio/Tagging%20KML%20MAP%20Preview.png)
-![Tagging KML MAP Streets Preview](./assets/images/porfolio/Tagging%20KML%20MAP%20Streets%20Preview.png)
-![Project Detail KML](./assets/images/porfolio/Project%20Detail%20KML.png)
+![Tagging KML MAP Preview](./images/porfolio/Tagging%20KML%20MAP%20Preview.png)
+![Tagging KML MAP Streets Preview](./images/porfolio/Tagging%20KML%20MAP%20Streets%20Preview.png)
+![Project Detail KML](./images/porfolio/Project%20Detail%20KML.png)
 
 **Features:**
 - KML file import & visualization
@@ -525,7 +525,7 @@ Berikut adalah beberapa project mapping & geospatial yang pernah kami kerjakan:
 ---
 
 ### 3. Point Info Data - Right Panel
-![Point Info Data Right Panel](./assets/images/porfolio/point-info-data-right-panel.png)
+![Point Info Data Right Panel](./images/porfolio/point-info-data-right-panel.png)
 
 **Features:**
 - Detailed location information panel
@@ -535,7 +535,7 @@ Berikut adalah beberapa project mapping & geospatial yang pernah kami kerjakan:
 ---
 
 ### 4. Technician Tracking System
-![Technician Tracking](./assets/images/porfolio/technician-tracking.png)
+![Technician Tracking](./images/porfolio/technician-tracking.png)
 
 **Features:**
 - Real-time location tracking
@@ -546,10 +546,10 @@ Berikut adalah beberapa project mapping & geospatial yang pernah kami kerjakan:
 ---
 
 ### 5. Additional Dashboard & Map Interfaces
-![Dashboard 1](./assets/images/porfolio/photo_2025-10-31_21-10-45.jpg)
-![Screenshot 1](./assets/images/porfolio/Screenshot%202025-10-31%20212244.png)
-![Screenshot 2](./assets/images/porfolio/Screenshot%202025-10-31%20212423.png)
-![Dashboard 2](./assets/images/porfolio/image.png)
+![Dashboard 1](./images/porfolio/photo_2025-10-31_21-10-45.jpg)
+![Screenshot 1](./images/porfolio/Screenshot%202025-10-31%20212244.png)
+![Screenshot 2](./images/porfolio/Screenshot%202025-10-31%20212423.png)
+![Dashboard 2](./images/porfolio/image.png)
 
 **Features:**
 - Complex data visualization
