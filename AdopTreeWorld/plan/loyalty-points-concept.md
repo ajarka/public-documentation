@@ -346,7 +346,7 @@ flowchart LR
     G -->|Belum| H[⏳ Tunggu —\ntidak ada batas waktu]
     H --> G
     G -->|Ya, adopsi!| I[User A dapat:\n+150 pts referral bonus]
-    I --> J[🔔 Notif ke A:\n"Temanmu baru adopsi!\nKamu dapat +150 pts"]
+    I --> J[🔔 Notif ke A:\nTemanmu baru adopsi!\nKamu dapat +150 pts]
     E --> K([✅ Kedua pihak diuntungkan])
     J --> K
 
@@ -400,30 +400,30 @@ flowchart TD
 ```mermaid
 gantt
     title Phasing Implementasi Loyalty Points
-    dateFormat  YYYY-MM
+    dateFormat  YYYY-MM-DD
     axisFormat  %b %Y
 
-    section Phase 1 — Foundation
-    Platform poin: daftar, adopsi, verif HP  :p1a, 2026-04, 6w
-    Redeem: diskon digital saja              :p1b, after p1a, 4w
-    Dashboard poin sederhana di profil       :p1c, after p1a, 4w
-    MSISDN OTP integration                   :p1d, 2026-04, 5w
+    section Phase 1 - Foundation
+    Platform poin - daftar, adopsi, verif HP  :p1a, 2026-04-01, 42d
+    MSISDN OTP integration                    :p1d, 2026-04-01, 35d
+    Redeem - diskon digital saja              :p1b, 2026-05-13, 28d
+    Dashboard poin sederhana di profil        :p1c, 2026-05-13, 28d
 
-    section Phase 2 — Enrichment
-    Earn: forum, review, streak, referral    :p2a, after p1b, 5w
-    Badge & cosmetic reward                  :p2b, after p2a, 3w
-    Leaderboard (top adopter, top donor)     :p2c, after p2a, 4w
-    Event multiplier (admin config)          :p2d, after p2b, 3w
+    section Phase 2 - Enrichment
+    Earn - forum, review, streak, referral    :p2a, 2026-06-10, 35d
+    Badge and cosmetic reward                 :p2b, 2026-07-15, 21d
+    Leaderboard top adopter dan donor         :p2c, 2026-07-15, 28d
+    Event multiplier admin config             :p2d, 2026-08-05, 21d
 
-    section Phase 3 — Merchant Loyalty
-    Merchant aktifkan program loyalty        :p3a, after p2c, 6w
-    Dashboard merchant: manage poin & reward :p3b, after p3a, 4w
-    Notifikasi poin (in-app + WA)            :p3c, after p3a, 4w
+    section Phase 3 - Merchant Loyalty
+    Merchant aktifkan program loyalty         :p3a, 2026-08-26, 42d
+    Dashboard merchant manage reward          :p3b, 2026-10-07, 28d
+    Notifikasi poin in-app dan WA             :p3c, 2026-10-07, 28d
 
-    section Phase 4 — Advanced
-    Reward fisik + manajemen stok            :p4a, after p3b, 5w
-    Analytics mendalam (admin & merchant)    :p4b, after p3b, 6w
-    A/B testing nilai poin                   :p4c, after p4b, 4w
+    section Phase 4 - Advanced
+    Reward fisik dan manajemen stok           :p4a, 2026-11-04, 35d
+    Analytics mendalam admin dan merchant     :p4b, 2026-11-04, 42d
+    AB testing nilai poin                     :p4c, 2026-12-16, 28d
 ```
 
 ---
