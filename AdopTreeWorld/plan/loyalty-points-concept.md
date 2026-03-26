@@ -141,19 +141,289 @@ Merchant atur via dashboard merchant mereka:
 
 ---
 
-## Alur User Experience
+## Diagram Alur & Sequence
 
+### 1. Arsitektur Sistem — Gambaran Besar
+
+```mermaid
+graph TB
+    subgraph Platform["🌿 AdopTree World Platform"]
+        direction TB
+
+        subgraph Users["Pengguna"]
+            U[👤 User]
+        end
+
+        subgraph TP["TreePoints — Dikelola Admin"]
+            direction LR
+            TPE[Earn Engine]
+            TPR[Redemption Engine]
+            TPL[Ledger / Riwayat]
+            TPE --> TPL
+            TPL --> TPR
+        end
+
+        subgraph ML["MerchantLeaf — Dikelola Merchant"]
+            direction LR
+            MLE[Earn Engine]
+            MLR[Reward Pool]
+            MLL[Ledger]
+            MLE --> MLL
+            MLL --> MLR
+        end
+
+        subgraph Admin["⚙️ Admin Dashboard"]
+            AC[Config: rate, expiry, stok]
+            AE[Event Multiplier]
+            AA[Analytics]
+        end
+
+        subgraph MerchantDash["🏪 Merchant Dashboard"]
+            MC[Config Program Loyalty]
+            MS[Manage Reward & Stok]
+        end
+
+        subgraph Notif["🔔 Notification Engine"]
+            NS[In-App]
+            NW[WhatsApp / SMS]
+        end
+    end
+
+    U -->|Aksi: daftar, adopsi, forum, referral| TPE
+    U -->|Donasi ke lahan| MLE
+    U -->|Tukar poin| TPR
+    U -->|Tukar leaf| MLR
+    Admin --> AC --> TP
+    MerchantDash --> MC --> ML
+    TPE --> Notif
+    MLE --> Notif
+    Notif --> U
 ```
-[Daftar] ──→ +100 pts ──→ [Notifikasi "Selamat! Kamu punya 100 TreePoints"]
-     │
-     ▼
-[Adopsi Pohon Pertama] ──→ +200 pts + MerchantLeaf (jika merchant aktif)
-     │
-     ▼
-[Dashboard Poin] → Lihat riwayat, tukar reward, cek leaderboard
-     │
-     ▼
-[Referral ke teman] ──→ +150 pts saat teman pertama kali adopsi
+
+---
+
+### 2. User Journey — TreePoints dari Nol hingga Redeem
+
+```mermaid
+flowchart TD
+    A([🚀 User Baru]) --> B[Registrasi Akun\n+100 pts]
+    B --> C[Verifikasi Email\n+50 pts]
+    C --> D{Verifikasi\nNomor HP?}
+
+    D -->|Ya| E[Input MSISDN\nKirim OTP]
+    E --> F{OTP Valid?}
+    F -->|Ya| G[+100 pts\nNomor Terverifikasi ✓]
+    F -->|Tidak / Expired| H[Kirim Ulang OTP\nmaks 3x/jam]
+    H --> F
+    D -->|Lewati| I[Skip — bisa kembali\ndi Settings Profil]
+
+    G --> J[Lengkapi Profil\nfoto + bio → +75 pts]
+    I --> J
+
+    J --> K{Total pts\ncukup untuk redeem?}
+
+    K -->|Belum| L[Lanjut Aktivitas\nHarian]
+    L --> M[Forum Post +10pts\nKomentar +5pts\nReview +30pts\nStreak +50pts]
+    M --> K
+
+    K -->|Ya| N[🎁 Redeem Reward]
+    N --> O{Pilih Reward}
+    O --> P[Diskon Adopsi\n500–900 pts]
+    O --> Q[Badge Profil\n300–700 pts]
+    O --> R[Merchandise\n200–5000 pts]
+
+    P --> S([✅ Voucher aktif 30 hari])
+    Q --> T([✅ Badge terpasang permanen])
+    R --> U([✅ Pengiriman diproses])
+
+    style A fill:#4ade80,color:#000
+    style G fill:#86efac,color:#000
+    style N fill:#fbbf24,color:#000
+    style S fill:#d1fae5,color:#000
+    style T fill:#d1fae5,color:#000
+    style U fill:#d1fae5,color:#000
+```
+
+---
+
+### 3. Sequence — Verifikasi MSISDN (OTP Flow)
+
+```mermaid
+sequenceDiagram
+    actor U as 👤 User
+    participant FE as Frontend
+    participant BE as Backend API
+    participant SMS as SMS/WA Gateway
+    participant DB as Database
+
+    Note over U,DB: Entry via Registrasi ATAU Settings Profil
+
+    U->>FE: Input nomor HP (+628xxx)
+    FE->>BE: POST /auth/msisdn/request-otp\n{ phone: "+628xxx" }
+    BE->>DB: Cek: apakah nomor sudah dipakai akun lain?
+    DB-->>BE: Result
+
+    alt Nomor sudah dipakai akun lain
+        BE-->>FE: 409 Conflict
+        FE-->>U: ❌ "Nomor sudah terdaftar di akun lain"
+    else Nomor tersedia
+        BE->>DB: Simpan OTP (hash, exp 5 menit)
+        BE->>SMS: Kirim OTP ke +628xxx
+        SMS-->>U: 📱 "Kode OTP AdopTree: 123456 (berlaku 5 menit)"
+        BE-->>FE: 200 OK — OTP terkirim
+        FE-->>U: ✅ "Kode OTP dikirim, cek HP kamu"
+
+        U->>FE: Input 6-digit OTP
+        FE->>BE: POST /auth/msisdn/verify\n{ phone, otp }
+        BE->>DB: Validasi OTP (hash + expiry)
+
+        alt OTP Valid
+            BE->>DB: Update user: msisdn_verified = true
+            BE->>DB: Catat transaksi poin +100 pts
+            BE-->>FE: 200 OK — { verified: true, points_earned: 100 }
+            FE-->>U: 🎉 "+100 TreePoints! Nomor HP terverifikasi"
+        else OTP Salah / Expired
+            BE-->>FE: 400 Bad Request — { reason: "invalid_otp" | "expired" }
+            FE-->>U: ❌ "Kode salah atau sudah expired"
+            Note over U,FE: User bisa request ulang\n(maks 3x per jam per nomor)
+        end
+    end
+```
+
+---
+
+### 4. Sequence — Earn & Redeem TreePoints (Adopsi + Voucher)
+
+```mermaid
+sequenceDiagram
+    actor U as 👤 User
+    participant FE as Frontend
+    participant BE as Backend API
+    participant DB as Database
+    participant Notif as Notification Engine
+
+    Note over U,Notif: Skenario: User adopsi pohon, earn poin, lalu redeem diskon
+
+    U->>FE: Klik "Adopsi Pohon" pada lahan
+    FE->>BE: POST /adoptions { land_id, tier, ... }
+    BE->>DB: Buat record adopsi
+    BE->>DB: Catat earn: +50 pts (atau +200 jika first adoption)
+    DB-->>BE: Poin terupdate
+    BE->>Notif: Trigger notifikasi poin
+    Notif-->>U: 🌱 "Kamu mendapat +200 TreePoints dari adopsi pertama!"
+    BE-->>FE: 200 OK — adoption confirmed
+
+    Note over U,Notif: Beberapa waktu kemudian — user mau redeem
+
+    U->>FE: Buka Rewards Store\nPilih "Diskon 10% adopsi berikutnya"
+    FE->>BE: GET /loyalty/balance
+    BE->>DB: Hitung total poin aktif (belum expired)
+    DB-->>BE: { balance: 950 }
+    BE-->>FE: { balance: 950 }
+    FE-->>U: Saldo: 950 pts — ✅ cukup (butuh 900 pts)
+
+    U->>FE: Klik "Tukar Sekarang"
+    FE->>BE: POST /loyalty/redeem { reward_id: "disc_10pct" }
+    BE->>DB: Kurangi 900 pts dari saldo
+    BE->>DB: Buat voucher (kode unik, exp 30 hari)
+    DB-->>BE: { voucher_code: "TREE-XXXXX", expires_at }
+    BE-->>FE: 200 OK — { voucher_code, expires_at, remaining_balance: 50 }
+    FE-->>U: 🎁 "Voucher diskon 10% aktif!\nKode: TREE-XXXXX (berlaku 30 hari)"
+```
+
+---
+
+### 5. Flow — Referral System
+
+```mermaid
+flowchart LR
+    A([👤 User A\nSudah terdaftar]) -->|Salin referral link| B[Link unik:\nadoptreeworld.com/r/KODEUSER]
+    B -->|Bagikan ke| C([🧑 User B\nBelum terdaftar])
+    C -->|Klik link & daftar| D[Registrasi\nvia referral link]
+    D --> E[User B dapat:\n+100 pts registrasi\n+50 pts verif email]
+    D --> F[Sistem catat:\nB di-refer oleh A]
+    F --> G{User B adopsi\npohon pertama?}
+    G -->|Belum| H[⏳ Tunggu —\ntidak ada batas waktu]
+    H --> G
+    G -->|Ya, adopsi!| I[User A dapat:\n+150 pts referral bonus]
+    I --> J[🔔 Notif ke A:\n"Temanmu baru adopsi!\nKamu dapat +150 pts"]
+    E --> K([✅ Kedua pihak diuntungkan])
+    J --> K
+
+    style A fill:#86efac,color:#000
+    style C fill:#93c5fd,color:#000
+    style K fill:#fbbf24,color:#000
+```
+
+---
+
+### 6. Flow — Merchant Loyalty (MerchantLeaf)
+
+```mermaid
+flowchart TD
+    subgraph Setup["⚙️ Setup oleh Merchant"]
+        M1[Merchant aktifkan\nprogram loyalty] --> M2[Atur nama program\nmisal: 'HijauLeaf']
+        M2 --> M3[Set rate earn:\nmisal 1 Leaf per $1 donasi]
+        M3 --> M4[Tambah reward catalog:\ndiskon, konten eksklusif, merchandise]
+    end
+
+    subgraph Earn["💚 Earn oleh User"]
+        U1([👤 User donasi\nke lahan merchant]) --> U2{Merchant punya\nprogram aktif?}
+        U2 -->|Tidak| U3[Tidak dapat MerchantLeaf]
+        U2 -->|Ya| U4[Hitung Leaf:\njumlah donasi × rate]
+        U4 --> U5[+N Leaf masuk\nke wallet user]
+        U5 --> U6[🔔 Notif:\n'Kamu dapat N HijauLeaf!']
+    end
+
+    subgraph Redeem["🎁 Redeem oleh User"]
+        R1[User buka halaman\nMerchant / My Rewards] --> R2[Pilih reward\ndari catalog merchant]
+        R2 --> R3{Leaf cukup?}
+        R3 -->|Tidak| R4[Terus donasi\nuntuk kumpulkan Leaf]
+        R4 --> R1
+        R3 -->|Ya| R5[Konfirmasi penukaran]
+        R5 --> R6[Leaf berkurang\nReward dikirim / diaktifkan]
+        R6 --> R7([✅ User menikmati reward])
+    end
+
+    Setup --> Earn
+    Earn --> Redeem
+
+    style Setup fill:#f0fdf4
+    style Earn fill:#eff6ff
+    style Redeem fill:#fffbeb
+```
+
+---
+
+### 7. Roadmap Phasing Implementasi
+
+```mermaid
+gantt
+    title Phasing Implementasi Loyalty Points
+    dateFormat  YYYY-MM
+    axisFormat  %b %Y
+
+    section Phase 1 — Foundation
+    Platform poin: daftar, adopsi, verif HP  :p1a, 2026-04, 6w
+    Redeem: diskon digital saja              :p1b, after p1a, 4w
+    Dashboard poin sederhana di profil       :p1c, after p1a, 4w
+    MSISDN OTP integration                   :p1d, 2026-04, 5w
+
+    section Phase 2 — Enrichment
+    Earn: forum, review, streak, referral    :p2a, after p1b, 5w
+    Badge & cosmetic reward                  :p2b, after p2a, 3w
+    Leaderboard (top adopter, top donor)     :p2c, after p2a, 4w
+    Event multiplier (admin config)          :p2d, after p2b, 3w
+
+    section Phase 3 — Merchant Loyalty
+    Merchant aktifkan program loyalty        :p3a, after p2c, 6w
+    Dashboard merchant: manage poin & reward :p3b, after p3a, 4w
+    Notifikasi poin (in-app + WA)            :p3c, after p3a, 4w
+
+    section Phase 4 — Advanced
+    Reward fisik + manajemen stok            :p4a, after p3b, 5w
+    Analytics mendalam (admin & merchant)    :p4b, after p3b, 6w
+    A/B testing nilai poin                   :p4c, after p4b, 4w
 ```
 
 ---
