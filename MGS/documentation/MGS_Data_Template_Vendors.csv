@@ -1,0 +1,16 @@
+PETUNJUK PENGISIAN:,,,,,,,,,,,,,,,,,
+- Hapus baris PETUNJUK ini sebelum dikirim,,,,,,,,,,,,,,,,,
+- Kolom bertanda * wajib diisi,,,,,,,,,,,,,,,,,
+- Kategori Vendor: material / equipment / service / labor / vehicle,,,,,,,,,,,,,,,,,
+- Rating: 1-5 (5 = terbaik),,,,,,,,,,,,,,,,,
+- Status: active / inactive,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+NO*,KODE VENDOR,NAMA PERUSAHAAN*,KATEGORI*,NAMA KONTAK*,NO HP*,EMAIL,ALAMAT,KOTA,PROVINSI,NPWP,NAMA BANK,NO REKENING,NAMA PEMILIK REKENING,RATING (1-5),STATUS,PRODUK / LAYANAN UTAMA,CATATAN
+1,VND-001,Wira Toyota,vehicle,,[isi kontak],,Banjarmasin,Banjarmasin,Kalimantan Selatan,,,,,,active,Dealer Toyota - Kendaraan Operasional,Serah terima 14 unit Nov 2020
+2,VND-002,Kalimantan Teknik,equipment,,[isi kontak],,Banjarmasin,Banjarmasin,Kalimantan Selatan,,,,,,active,Peralatan teknis & industri,
+3,VND-003,[Isi nama supplier],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],active,[Isi produk/layanan],
+4,VND-004,[Isi nama supplier],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],active,[Isi produk/layanan],
+5,VND-005,[Isi nama supplier],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],active,[Isi produk/layanan],
+6,[isi kode],[Isi nama],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],[Isi status],[Isi layanan],
+7,[isi kode],[Isi nama],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],[Isi status],[Isi layanan],
+8,[isi kode],[Isi nama],[Isi kategori],[Isi kontak],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi provinsi],[Isi NPWP],[Isi bank],[Isi rekening],[Isi nama rekening],[Isi rating],[Isi status],[Isi layanan],

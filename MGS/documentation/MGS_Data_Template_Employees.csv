@@ -1,0 +1,20 @@
+PETUNJUK PENGISIAN:,,,,,,,,,,,,,,,,,,,,
+- Hapus baris PETUNJUK ini sebelum dikirim,,,,,,,,,,,,,,,,,,,,
+- Kolom bertanda * wajib diisi,,,,,,,,,,,,,,,,,,,,
+- Tipe Karyawan: permanent / contract / outsource / freelance,,,,,,,,,,,,,,,,,,,,
+- Status: active / inactive / on_project / resigned,,,,,,,,,,,,,,,,,,,,
+- Departemen: operations / finance / hrd / logistics / field / management,,,,,,,,,,,,,,,,,,,,
+- Format tanggal: YYYY-MM-DD,,,,,,,,,,,,,,,,,,,,
+- Gaji diisi dalam Rupiah tanpa titik/koma,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,
+NO*,NIK,NAMA LENGKAP*,JABATAN*,DEPARTEMEN*,TIPE KARYAWAN*,STATUS*,NO HP,EMAIL,ALAMAT,KOTA,TGL BERGABUNG,TGL KONTRAK BERAKHIR,GAJI POKOK (Rp),NO KTP,NO BPJS TK,NO BPJS KES,NAMA KONTAK DARURAT,NO KONTAK DARURAT,PROYEK SAAT INI (KODE),CATATAN
+1,MGS-001,Harry Nata,Direktur,management,permanent,active,,[isi email],,Banjarmasin,2016-01-01,,,[isi KTP],,,,[isi nama],,[isi kode proyek],Direktur/Pimpinan Badan Usaha
+2,MGS-002,Alexander Bobby,Manager,operations,permanent,active,,[isi email],,Banjarmasin,,,,,,,,,,
+3,MGS-003,Boby [Nama Lengkap],PIC Lapangan,operations,permanent,active,0821-5822-9977,,[isi alamat],Banjarmasin,,,,,,,,,,PIC Banjarmasin
+4,MGS-004,Lina [Nama Lengkap],PIC Surabaya,operations,permanent,active,0812-164-70009,,[isi alamat],Surabaya,,,,,,,,,,PIC Surabaya
+5,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
+6,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
+7,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
+8,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
+9,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
+10,[isi NIK],[Isi nama],[Isi jabatan],[Isi dept],[Isi tipe],[Isi status],[Isi HP],[Isi email],[Isi alamat],[Isi kota],[Isi tgl bergabung],[Isi tgl berakhir],[Isi gaji],[Isi KTP],[Isi BPJS TK],[Isi BPJS Kes],[Isi kontak darurat],[Isi no darurat],[Isi kode proyek],
