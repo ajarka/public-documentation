@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MGS ERP — Dashboard Preview</title>
+  <style>
+    /* ── RESET ─────────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f0f2f7;
+      color: #1e2240;
+      display: flex;
+      min-height: 100vh;
+      font-size: 13px;
+      line-height: 1.5
+    }
+
+    a,
+    button {
+      cursor: pointer;
+      text-decoration: none;
+      outline: none
+    }
+
+    svg {
+      display: block
+    }
+
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --sidebar: #1e2240;
+      --sidebar-item: #8892b0;
+      --sidebar-hover: rgba(255, 255, 255, .05);
+      --sidebar-active-bg: rgba(20, 184, 166, .12);
+      --sidebar-active: #14b8a6;
+      --primary: #14b8a6;
+      --primary-light: rgba(20, 184, 166, .1);
+      --primary-lighter: #e6fffa;
+      --blue: #3b82f6;
+      --blue-l: #eff6ff;
+      --amber: #f59e0b;
+      --amber-l: #fffbeb;
+      --green: #22c55e;
+      --green-l: #f0fdf4;
+      --red: #ef4444;
+      --red-l: #fef2f2;
+      --purple: #8b5cf6;
+      --purple-l: #f5f3ff;
+      --bg: #f0f2f7;
+      --card: #fff;
+      --text: #1e2240;
+      --t2: #64748b;
+      --t3: #94a3b8;
+      --t4: #cbd5e1;
+      --border: #e8ecf0;
+      --sh: 0 1px 3px rgba(0, 0, 0, .07), 0 1px 2px rgba(0, 0, 0, .04);
+      --sh-md: 0 4px 12px rgba(0, 0, 0, .08);
+    }
+
+    /* ── SIDEBAR ─────────────────────────────────────────────── */
+    .sidebar {
+      width: 230px;
+      min-height: 100vh;
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+
+    .sb-logo {
+      padding: 18px 20px 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .sb-logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(20, 184, 166, .35);
+    }
+
+    .sb-logo h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f0f4f8;
+      letter-spacing: .2px
+    }
+
+    .sb-logo p {
+      font-size: 10px;
+      color: #4a5568;
+      margin-top: 1px
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 10px 0;
+      overflow-y: auto
+    }
+
+    .sb-section {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #3d4a6b;
+      padding: 12px 20px 4px;
+      font-weight: 700
+    }
+
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      color: var(--sidebar-item);
+      transition: all .15s;
+      border-left: 3px solid transparent;
+      margin: 1px 0;
+      user-select: none;
+    }
+
+    .sb-item:hover {
+      background: var(--sidebar-hover);
+      color: #c4cee0
+    }
+
+    .sb-item.active {
+      background: var(--sidebar-active-bg);
+      color: var(--sidebar-active);
+      border-left-color: var(--sidebar-active);
+    }
+
+    .sb-icon {
+      font-size: 15px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0
+    }
+
+    .sb-label {
+      font-size: 12.5px;
+      font-weight: 500
+    }
+
+    .sb-badge {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    .sb-user {
+      padding: 13px 20px;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sb-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #14b8a6, #0891b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sb-uname {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .sb-urole {
+      font-size: 10px;
+      color: #4a5568;
+      margin-top: 1px
+    }
+
+    /* ── MAIN ─────────────────────────────────────────────────── */
+    .main {
+      margin-left: 230px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh
+    }
+
+    /* ── TOPBAR ──────────────────────────────────────────────── */
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+    }
+
+    .topbar-bread {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--t3)
+    }
+
+    .topbar-bread .cur {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13px
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .topbar-clock {
+      font-size: 11.5px;
+      color: var(--t2);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10.5px;
+      font-weight: 600
+    }
+
+    .pill.online {
+      background: var(--green-l);
+      color: var(--green)
+    }
+
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 5px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+
+    .topbar-user .av {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #14b8a6, #0891b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .topbar-user .un {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .topbar-user .ur {
+      font-size: 9.5px;
+      color: var(--t3)
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--t2);
+      background: var(--card);
+      transition: background .15s;
+    }
+
+    .logout-btn:hover {
+      background: var(--bg)
+    }
+
+    /* ── CONTENT ─────────────────────────────────────────────── */
+    .content {
+      padding: 20px 24px;
+      flex: 1
+    }
+
+    .view {
+      display: none
+    }
+
+    .view.active {
+      display: block
+    }
+
+    /* ── PAGE HEADER ─────────────────────────────────────────── */
+    .ph {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px
+    }
+
+    .ph-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px
+    }
+
+    .ph-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text)
+    }
+
+    .ph-badge {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-lighter);
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+
+    .ph-sub {
+      font-size: 11.5px;
+      color: var(--t3)
+    }
+
+    .ph-actions {
+      display: flex;
+      gap: 8px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--t2);
+      transition: background .15s;
+    }
+
+    .btn:hover {
+      background: var(--bg)
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary)
+    }
+
+    .btn-primary:hover {
+      background: #0d9488
+    }
+
+    /* ── KPI CARDS ─────────────────────────────────────────────── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .kpi {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 17px 18px;
+      box-shadow: var(--sh);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: '';
+      position: absolute;
+      right: -14px;
+      bottom: -14px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      opacity: .04;
+    }
+
+    .kpi.t::after {
+      background: var(--primary)
+    }
+
+    .kpi.a::after {
+      background: var(--amber)
+    }
+
+    .kpi.r::after {
+      background: var(--red)
+    }
+
+    .kpi.g::after {
+      background: var(--green)
+    }
+
+    .kpi-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .kpi-icon.t {
+      background: var(--primary-lighter)
+    }
+
+    .kpi-icon.a {
+      background: var(--amber-l)
+    }
+
+    .kpi-icon.r {
+      background: var(--red-l)
+    }
+
+    .kpi-icon.g {
+      background: var(--green-l)
+    }
+
+    .kpi-icon.b {
+      background: var(--blue-l)
+    }
+
+    .kpi-body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .kpi-lbl {
+      font-size: 11px;
+      color: var(--t3);
+      font-weight: 500;
+      margin-bottom: 5px
+    }
+
+    .kpi-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 7px
+    }
+
+    .kpi-val.sm {
+      font-size: 17px
+    }
+
+    .kpi-foot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--t3)
+    }
+
+    .up {
+      background: var(--green-l);
+      color: var(--green);
+      padding: 1px 7px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700
+    }
+
+    .dn {
+      background: var(--red-l);
+      color: var(--red);
+      padding: 1px 7px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700
+    }
+
+    .wa {
+      background: var(--amber-l);
+      color: var(--amber);
+      padding: 1px 7px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700
+    }
+
+    /* ── STAT BOXES ────────────────────────────────────────────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .stat {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px 20px 12px;
+      box-shadow: var(--sh);
+      position: relative;
+      overflow: hidden
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--t3);
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    .stat-val {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--t3);
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .stat-chart {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      opacity: .6
+    }
+
+    /* ── MAIN GRID ─────────────────────────────────────────────── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.9fr 1.35fr .95fr;
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    /* ── CARD ──────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--sh);
+      overflow: hidden
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 15px 18px 0
+    }
+
+    .card-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .card-sub {
+      font-size: 10.5px;
+      color: var(--t3);
+      margin-top: 2px
+    }
+
+    .card-body {
+      padding: 14px 18px
+    }
+
+    .tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-lighter);
+      padding: 2px 8px;
+      border-radius: 20px
+    }
+
+    .toggle-grp {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      overflow: hidden
+    }
+
+    .tgl {
+      padding: 4px 11px;
+      font-size: 11px;
+      border: none;
+      background: var(--card);
+      color: var(--t3)
+    }
+
+    .tgl.on {
+      background: var(--primary);
+      color: #fff
+    }
+
+    /* ── DONUT LEGEND ──────────────────────────────────────────── */
+    .legend {
+      width: 100%;
+      margin-top: 11px
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 0;
+      font-size: 11px
+    }
+
+    .legend-l {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--t2)
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .legend-r {
+      display: flex;
+      gap: 10px
+    }
+
+    .lc {
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .lp {
+      color: var(--t3);
+      min-width: 34px;
+      text-align: right
+    }
+
+    /* ── ACTION ITEMS ──────────────────────────────────────────── */
+    .action {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .action:last-child {
+      border-bottom: none;
+      padding-bottom: 0
+    }
+
+    .action-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px
+    }
+
+    .action-code {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .action-co {
+      font-size: 11px;
+      color: var(--t2);
+      margin-top: 1px
+    }
+
+    .action-meta {
+      font-size: 10px;
+      color: var(--t3);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .action-meta.warn {
+      color: var(--red)
+    }
+
+    .act-btn {
+      padding: 4px 11px;
+      border-radius: 7px;
+      font-size: 10.5px;
+      font-weight: 600;
+      border: none
+    }
+
+    .act-btn.approve {
+      background: var(--primary);
+      color: #fff
+    }
+
+    .act-btn.review {
+      background: var(--amber-l);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, .3)
+    }
+
+    /* ── RANK LIST ─────────────────────────────────────────────── */
+    .rank {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .rank:last-child {
+      border-bottom: none
+    }
+
+    .rank-n {
+      width: 20px;
+      height: 20px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--t3);
+      flex-shrink: 0
+    }
+
+    .rank-ico {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0
+    }
+
+    .rank-name {
+      flex: 1;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .rank-val {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t2);
+      white-space: nowrap
+    }
+
+    /* ── QUICK SUMMARY ─────────────────────────────────────────── */
+    .qs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px
+    }
+
+    .qs-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .qs-ico {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0
+    }
+
+    .qs-lbl {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--t3);
+      font-weight: 700
+    }
+
+    .qs-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2px
+    }
+
+    .qs-sub {
+      font-size: 10px;
+      color: var(--t3);
+      margin-top: 1px
+    }
+
+    /* ── TABLE ─────────────────────────────────────────────────── */
+    .tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px
+    }
+
+    .tbl th {
+      text-align: left;
+      padding: 8px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--t3);
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tbl td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f5f7fa;
+      color: var(--t2)
+    }
+
+    .tbl tr:hover td {
+      background: #fafbfc
+    }
+
+    .tbl tr:last-child td {
+      border-bottom: none
+    }
+
+    .tbl-foot {
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--t3);
+    }
+
+    /* ── STATUS BADGE ──────────────────────────────────────────── */
+    .sb2 {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600
+    }
+
+    .sb2.active {
+      background: var(--green-l);
+      color: var(--green)
+    }
+
+    .sb2.completed {
+      background: var(--blue-l);
+      color: var(--blue)
+    }
+
+    .sb2.pending {
+      background: var(--amber-l);
+      color: var(--amber)
+    }
+
+    .sb2.onhold {
+      background: var(--red-l);
+      color: var(--red)
+    }
+
+    .sb2.draft {
+      background: #f1f5f9;
+      color: var(--t3)
+    }
+
+    .sb2.approved {
+      background: var(--green-l);
+      color: var(--green)
+    }
+
+    .sb2.delivered {
+      background: var(--purple-l);
+      color: var(--purple)
+    }
+
+    .sb2.permanent {
+      background: var(--blue-l);
+      color: var(--blue)
+    }
+
+    .sb2.outsource {
+      background: #f1f5f9;
+      color: var(--t2)
+    }
+
+    .sb2.overdue {
+      background: var(--red-l);
+      color: var(--red)
+    }
+
+    .sb2.paid {
+      background: var(--green-l);
+      color: var(--green)
+    }
+
+    .sb2.sent {
+      background: var(--blue-l);
+      color: var(--blue)
+    }
+
+    /* ── PROGRESS BAR ──────────────────────────────────────────── */
+    .prog {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .prog-bg {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    .prog-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: var(--primary);
+      transition: width .3s
+    }
+
+    .prog-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      width: 34px;
+      text-align: right
+    }
+
+    /* ── FILTER BAR ────────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center
+    }
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: var(--t3);
+    }
+
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .tab {
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--t2)
+    }
+
+    .tab.on {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary)
+    }
+
+    /* ── REPORT CARDS ──────────────────────────────────────────── */
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px
+    }
+
+    .report-card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--sh);
+      padding: 24px;
+      text-align: center
+    }
+
+    .report-ico {
+      font-size: 38px;
+      margin-bottom: 12px
+    }
+
+    .report-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text)
+    }
+
+    .report-sub {
+      font-size: 11px;
+      color: var(--t3);
+      margin-bottom: 14px
+    }
+
+    /* ── SCROLLBAR ─────────────────────────────────────────────── */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════ SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">M</div>
+      <div>
+        <h2>MGS ERP</h2>
+        <p>PT. Manata Gawi Sabumi</p>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">Main</div>
+      <div class="sb-item active" onclick="go('dashboard',this)">
+        <span class="sb-icon">📊</span><span class="sb-label">Dashboard</span>
+      </div>
+      <div class="sb-item" onclick="go('projects',this)">
+        <span class="sb-icon">📋</span><span class="sb-label">Projects</span>
+        <span class="sb-badge">18</span>
+      </div>
+      <div class="sb-item" onclick="go('procurement',this)">
+        <span class="sb-icon">🛒</span><span class="sb-label">Procurement</span>
+        <span class="sb-badge">3</span>
+      </div>
+      <div class="sb-section">Manajemen</div>
+      <div class="sb-item" onclick="go('hr',this)">
+        <span class="sb-icon">👥</span><span class="sb-label">HR &amp; SDM</span>
+      </div>
+      <div class="sb-item" onclick="go('asset',this)">
+        <span class="sb-icon">🚛</span><span class="sb-label">Asset</span>
+      </div>
+      <div class="sb-item" onclick="go('finance',this)">
+        <span class="sb-icon">💰</span><span class="sb-label">Finance</span>
+        <span class="sb-badge">2</span>
+      </div>
+      <div class="sb-section">Lainnya</div>
+      <div class="sb-item" onclick="go('reports',this)">
+        <span class="sb-icon">📈</span><span class="sb-label">Reports</span>
+      </div>
+      <div class="sb-item">
+        <span class="sb-icon">⚙️</span><span class="sb-label">Settings</span>
+      </div>
+    </nav>
+    <div class="sb-user">
+      <div class="sb-avatar">HN</div>
+      <div style="min-width:0">
+        <div class="sb-uname">Harry Nata, ST</div>
+        <div class="sb-urole">Direktur Utama</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════ MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-bread">
+        <span>MGS ERP</span>
+        <span style="color:var(--border)">/</span>
+        <span class="cur" id="page-title">Executive Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-clock">
+          📅 11 April 2026 &nbsp;|&nbsp; 🕐 <span id="clk">--:--:--</span>
+        </div>
+        <span class="pill online">● Online</span>
+        <div class="topbar-user">
+          <div class="av">HN</div>
+          <div>
+            <div class="un">Harry Nata</div>
+            <div class="ur">DIREKTUR</div>
+          </div>
+        </div>
+        <button class="logout-btn">↩ Logout</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ══════════════════════════════════════════ VIEW: DASHBOARD -->
+      <div id="v-dashboard" class="view active">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">Executive Dashboard</span>
+              <span class="ph-badge">● PT. Manata Gawi Sabumi</span>
+            </div>
+            <p class="ph-sub">Ringkasan eksekutif & monitoring operasional seluruh proyek MGS real-time</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn">📅 April 2026</button>
+            <button class="btn btn-primary">⬇ Export Laporan</button>
+          </div>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="kpi-row">
+          <div class="kpi t">
+            <div class="kpi-icon t">📋</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Total Proyek Bulan Ini</div>
+              <div class="kpi-val">42</div>
+              <div class="kpi-foot"><span class="up">↑ 8.3%</span> vs Maret 2026</div>
+            </div>
+          </div>
+          <div class="kpi a">
+            <div class="kpi-icon a">🛒</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">PO Pending Approval</div>
+              <div class="kpi-val" style="color:var(--amber)">3</div>
+              <div class="kpi-foot"><span class="wa">⚠ Perlu tindakan segera</span></div>
+            </div>
+          </div>
+          <div class="kpi r">
+            <div class="kpi-icon r">💼</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Nilai Kontrak Berjalan</div>
+              <div class="kpi-val sm">Rp 1,24 M</div>
+              <div class="kpi-foot"><span class="wa">5 proyek belum terealisasi</span></div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">✅</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Proyek Completed</div>
+              <div class="kpi-val" style="color:var(--green)">24</div>
+              <div class="kpi-foot"><span class="up">↑ 12.5%</span> vs Januari 2026</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAT BOXES -->
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-lbl">Total Proyek</div>
+            <div class="stat-val">Rp 1.24 M</div>
+            <div class="stat-sub"><span class="up" style="font-size:9px">↑ 8.3%</span> dari bulan lalu</div>
+            <svg class="stat-chart" width="90" height="44" viewBox="0 0 90 44">
+              <defs>
+                <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#14b8a6" stop-opacity=".18" />
+                  <stop offset="100%" stop-color="#14b8a6" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M0,36 C15,32 25,24 40,18 C55,12 65,10 90,4 L90,44 L0,44Z" fill="url(#sg1)" />
+              <path d="M0,36 C15,32 25,24 40,18 C55,12 65,10 90,4" fill="none" stroke="#14b8a6" stroke-width="1.8"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="stat">
+            <div class="stat-lbl">Active Projects</div>
+            <div class="stat-val">18</div>
+            <div class="stat-sub" style="color:var(--amber)">Sedang berjalan</div>
+            <svg class="stat-chart" width="90" height="44" viewBox="0 0 90 44">
+              <defs>
+                <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity=".15" />
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M0,30 C10,28 20,25 35,22 C50,19 60,16 90,12 L90,44 L0,44Z" fill="url(#sg2)" />
+              <path d="M0,30 C10,28 20,25 35,22 C50,19 60,16 90,12" fill="none" stroke="#f59e0b" stroke-width="1.8"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="stat">
+            <div class="stat-lbl">Proyek Selesai</div>
+            <div class="stat-val">20</div>
+            <div class="stat-sub"><span class="up" style="font-size:9px">↑ 5.2%</span> bulan ini</div>
+            <svg class="stat-chart" width="90" height="44" viewBox="0 0 90 44">
+              <defs>
+                <linearGradient id="sg3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity=".15" />
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M0,38 C20,34 35,28 50,22 C65,16 75,12 90,8 L90,44 L0,44Z" fill="url(#sg3)" />
+              <path d="M0,38 C20,34 35,28 50,22 C65,16 75,12 90,8" fill="none" stroke="#3b82f6" stroke-width="1.8"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="stat">
+            <div class="stat-lbl">Karyawan Aktif</div>
+            <div class="stat-val">87</div>
+            <div class="stat-sub"><span class="up" style="font-size:9px">↑ 12.5%</span> vs bulan lalu</div>
+            <svg class="stat-chart" width="90" height="44" viewBox="0 0 90 44">
+              <defs>
+                <linearGradient id="sg4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#22c55e" stop-opacity=".15" />
+                  <stop offset="100%" stop-color="#22c55e" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M0,40 C15,36 30,30 45,24 C60,18 72,14 90,6 L90,44 L0,44Z" fill="url(#sg4)" />
+              <path d="M0,40 C15,36 30,30 45,24 C60,18 72,14 90,6" fill="none" stroke="#22c55e" stroke-width="1.8"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- 3-COLUMN GRID -->
+        <div class="main-grid">
+
+          <!-- LINE CHART -->
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Trend Nilai Proyek</div>
+                <div class="card-sub">6 Bulan Terakhir</div>
+              </div>
+              <div class="toggle-grp">
+                <button class="tgl on">6 Bulan</button>
+                <button class="tgl">12 Bulan</button>
+              </div>
+            </div>
+            <div style="padding:12px 18px 16px">
+              <svg width="100%" height="180" viewBox="0 0 500 180" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#14b8a6" stop-opacity=".28" />
+                    <stop offset="85%" stop-color="#14b8a6" stop-opacity=".02" />
+                  </linearGradient>
+                </defs>
+                <!-- Grid -->
+                <line x1="40" y1="20" x2="490" y2="20" stroke="#f1f5f9" stroke-width="1" />
+                <line x1="40" y1="55" x2="490" y2="55" stroke="#f1f5f9" stroke-width="1" />
+                <line x1="40" y1="90" x2="490" y2="90" stroke="#f1f5f9" stroke-width="1" />
+                <line x1="40" y1="125" x2="490" y2="125" stroke="#f1f5f9" stroke-width="1" />
+                <line x1="40" y1="155" x2="490" y2="155" stroke="#e8ecf0" stroke-width="1" />
+                <!-- Y labels -->
+                <text x="35" y="23" font-size="9" fill="#94a3b8" text-anchor="end">1.6M</text>
+                <text x="35" y="58" font-size="9" fill="#94a3b8" text-anchor="end">1.2M</text>
+                <text x="35" y="93" font-size="9" fill="#94a3b8" text-anchor="end">0.9M</text>
+                <text x="35" y="128" font-size="9" fill="#94a3b8" text-anchor="end">0.6M</text>
+                <text x="35" y="158" font-size="9" fill="#94a3b8" text-anchor="end">0.4M</text>
+                <!-- Area -->
+                <path d="M65,148 C110,138 150,122 210,105 C265,90 310,72 360,52 C400,38 440,28 480,18 L480,155 L65,155Z"
+                  fill="url(#lg1)" />
+                <!-- Line -->
+                <path d="M65,148 C110,138 150,122 210,105 C265,90 310,72 360,52 C400,38 440,28 480,18" fill="none"
+                  stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                <!-- Points -->
+                <circle cx="65" cy="148" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <circle cx="155" cy="120" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <circle cx="245" cy="96" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <circle cx="335" cy="65" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <circle cx="415" cy="36" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <circle cx="480" cy="18" r="5.5" fill="#14b8a6" stroke="#fff" stroke-width="2.5" />
+                <!-- Tooltip on last -->
+                <rect x="436" y="2" width="60" height="19" rx="5" fill="#1e2240" opacity=".88" />
+                <text x="466" y="14.5" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">Rp 1.24M</text>
+                <!-- X labels -->
+                <text x="65" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">Okt</text>
+                <text x="155" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">Nov</text>
+                <text x="245" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">Des</text>
+                <text x="335" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">Jan</text>
+                <text x="415" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">Feb</text>
+                <text x="480" y="172" font-size="9" fill="#14b8a6" text-anchor="middle" font-weight="600">Mar</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- MIDDLE: DONUT + TOP PROJECT -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+
+            <!-- DONUT -->
+            <div class="card">
+              <div class="card-head">
+                <div class="card-title">Status Distribusi Proyek</div>
+                <span class="tag">Prioritas</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;padding:12px 18px 14px">
+                <svg width="148" height="148" viewBox="0 0 148 148">
+                  <!-- circumference = 2*pi*54 = 339.3 -->
+                  <circle cx="74" cy="74" r="54" fill="none" stroke="#f1f5f9" stroke-width="22" />
+                  <!-- Active 18/42=43% → 145.9 -->
+                  <circle cx="74" cy="74" r="54" fill="none" stroke="#22c55e" stroke-width="22"
+                    stroke-dasharray="145 194" stroke-dashoffset="85" transform="rotate(-90 74 74)" />
+                  <!-- Completed 20/42=47.6% → 161.5 -->
+                  <circle cx="74" cy="74" r="54" fill="none" stroke="#3b82f6" stroke-width="22"
+                    stroke-dasharray="162 177" stroke-dashoffset="-60" transform="rotate(-90 74 74)" />
+                  <!-- OnHold 3/42=7.1% → 24.1 -->
+                  <circle cx="74" cy="74" r="54" fill="none" stroke="#f59e0b" stroke-width="22"
+                    stroke-dasharray="24 315" stroke-dashoffset="-222" transform="rotate(-90 74 74)" />
+                  <!-- Draft 1/42=2.4% → 8.1 -->
+                  <circle cx="74" cy="74" r="54" fill="none" stroke="#e2e8f0" stroke-width="22" stroke-dasharray="8 331"
+                    stroke-dashoffset="-246" transform="rotate(-90 74 74)" />
+                  <!-- Center -->
+                  <text x="74" y="70" text-anchor="middle" font-size="24" font-weight="800" fill="#1e2240">42</text>
+                  <text x="74" y="84" text-anchor="middle" font-size="9.5" fill="#94a3b8">Total Proyek</text>
+                </svg>
+                <div class="legend">
+                  <div class="legend-row">
+                    <div class="legend-l">
+                      <div class="dot" style="background:#22c55e"></div>Active
+                    </div>
+                    <div class="legend-r"><span class="lc">18</span><span class="lp">43%</span></div>
+                  </div>
+                  <div class="legend-row">
+                    <div class="legend-l">
+                      <div class="dot" style="background:#3b82f6"></div>Completed
+                    </div>
+                    <div class="legend-r"><span class="lc">20</span><span class="lp">48%</span></div>
+                  </div>
+                  <div class="legend-row">
+                    <div class="legend-l">
+                      <div class="dot" style="background:#f59e0b"></div>On Hold
+                    </div>
+                    <div class="legend-r"><span class="lc">3</span><span class="lp">7%</span></div>
+                  </div>
+                  <div class="legend-row">
+                    <div class="legend-l">
+                      <div class="dot" style="background:#e2e8f0"></div>Draft
+                    </div>
+                    <div class="legend-r"><span class="lc">1</span><span class="lp">2%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TOP PROJECT -->
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Top Proyek — Nilai</div>
+                  <div class="card-sub">Nilai belum terealisasi</div>
+                </div>
+                <span class="tag">Prioritas</span>
+              </div>
+              <div class="card-body" style="padding-top:10px">
+                <div class="rank">
+                  <div class="rank-n">1</div>
+                  <div class="rank-ico" style="background:#e6fffa">⚡</div>
+                  <div class="rank-name">PT. Sumber Makmur</div>
+                  <div class="rank-val">Rp 320.000.000</div>
+                </div>
+                <div class="rank">
+                  <div class="rank-n">2</div>
+                  <div class="rank-ico" style="background:#eff6ff">🔧</div>
+                  <div class="rank-name">CV. Indo Takrik</div>
+                  <div class="rank-val">Rp 245.000.000</div>
+                </div>
+                <div class="rank">
+                  <div class="rank-n">3</div>
+                  <div class="rank-ico" style="background:#fffbeb">🚛</div>
+                  <div class="rank-name">PT. Karya Global</div>
+                  <div class="rank-val">Rp 199.500.000</div>
+                </div>
+                <div class="rank">
+                  <div class="rank-n">4</div>
+                  <div class="rank-ico" style="background:#f5f3ff">👷</div>
+                  <div class="rank-name">CV. Jaya Abadi</div>
+                  <div class="rank-val">Rp 156.750.000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: ACTIONS + QUICK SUMMARY -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+
+            <!-- ACTION ITEMS -->
+            <div class="card" style="flex:1">
+              <div class="card-head">
+                <div class="card-title">Perlu Tindakan</div>
+                <span class="tag">Prioritas</span>
+              </div>
+              <div class="card-body">
+                <div class="action">
+                  <div class="action-top">
+                    <div>
+                      <div class="action-code">PO-2026-0019</div>
+                      <div class="action-co">PT. Sumber Makmur</div>
+                      <div class="action-meta">🕐 2 hari menunggu</div>
+                    </div>
+                    <button class="act-btn approve">Approve</button>
+                  </div>
+                </div>
+                <div class="action">
+                  <div class="action-top">
+                    <div>
+                      <div class="action-code">PO-2026-0021</div>
+                      <div class="action-co">CV. Indo Teknik</div>
+                      <div class="action-meta warn">⚠ Lewat due date</div>
+                    </div>
+                    <button class="act-btn review">Review</button>
+                  </div>
+                </div>
+                <div class="action">
+                  <div class="action-top">
+                    <div>
+                      <div class="action-code">PRJ-2026-014</div>
+                      <div class="action-co">BAST Menunggu</div>
+                      <div class="action-meta">📋 Progress 100%</div>
+                    </div>
+                    <button class="act-btn approve">BAST</button>
+                  </div>
+                </div>
+                <div class="action">
+                  <div class="action-top">
+                    <div>
+                      <div class="action-code">INV-2026-008</div>
+                      <div class="action-co">PT PLN IP</div>
+                      <div class="action-meta warn">⚠ Overdue 5 hari</div>
+                    </div>
+                    <button class="act-btn review">Cek</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUICK SUMMARY -->
+            <div class="card">
+              <div class="card-head" style="margin-bottom:10px">
+                <div class="card-title">Quick Summary</div>
+              </div>
+              <div class="card-body" style="padding-top:6px">
+                <div class="qs">
+                  <div class="qs-item">
+                    <div class="qs-ico" style="background:#e6fffa">🏆</div>
+                    <div>
+                      <div class="qs-lbl">Top Divisi</div>
+                      <div class="qs-val">Operations</div>
+                      <div class="qs-sub">65% dari total PO</div>
+                    </div>
+                  </div>
+                  <div class="qs-item">
+                    <div class="qs-ico" style="background:#fffbeb">⚡</div>
+                    <div>
+                      <div class="qs-lbl">Top Kategori</div>
+                      <div class="qs-val">Equipment</div>
+                      <div class="qs-sub">Rp 320M</div>
+                    </div>
+                  </div>
+                  <div class="qs-item" style="grid-column:1/-1">
+                    <div class="qs-ico" style="background:#eff6ff">👤</div>
+                    <div>
+                      <div class="qs-lbl">Most Active PM</div>
+                      <div class="qs-val">Alexander Bobby</div>
+                      <div class="qs-sub">12 proyek bulan ini</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /main-grid -->
+      </div><!-- /v-dashboard -->
+
+
+      <!-- ══════════════════════════════════════════ VIEW: PROJECTS -->
+      <div id="v-projects" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">Project Management</span>
+              <span class="ph-badge">● 18 Active</span>
+            </div>
+            <p class="ph-sub">Kelola dan monitoring semua proyek PT. Manata Gawi Sabumi secara real-time</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn">⬇ Export</button>
+            <button class="btn btn-primary">+ Tambah Proyek</button>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi t">
+            <div class="kpi-icon t">📋</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Total Proyek</div>
+              <div class="kpi-val">42</div>
+              <div class="kpi-foot">Semua periode</div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">✅</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">On Schedule</div>
+              <div class="kpi-val" style="color:var(--green)">14</div>
+              <div class="kpi-foot"><span class="up">77.8%</span> dari active</div>
+            </div>
+          </div>
+          <div class="kpi r">
+            <div class="kpi-icon r">⚠️</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Terlambat</div>
+              <div class="kpi-val" style="color:var(--red)">2</div>
+              <div class="kpi-foot"><span class="dn">Perlu perhatian</span></div>
+            </div>
+          </div>
+          <div class="kpi t">
+            <div class="kpi-icon b">📊</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Avg Progress</div>
+              <div class="kpi-val">67%</div>
+              <div class="kpi-foot"><span class="up">↑ 5%</span> vs bulan lalu</div>
+            </div>
+          </div>
+        </div>
+        <div class="tabs-bar">
+          <button class="tab on">Semua (42)</button>
+          <button class="tab">Active (18)</button>
+          <button class="tab">Completed (20)</button>
+          <button class="tab">On Hold (3)</button>
+          <button class="tab">Draft (1)</button>
+        </div>
+        <div class="filter-bar">
+          <div class="search-box">🔍 Search proyek, klien, lokasi...</div>
+          <button class="btn">⚙ Filter</button>
+          <button class="btn">↕ Sort</button>
+        </div>
+        <div class="card">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Kode Proyek</th>
+                <th>Nama Proyek</th>
+                <th>Klien</th>
+                <th>Tipe</th>
+                <th>PIC</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Nilai Kontrak</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color:var(--text)">PRJ-2025-001</strong></td>
+                <td>Pengadaan Baterai &amp; Charger PLTU</td>
+                <td>PT PLN IP UBP Asam-Asam</td>
+                <td><span class="sb2 draft">Procurement</span></td>
+                <td>Harry Nata</td>
+                <td><span class="sb2 completed">Completed</span></td>
+                <td>
+                  <div class="prog">
+                    <div class="prog-bg">
+                      <div class="prog-fill" style="width:100%;background:var(--green)"></div>
+                    </div><span class="prog-lbl" style="color:var(--green)">100%</span>
+                  </div>
+                </td>
+                <td><strong>Rp 320.000.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PRJ-2025-002</strong></td>
+                <td>Instalasi Unit UPS PLTU Asam-Asam</td>
+                <td>PT PLN IP UBP Asam-Asam</td>
+                <td><span class="sb2 draft">Maintenance</span></td>
+                <td>Alex Bobby</td>
+                <td><span class="sb2 active">Active</span></td>
+                <td>
+                  <div class="prog">
+                    <div class="prog-bg">
+                      <div class="prog-fill" style="width:78%"></div>
+                    </div><span class="prog-lbl">78%</span>
+                  </div>
+                </td>
+                <td><strong>Rp 245.000.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PRJ-2025-003</strong></td>
+                <td>Perbaikan &amp; Inspeksi Generator</td>
+                <td>PT PLN Persero Kalsel</td>
+                <td><span class="sb2 draft">Maintenance</span></td>
+                <td>Alex Bobby</td>
+                <td><span class="sb2 active">Active</span></td>
+                <td>
+                  <div class="prog">
+                    <div class="prog-bg">
+                      <div class="prog-fill" style="width:55%"></div>
+                    </div><span class="prog-lbl">55%</span>
+                  </div>
+                </td>
+                <td><strong>Rp 199.500.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PRJ-2025-004</strong></td>
+                <td>Sewa Excavator Kalimantan Selatan</td>
+                <td>CV. Karya Global</td>
+                <td><span class="sb2 draft">Rental</span></td>
+                <td>Boby Field</td>
+                <td><span class="sb2 active">Active</span></td>
+                <td>
+                  <div class="prog">
+                    <div class="prog-bg">
+                      <div class="prog-fill" style="width:40%"></div>
+                    </div><span class="prog-lbl">40%</span>
+                  </div>
+                </td>
+                <td><strong>Rp 156.750.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PRJ-2026-001</strong></td>
+                <td>Labor Supply — Security &amp; Driver</td>
+                <td>PT Jaya Abadi Tbk</td>
+                <td><span class="sb2 draft">Labor Supply</span></td>
+                <td>Lina Surabaya</td>
+                <td><span class="sb2 pending">On Hold</span></td>
+                <td>
+                  <div class="prog">
+                    <div class="prog-bg">
+                      <div class="prog-fill" style="width:20%;background:var(--amber)"></div>
+                    </div><span class="prog-lbl" style="color:var(--amber)">20%</span>
+                  </div>
+                </td>
+                <td><strong>Rp 89.000.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="tbl-foot">
+            <span>Menampilkan 1–5 dari 42 proyek</span>
+            <div style="display:flex;gap:6px">
+              <button class="btn" style="padding:4px 10px;font-size:11px">‹</button>
+              <button class="btn btn-primary" style="padding:4px 10px;font-size:11px">1</button>
+              <button class="btn" style="padding:4px 10px;font-size:11px">2</button>
+              <button class="btn" style="padding:4px 10px;font-size:11px">3</button>
+              <button class="btn" style="padding:4px 10px;font-size:11px">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════ VIEW: PROCUREMENT -->
+      <div id="v-procurement" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">Procurement</span>
+              <span class="ph-badge">● 3 Pending Approval</span>
+            </div>
+            <p class="ph-sub">Manajemen pengadaan barang &amp; jasa seluruh proyek MGS</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn">⬇ Export</button>
+            <button class="btn btn-primary">+ Buat PO</button>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi t">
+            <div class="kpi-icon t">📦</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Total PO Bulan Ini</div>
+              <div class="kpi-val sm">Rp 1.24M</div>
+              <div class="kpi-foot"><span class="up">↑ 12.5%</span> vs Maret</div>
+            </div>
+          </div>
+          <div class="kpi a">
+            <div class="kpi-icon a">⏳</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">PO Pending</div>
+              <div class="kpi-val" style="color:var(--amber)">3</div>
+              <div class="kpi-foot"><span class="wa">⚠ Menunggu approval</span></div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">✅</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">PO Approved</div>
+              <div class="kpi-val" style="color:var(--green)">12</div>
+              <div class="kpi-foot"><span class="up">↑ 5.2%</span> bulan ini</div>
+            </div>
+          </div>
+          <div class="kpi t">
+            <div class="kpi-icon t">🔒</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">PO Closed</div>
+              <div class="kpi-val">28</div>
+              <div class="kpi-foot"><span class="up">↑ 8.3%</span> vs Januari</div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <div class="search-box">🔍 Search nomor PO, vendor, proyek...</div>
+          <button class="btn">⚙ Filter</button>
+        </div>
+        <div class="card">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>No. PO</th>
+                <th>Proyek</th>
+                <th>Vendor</th>
+                <th>Tgl Order</th>
+                <th>Tgl Delivery</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color:var(--text)">PO-2026-0019</strong></td>
+                <td>PRJ-2025-001</td>
+                <td>PT. Sumber Makmur</td>
+                <td>2026-04-01</td>
+                <td>2026-04-15</td>
+                <td><span class="sb2 pending">Pending</span></td>
+                <td><strong>Rp 87.500.000</strong></td>
+                <td>
+                  <div style="display:flex;gap:6px">
+                    <button class="act-btn approve" style="font-size:11px;padding:5px 10px">Approve</button>
+                    <button class="act-btn review" style="font-size:11px;padding:5px 10px">Review</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PO-2026-0021</strong></td>
+                <td>PRJ-2025-002</td>
+                <td>CV. Indo Teknik</td>
+                <td>2026-03-28</td>
+                <td style="color:var(--red);font-weight:600">2026-04-05 ⚠</td>
+                <td><span class="sb2 pending">Pending</span></td>
+                <td><strong>Rp 42.000.000</strong></td>
+                <td>
+                  <div style="display:flex;gap:6px">
+                    <button class="act-btn approve" style="font-size:11px;padding:5px 10px">Approve</button>
+                    <button class="act-btn review" style="font-size:11px;padding:5px 10px">Review</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PO-2026-0015</strong></td>
+                <td>PRJ-2025-003</td>
+                <td>Kalimantan Teknik</td>
+                <td>2026-03-20</td>
+                <td>2026-04-01</td>
+                <td><span class="sb2 delivered">Delivered</span></td>
+                <td><strong>Rp 125.000.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">PO-2026-0010</strong></td>
+                <td>PRJ-2025-004</td>
+                <td>Wira Toyota</td>
+                <td>2026-03-10</td>
+                <td>2026-03-15</td>
+                <td><span class="sb2 approved">Approved</span></td>
+                <td><strong>Rp 320.000.000</strong></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════ VIEW: HR & SDM -->
+      <div id="v-hr" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">HR &amp; SDM</span>
+              <span class="ph-badge">● 87 Karyawan Aktif</span>
+            </div>
+            <p class="ph-sub">Manajemen karyawan &amp; penempatan tenaga kerja proyek MGS</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn">⬇ Export</button>
+            <button class="btn btn-primary">+ Tambah Karyawan</button>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi t">
+            <div class="kpi-icon t">👥</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Total Karyawan</div>
+              <div class="kpi-val">87</div>
+              <div class="kpi-foot"><span class="up">↑ 5 orang</span> bulan ini</div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">🏗️</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">On Project</div>
+              <div class="kpi-val" style="color:var(--green)">63</div>
+              <div class="kpi-foot">72% dari total</div>
+            </div>
+          </div>
+          <div class="kpi t">
+            <div class="kpi-icon b">💼</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Karyawan Tetap</div>
+              <div class="kpi-val">12</div>
+              <div class="kpi-foot">Staff MGS internal</div>
+            </div>
+          </div>
+          <div class="kpi a">
+            <div class="kpi-icon a">📋</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Kontrak/Outsource</div>
+              <div class="kpi-val">75</div>
+              <div class="kpi-foot"><span class="wa">8 kontrak habis bulan ini</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <div class="search-box">🔍 Search nama, NIK, jabatan...</div>
+          <button class="btn">⚙ Filter</button>
+        </div>
+        <div class="card">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>NIK</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>Tipe</th>
+                <th>Status</th>
+                <th>Proyek Saat Ini</th>
+                <th>Tgl Bergabung</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MGS-001</td>
+                <td><strong style="color:var(--text)">Harry Nata, ST</strong></td>
+                <td>Direktur</td>
+                <td><span class="sb2 permanent">Permanent</span></td>
+                <td><span class="sb2 active">Active</span></td>
+                <td>—</td>
+                <td>2016-01-01</td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td>MGS-002</td>
+                <td><strong style="color:var(--text)">Alexander Bobby</strong></td>
+                <td>Manager</td>
+                <td><span class="sb2 permanent">Permanent</span></td>
+                <td><span class="sb2 active">Active</span></td>
+                <td>PRJ-2025-002</td>
+                <td>2016-03-01</td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td>MGS-003</td>
+                <td><strong style="color:var(--text)">Boby Pratama</strong></td>
+                <td>PIC Lapangan</td>
+                <td><span class="sb2 permanent">Permanent</span></td>
+                <td><span class="sb2 completed">On Project</span></td>
+                <td>PRJ-2025-001</td>
+                <td>2017-06-15</td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td>MGS-021</td>
+                <td><strong style="color:var(--text)">Rudi Santoso</strong></td>
+                <td>Security</td>
+                <td><span class="sb2 outsource">Outsource</span></td>
+                <td><span class="sb2 completed">On Project</span></td>
+                <td>PRJ-2026-001</td>
+                <td>2025-01-10</td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td>MGS-022</td>
+                <td><strong style="color:var(--text)">Ahmad Fauzi</strong></td>
+                <td>Driver</td>
+                <td><span class="sb2 outsource">Outsource</span></td>
+                <td><span class="sb2 completed">On Project</span></td>
+                <td>PRJ-2025-004</td>
+                <td>2025-02-20</td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════ VIEW: ASSET -->
+      <div id="v-asset" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">Asset Management</span>
+              <span class="ph-badge">● 28 Aset Terdaftar</span>
+            </div>
+            <p class="ph-sub">Monitoring armada kendaraan Toyota &amp; alat berat MGS</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn btn-primary">+ Tambah Aset</button>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi t">
+            <div class="kpi-icon t">🚛</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Total Aset</div>
+              <div class="kpi-val">28</div>
+              <div class="kpi-foot">Kendaraan + Alat Berat</div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">✅</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Available</div>
+              <div class="kpi-val" style="color:var(--green)">12</div>
+              <div class="kpi-foot">Siap digunakan</div>
+            </div>
+          </div>
+          <div class="kpi a">
+            <div class="kpi-icon a">🏗️</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">On Project/Rent</div>
+              <div class="kpi-val">14</div>
+              <div class="kpi-foot">Sedang ditugaskan</div>
+            </div>
+          </div>
+          <div class="kpi r">
+            <div class="kpi-icon r">🔧</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Maintenance</div>
+              <div class="kpi-val" style="color:var(--red)">2</div>
+              <div class="kpi-foot"><span class="wa">Jadwal servis</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Kode</th>
+                <th>Nama Aset</th>
+                <th>Kategori</th>
+                <th>No. Polisi</th>
+                <th>Kondisi</th>
+                <th>Status</th>
+                <th>Lokasi</th>
+                <th>Ditugaskan ke</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AST-VHC-001</td>
+                <td><strong style="color:var(--text)">Toyota Veloz 2020</strong></td>
+                <td>Kendaraan</td>
+                <td>DA 1234 MG</td>
+                <td><span class="sb2 active">Good</span></td>
+                <td><span class="sb2 active">Available</span></td>
+                <td>Banjarmasin</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>AST-VHC-002</td>
+                <td><strong style="color:var(--text)">Toyota Hiace 2020</strong></td>
+                <td>Kendaraan</td>
+                <td>DA 5678 MG</td>
+                <td><span class="sb2 active">Good</span></td>
+                <td><span class="sb2 completed">On Project</span></td>
+                <td>PLTU Asam-Asam</td>
+                <td>PRJ-2025-001</td>
+              </tr>
+              <tr>
+                <td>AST-VHC-003</td>
+                <td><strong style="color:var(--text)">Toyota Hilux 2020</strong></td>
+                <td>Kendaraan</td>
+                <td>DA 9012 MG</td>
+                <td><span class="sb2 pending">Fair</span></td>
+                <td><span class="sb2 pending">Maintenance</span></td>
+                <td>Bengkel</td>
+                <td>Servis rutin</td>
+              </tr>
+              <tr>
+                <td>AST-EQP-001</td>
+                <td><strong style="color:var(--text)">Excavator PC200</strong></td>
+                <td>Alat Berat</td>
+                <td>—</td>
+                <td><span class="sb2 approved">Excellent</span></td>
+                <td><span class="sb2 delivered">On Rent</span></td>
+                <td>Site Tambang</td>
+                <td>CV. Karya Global</td>
+              </tr>
+              <tr>
+                <td>AST-EQP-002</td>
+                <td><strong style="color:var(--text)">Bulldozer D6T</strong></td>
+                <td>Alat Berat</td>
+                <td>—</td>
+                <td><span class="sb2 active">Good</span></td>
+                <td><span class="sb2 active">Available</span></td>
+                <td>Warehouse Banjarmasin</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════ VIEW: FINANCE -->
+      <div id="v-finance" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row">
+              <span class="ph-title">Finance &amp; Billing</span>
+              <span class="ph-badge">● 2 Invoice Overdue</span>
+            </div>
+            <p class="ph-sub">Monitoring tagihan, pembayaran, dan keuangan proyek MGS</p>
+          </div>
+          <div class="ph-actions">
+            <button class="btn btn-primary">+ Buat Invoice</button>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi g">
+            <div class="kpi-icon g">💵</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Revenue Bulan Ini</div>
+              <div class="kpi-val sm">Rp 856 Jt</div>
+              <div class="kpi-foot"><span class="up">↑ 18.3%</span> vs Maret</div>
+            </div>
+          </div>
+          <div class="kpi r">
+            <div class="kpi-icon r">⏳</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Tagihan Belum Dibayar</div>
+              <div class="kpi-val sm" style="color:var(--red)">Rp 412 Jt</div>
+              <div class="kpi-foot"><span class="wa">5 invoice outstanding</span></div>
+            </div>
+          </div>
+          <div class="kpi r">
+            <div class="kpi-icon r">🚨</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Invoice Overdue</div>
+              <div class="kpi-val" style="color:var(--red)">2</div>
+              <div class="kpi-foot"><span class="dn">Perlu follow up</span></div>
+            </div>
+          </div>
+          <div class="kpi g">
+            <div class="kpi-icon g">✅</div>
+            <div class="kpi-body">
+              <div class="kpi-lbl">Invoice Paid</div>
+              <div class="kpi-val" style="color:var(--green)">14</div>
+              <div class="kpi-foot"><span class="up">75%</span> collection rate</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>No. Invoice</th>
+                <th>Klien</th>
+                <th>Proyek</th>
+                <th>Tgl Invoice</th>
+                <th>Due Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color:var(--text)">INV-2026-008</strong></td>
+                <td>PT PLN IP UBP Asam-Asam</td>
+                <td>PRJ-2025-001</td>
+                <td>2026-03-20</td>
+                <td style="color:var(--red);font-weight:600">2026-04-05 ⚠</td>
+                <td><strong>Rp 320.000.000</strong></td>
+                <td><span class="sb2 overdue">Overdue</span></td>
+                <td><button class="act-btn review" style="font-size:11px;padding:5px 10px">Follow Up</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">INV-2026-007</strong></td>
+                <td>PT PLN Persero Kalsel</td>
+                <td>PRJ-2025-003</td>
+                <td>2026-03-25</td>
+                <td>2026-04-25</td>
+                <td><strong>Rp 199.500.000</strong></td>
+                <td><span class="sb2 sent">Sent</span></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">INV-2026-005</strong></td>
+                <td>CV. Karya Global</td>
+                <td>PRJ-2025-004</td>
+                <td>2026-03-15</td>
+                <td>2026-04-15</td>
+                <td><strong>Rp 78.000.000</strong></td>
+                <td><span class="sb2 paid">Paid</span></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--text)">INV-2026-003</strong></td>
+                <td>PT Jaya Abadi Tbk</td>
+                <td>PRJ-2026-001</td>
+                <td>2026-03-01</td>
+                <td>2026-04-01</td>
+                <td><strong>Rp 45.000.000</strong></td>
+                <td><span class="sb2 paid">Paid</span></td>
+                <td><button class="btn" style="padding:4px 10px;font-size:11px">👁 Detail</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════ VIEW: REPORTS -->
+      <div id="v-reports" class="view">
+        <div class="ph">
+          <div>
+            <div class="ph-title-row"><span class="ph-title">Reports &amp; Analytics</span></div>
+            <p class="ph-sub">Generate laporan komprehensif seluruh aktivitas MGS</p>
+          </div>
+        </div>
+        <div class="report-grid">
+          <div class="report-card">
+            <div class="report-ico">📊</div>
+            <div class="report-title">Project Progress Report</div>
+            <div class="report-sub">Laporan progress semua proyek aktif per periode</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate PDF</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ico">💰</div>
+            <div class="report-title">Financial Summary</div>
+            <div class="report-sub">Ringkasan keuangan bulanan &amp; cash flow MGS</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate PDF</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ico">👥</div>
+            <div class="report-title">HR Headcount Report</div>
+            <div class="report-sub">Laporan penempatan tenaga kerja per proyek</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate PDF</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ico">🛒</div>
+            <div class="report-title">Procurement Report</div>
+            <div class="report-sub">Laporan pengadaan barang &amp; jasa per periode</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate Excel</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ico">🚛</div>
+            <div class="report-title">Asset Utilization</div>
+            <div class="report-sub">Laporan utilisasi aset &amp; armada kendaraan</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate PDF</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ico">📈</div>
+            <div class="report-title">Annual Portfolio</div>
+            <div class="report-sub">Portofolio proyek tahunan PT. MGS lengkap</div><button class="btn btn-primary"
+              style="width:100%;justify-content:center">Generate PDF</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+  <script>
+    // Clock
+    (function tick() { document.getElementById('clk').textContent = new Date().toLocaleTimeString('id-ID'); setTimeout(tick, 1000) })();
+
+    // Nav titles
+    const titles = { dashboard: 'Executive Dashboard', projects: 'Project Management', procurement: 'Procurement', hr: 'HR & SDM', asset: 'Asset Management', finance: 'Finance & Billing', reports: 'Reports & Analytics' };
+
+    // View switcher
+    function go(v, el) {
+      document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+      document.getElementById('v-' + v).classList.add('active');
+      document.querySelectorAll('.sb-item').forEach(x => x.classList.remove('active'));
+      if (el) el.classList.add('active');
+      document.getElementById('page-title').textContent = titles[v] || v;
+    }
+  </script>
+</body>
+
+</html>
