@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdopTree — Market Opportunity</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f2218 0%, #115031 60%, #1a3a20 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+  .header .label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4ade80;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+  .header p {
+    margin-top: 12px;
+    font-size: 15px;
+    color: #86efac;
+  }
+
+  /* ── Circles ── */
+  .circles-wrapper {
+    position: relative;
+    width: 580px;
+    height: 580px;
+    margin: 0 auto;
+    flex-shrink: 0;
+  }
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* TAM — 580×580, occupies full wrapper */
+  .tam {
+    width: 580px; height: 580px;
+    top: 0; left: 0;
+    background: rgba(34,197,94,0.10);
+    border: 2px solid rgba(34,197,94,0.38);
+  }
+  /* SAM — 380×380, centered → offset 100px */
+  .sam {
+    width: 380px; height: 380px;
+    top: 100px; left: 100px;
+    background: rgba(34,197,94,0.17);
+    border: 2px solid rgba(34,197,94,0.55);
+  }
+  /* SOM — 200×200, centered → offset 190px */
+  .som {
+    width: 200px; height: 200px;
+    top: 190px; left: 190px;
+    background: rgba(34,197,94,0.35);
+    border: 2px solid rgba(34,197,94,0.9);
+  }
+
+  /* ── TAM text — sits in top band (y: 20–100) of the outer ring ── */
+  .tam .circle-label {
+    position: absolute;
+    top: 20px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #4ade80;
+  }
+  .tam .circle-value {
+    position: absolute;
+    top: 40px;
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+  }
+  .tam .circle-desc {
+    position: absolute;
+    top: 78px;
+    font-size: 12px;
+    color: #86efac;
+    max-width: 160px;
+    line-height: 1.4;
+  }
+
+  /* ── SAM text — sits in top band (y: 14–88) of the SAM ring ── */
+  .sam .circle-label {
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #4ade80;
+  }
+  .sam .circle-value {
+    position: absolute;
+    top: 34px;
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+  }
+  .sam .circle-desc {
+    position: absolute;
+    top: 66px;
+    font-size: 11px;
+    color: #86efac;
+    max-width: 150px;
+    line-height: 1.4;
+  }
+
+  /* ── SOM text — centered in the inner disc ── */
+  .som .circle-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #4ade80;
+    margin-bottom: 4px;
+  }
+  .som .circle-value {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .som .circle-desc {
+    font-size: 11px;
+    color: #86efac;
+    max-width: 110px;
+    line-height: 1.4;
+  }
+
+  /* ── Cards ── */
+  .cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 44px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 760px;
+    width: 100%;
+  }
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 22px 20px;
+    flex: 1;
+    min-width: 155px;
+    text-align: center;
+  }
+  .card .dot {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+  }
+  .dot-tam { background: rgba(34,197,94,0.5); border: 2px solid #22c55e; }
+  .dot-sam { background: rgba(34,197,94,0.7); border: 2px solid #4ade80; }
+  .dot-som { background: #22c55e; border: 2px solid #86efac; }
+  .card h3 {
+    font-size: 13px; font-weight: 700;
+    color: #86efac; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .card .amount { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: #86efac; line-height: 1.55; }
+
+  /* ── Vision target section ── */
+  .vision-section {
+    margin-top: 24px;
+    max-width: 760px;
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 16px;
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .vision-text { flex: 1; min-width: 200px; }
+  .vision-section .v-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #4ade80; margin-bottom: 6px;
+  }
+  .vision-section .v-title { font-size: 16px; font-weight: 800; color: #fff; }
+  .vision-section .v-sub { font-size: 12px; color: #86efac; margin-top: 4px; line-height: 1.5; }
+  .v-stats { display: flex; gap: 24px; }
+  .v-stat { text-align: center; }
+  .v-stat .num { font-size: 28px; font-weight: 900; color: #fff; line-height: 1; }
+  .v-stat .unit { font-size: 12px; color: #86efac; margin-top: 4px; line-height: 1.3; max-width: 90px; }
+  .v-divider { width: 1px; background: rgba(255,255,255,0.15); align-self: stretch; }
+
+  .footer-note {
+    margin-top: 32px;
+    font-size: 12px;
+    color: rgba(134,239,172,0.6);
+    text-align: center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">Market Opportunity</div>
+  <h1>A Multi-Billion Dollar<br>Green Impact Market</h1>
+  <p>Voluntary carbon market + ESG investment + Indonesia CSR landscape + Islamic finance</p>
+</div>
+
+<div class="circles-wrapper">
+  <!-- TAM — text in top band, above SAM ring -->
+  <div class="circle tam">
+    <span class="circle-label">TAM</span>
+    <span class="circle-value">$50B</span>
+    <span class="circle-desc">Global Voluntary Carbon Market by 2030</span>
+  </div>
+  <!-- SAM — text in its own top band, above SOM disc -->
+  <div class="circle sam">
+    <span class="circle-label">SAM</span>
+    <span class="circle-value">$2.4B</span>
+    <span class="circle-desc">SEA Environmental Impact Investment</span>
+  </div>
+  <!-- SOM — text centered in disc -->
+  <div class="circle som">
+    <span class="circle-label">SOM</span>
+    <span class="circle-value">$24M</span>
+    <span class="circle-desc">Indonesia<br>Year 3 Target</span>
+  </div>
+</div>
+
+<!-- TAM / SAM / SOM cards -->
+<div class="cards">
+  <div class="card">
+    <div class="dot dot-tam"></div>
+    <h3>TAM</h3>
+    <div class="amount">$50B</div>
+    <p>Global voluntary carbon market projected by 2030 (McKinsey)</p>
+  </div>
+  <div class="card">
+    <div class="dot dot-sam"></div>
+    <h3>SAM</h3>
+    <div class="amount">$2.4B</div>
+    <p>Southeast Asia ESG & environmental impact investment</p>
+  </div>
+  <div class="card">
+    <div class="dot dot-som"></div>
+    <h3>SOM</h3>
+    <div class="amount">$24M</div>
+    <p>Indonesia CSR + tree adoption market, 1% capture target by 2028</p>
+  </div>
+</div>
+
+<!-- Context stats -->
+<div class="cards" style="margin-top:16px;">
+  <div class="card">
+    <h3>🌳 Forest at Stake</h3>
+    <div class="amount" style="font-size:22px;">91M ha</div>
+    <p>Indonesia's forest — 3rd largest in the world, critical carbon sink</p>
+  </div>
+  <div class="card">
+    <h3>📉 Annual Loss</h3>
+    <div class="amount" style="font-size:22px;">600K ha</div>
+    <p>Deforestation per year in Indonesia — creating urgent supply demand</p>
+  </div>
+  <div class="card">
+    <h3>🏢 CSR Pool</h3>
+    <div class="amount" style="font-size:22px;">$1B+</div>
+    <p>Indonesian corporate CSR spending per year, ~20% environmental</p>
+  </div>
+  <div class="card">
+    <h3>📱 Digital Donors</h3>
+    <div class="amount" style="font-size:22px;">185M</div>
+    <p>Indonesian internet users — growing 8% YoY, rising green awareness</p>
+  </div>
+</div>
+
+<!-- 3-Year vision target -->
+<div class="vision-section">
+  <div class="vision-text">
+    <div class="v-label">AdopTree 3-Year Commercial Target</div>
+    <div class="v-title">Capturing Indonesia first, then Southeast Asia</div>
+    <div class="v-sub">Strategy: Networks · Donations · CSR · International expansion from 2028</div>
+  </div>
+  <div class="v-stats">
+    <div class="v-stat">
+      <div class="num">100K</div>
+      <div class="unit">Ha Under Management</div>
+    </div>
+    <div class="v-divider"></div>
+    <div class="v-stat">
+      <div class="num">500M</div>
+      <div class="unit">Trees Reserved</div>
+    </div>
+    <div class="v-divider"></div>
+    <div class="v-stat">
+      <div class="num">$2.6M</div>
+      <div class="unit">Revenue by 2028</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  Sources: McKinsey Global Institute · World Bank · KLHK Indonesia · BPS Statistics Indonesia · IDX Carbon · 2026 estimates
+</div>
+
+</body>
+</html>

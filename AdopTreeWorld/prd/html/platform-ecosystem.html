@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AdopTree — Platform Ecosystem</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #f0fdf4 0%, #fff 60%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 32px;
+  }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header .label {
+    font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: #16a34a; margin-bottom: 10px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: #115031; }
+  .header p { font-size: 15px; color: #6b7280; margin-top: 8px; }
+  .header .pillars {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .pillar-tag {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 99px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #15803d;
+  }
+
+  .ecosystem {
+    position: relative;
+    width: 780px;
+    height: 520px;
+    margin: 0 auto;
+  }
+
+  /* Center platform */
+  .center-node {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #115031, #22c55e);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 12px rgba(34,197,94,0.12), 0 0 0 24px rgba(34,197,94,0.06);
+    z-index: 10;
+    text-align: center;
+  }
+  .center-node .icon { font-size: 30px; margin-bottom: 4px; }
+  .center-node h3 { font-size: 15px; font-weight: 800; color: #fff; }
+  .center-node p { font-size: 11px; color: #86efac; }
+  .center-node .live-badge {
+    margin-top: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 99px;
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #d1fae5;
+    letter-spacing: 1px;
+  }
+
+  /* Connector lines (SVG) */
+  svg.connectors {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .connector { stroke-width: 1.5; fill: none; stroke-dasharray: 5,4; }
+
+  /* Actor nodes */
+  .node {
+    position: absolute;
+    border-radius: 16px;
+    padding: 16px 14px;
+    text-align: center;
+    width: 148px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 2px solid transparent;
+  }
+  .node .n-icon { font-size: 26px; margin-bottom: 7px; }
+  .node h4 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
+  .node p { font-size: 12px; line-height: 1.45; }
+
+  .node-donor    { background: #fff; border-color: #d1fae5; top: 20px; left: 20px; }
+  .node-merchant { background: #fff; border-color: #d1fae5; top: 20px; right: 20px; }
+  .node-corp     { background: #fff; border-color: #dbeafe; bottom: 20px; left: 20px; }
+  .node-land     { background: #fff; border-color: #fde68a; bottom: 20px; right: 20px; }
+  .node-nft      { background: #fff; border-color: #ede9fe; top: 50%; left: -10px; transform: translateY(-50%); }
+  .node-impact   { background: #fff; border-color: #d1fae5; top: 50%; right: -10px; transform: translateY(-50%); }
+
+  .node-donor h4    { color: #16a34a; }
+  .node-merchant h4 { color: #115031; }
+  .node-corp h4     { color: #1d4ed8; }
+  .node-land h4     { color: #92400e; }
+  .node-nft h4      { color: #7c3aed; }
+  .node-impact h4   { color: #16a34a; }
+
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-right: 3px;
+    vertical-align: middle;
+    margin-top: -1px;
+  }
+  .status-dot.roadmap { background: #f59e0b; }
+
+  /* Flow arrows below */
+  .flow-section {
+    margin-top: 48px;
+    max-width: 780px;
+    width: 100%;
+  }
+  .flow-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #16a34a; margin-bottom: 20px;
+    text-align: center;
+  }
+  .flows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .flow-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .flow-card .f-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .flow-card h4 { font-size: 14px; font-weight: 700; color: #115031; margin-bottom: 5px; }
+  .flow-card p { font-size: 13px; color: #6b7280; line-height: 1.55; }
+  .arrow { color: #22c55e; font-weight: 700; }
+  .badge-live {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 99px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+  .badge-soon {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 99px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* GTM section */
+  .gtm-section {
+    margin-top: 24px;
+    max-width: 780px;
+    width: 100%;
+    background: linear-gradient(135deg, #115031, #1e6b40);
+    border-radius: 16px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .gtm-section .g-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #86efac; margin-bottom: 5px;
+  }
+  .gtm-section .g-title { font-size: 16px; font-weight: 800; color: #fff; }
+  .gtm-pillars { display: flex; gap: 12px; margin-left: auto; }
+  .gtm-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-align: center;
+  }
+  .gtm-pill .gp-icon { font-size: 20px; margin-bottom: 5px; }
+  .gtm-pill .gp-text { font-size: 13px; font-weight: 700; color: #d1fae5; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">Platform Ecosystem</div>
+  <h1>How AdopTree Connects the Dots</h1>
+  <p>A multi-sided platform linking donors, merchants, land owners, and impact at scale — live today.</p>
+  <div class="pillars">
+    <span class="pillar-tag">🌐 Individual Donors</span>
+    <span class="pillar-tag">🏢 Corporate CSR</span>
+    <span class="pillar-tag">☪️ Wakaf / Islamic Finance</span>
+    <span class="pillar-tag">🌍 International</span>
+  </div>
+</div>
+
+<div class="ecosystem">
+  <!-- SVG connectors -->
+  <svg class="connectors" viewBox="0 0 780 520">
+    <!-- Donor (top-left) to center -->
+    <line class="connector" x1="155" y1="105" x2="330" y2="225" stroke="#22c55e" />
+    <!-- Merchant (top-right) to center -->
+    <line class="connector" x1="625" y1="105" x2="455" y2="225" stroke="#22c55e" />
+    <!-- Corporate (bottom-left) to center -->
+    <line class="connector" x1="155" y1="410" x2="330" y2="300" stroke="#3b82f6" />
+    <!-- Land owner (bottom-right) to center -->
+    <line class="connector" x1="625" y1="410" x2="455" y2="300" stroke="#f59e0b" />
+    <!-- NFT/Solana (left-mid) to center -->
+    <line class="connector" x1="120" y1="260" x2="325" y2="260" stroke="#7c3aed" />
+    <!-- Impact (right-mid) to center -->
+    <line class="connector" x1="660" y1="260" x2="455" y2="260" stroke="#22c55e" />
+  </svg>
+
+  <!-- Center -->
+  <div class="center-node">
+    <div class="icon">🌳</div>
+    <h3>AdopTree</h3>
+    <p>Multiverse Platform</p>
+    <div class="live-badge">● LIVE</div>
+  </div>
+
+  <!-- Actors -->
+  <div class="node node-donor">
+    <div class="n-icon">🙋</div>
+    <h4>Individual Donors</h4>
+    <p>Adopt trees, earn certificates, NFT & carbon credits</p>
+  </div>
+
+  <div class="node node-merchant">
+    <div class="n-icon">🏢</div>
+    <h4>Merchants / NGOs</h4>
+    <p>Register lands, list trees, run campaigns, use Bot Tira</p>
+  </div>
+
+  <div class="node node-corp">
+    <div class="n-icon">🏛️</div>
+    <h4>Corporate CSR</h4>
+    <p>Bulk Platinum packages for ESG reporting & brand impact</p>
+  </div>
+
+  <div class="node node-land">
+    <div class="n-icon">🌾</div>
+    <h4>Land Owners</h4>
+    <p>Partner with merchants via invite token, manage tree assets</p>
+  </div>
+
+  <div class="node node-nft">
+    <div class="n-icon">🔮</div>
+    <h4>Solana NFT</h4>
+    <p>Blockchain proof of ownership — infra ready, minting Q3 2026</p>
+  </div>
+
+  <div class="node node-impact">
+    <div class="n-icon">🌍</div>
+    <h4>Real Impact</h4>
+    <p>GIS tracking, CO₂ sequestration data, surveillance reports</p>
+  </div>
+</div>
+
+<!-- Value flows -->
+<div class="flow-section">
+  <div class="flow-title">Value Flows</div>
+  <div class="flows">
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#f0fdf4;">💳</div>
+      <div>
+        <h4>Donor → Platform <span class="arrow">→</span> Merchant <span class="badge-live">LIVE</span></h4>
+        <p>Donor pays platform fee per tree (Silver $1 · Gold $2 · Platinum $3/yr). Platform deducts operational cost, remainder goes to merchant for tree stewardship. Payment via Midtrans (IDR) or Solana (SOL).</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#ede9fe;">🔮</div>
+      <div>
+        <h4>Platform <span class="arrow">→</span> Solana NFT <span class="badge-soon">Q3 2026</span></h4>
+        <p>Gold & Platinum service tiers unlock NFT ownership — transferable blockchain proof on Solana. Infrastructure & wallet auth live; on-chain minting activating H2 2026.</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#eff6ff;">📊</div>
+      <div>
+        <h4>Corporate <span class="arrow">→</span> ESG Reports <span class="badge-live">LIVE</span></h4>
+        <p>Platinum corporate packages — bulk tree adoption with verified GIS coordinates, periodic surveillance reports (2x/year), and certificate bundles for annual ESG/sustainability reporting.</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#fef3c7;">🤖</div>
+      <div>
+        <h4>Bot Tira SaaS <span class="arrow">→</span> Merchant <span class="badge-live">LIVE</span></h4>
+        <p>AI chatbot powered by <strong>Google Gemini</strong> with function-calling against live platform data. Merchant SaaS subscription — engages donors, answers tree queries, tracks conversation analytics. Already live on staging.</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#f0fdf4;">🌿</div>
+      <div>
+        <h4>Merchant Campaign <span class="arrow">→</span> Fundraising <span class="badge-live">LIVE</span></h4>
+        <p>Merchants launch campaigns with custom pricing (Regular vs. Campaign fee tier). Platform earns per-adoption fee. Donors browse and filter by campaign, merchant, region, or tree type.</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#fef3c7;">💰</div>
+      <div>
+        <h4>Carbon Credits <span class="arrow">→</span> Future Revenue <span class="badge-soon">2027</span></h4>
+        <p>All adoptions generate real-time CO₂ tracking per species. Gold & Platinum tiers accumulate tradeable carbon credits. VCS certification targeted 2027 — enabling IDX Carbon exchange integration.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GTM strategy bar -->
+<div class="gtm-section">
+  <div>
+    <div class="g-label">Go-to-Market Strategy</div>
+    <div class="g-title">Three pillars driving merchant & donor acquisition</div>
+  </div>
+  <div class="gtm-pillars">
+    <div class="gtm-pill">
+      <div class="gp-icon">🌐</div>
+      <div class="gp-text">Networks</div>
+    </div>
+    <div class="gtm-pill">
+      <div class="gp-icon">💚</div>
+      <div class="gp-text">Donations</div>
+    </div>
+    <div class="gtm-pill">
+      <div class="gp-icon">🏢</div>
+      <div class="gp-text">CSR</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

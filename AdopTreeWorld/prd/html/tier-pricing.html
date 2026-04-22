@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AdopTree — Service Class</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    padding: 48px 40px;
+    min-height: 100vh;
+  }
+
+  .header {
+    margin-bottom: 36px;
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 900;
+    color: #115031;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .header p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+
+  /* Table wrapper */
+  .table-wrap {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  /* Column header group */
+  thead tr.group-row th {
+    background: #fff;
+    padding: 18px 14px 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #9ca3af;
+  }
+  thead tr.group-row th.fee-group {
+    background: #fef9c3;
+    color: #92400e;
+    text-align: center;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding-bottom: 4px;
+  }
+
+  thead tr.col-row th {
+    background: #fff;
+    padding: 10px 14px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  thead tr.col-row th.fee-col {
+    background: #fef9c3;
+    text-align: center;
+    color: #92400e;
+    font-weight: 800;
+  }
+
+  /* Body rows */
+  tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+  }
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody td {
+    padding: 14px 14px;
+    vertical-align: top;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  /* Category cell */
+  td.cat-cell {
+    font-weight: 800;
+    font-size: 15px;
+    text-align: center;
+    vertical-align: middle;
+    width: 90px;
+    border-right: 2px solid #e5e7eb;
+  }
+  td.cat-wakaf {
+    color: #0369a1;
+    background: #f0f9ff;
+  }
+  td.cat-donasi {
+    color: #115031;
+    background: #f0fdf4;
+  }
+
+  /* Service class badge */
+  td.class-cell {
+    width: 90px;
+    vertical-align: middle;
+    border-right: 1px solid #f3f4f6;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-silver {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+  }
+  .badge-gold {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+  }
+  .badge-platinum {
+    background: linear-gradient(135deg, #115031, #16a34a);
+    color: #fff;
+    border: none;
+  }
+
+  /* Fee cells */
+  td.fee-cell {
+    background: #fefce8;
+    text-align: center;
+    font-weight: 800;
+    font-size: 15px;
+    color: #78350f;
+    width: 100px;
+    vertical-align: middle;
+    border-right: 1px dashed #fde68a;
+  }
+  td.fee-campaign {
+    border-right: 1px solid #f3f4f6;
+    background: #fffbeb;
+  }
+
+  /* Feature list */
+  td.feature-cell {
+    min-width: 240px;
+    border-right: 1px solid #f3f4f6;
+  }
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.45;
+  }
+  .feature-list li .check {
+    color: #16a34a;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Target market cell */
+  td.target-cell {
+    width: 100px;
+    vertical-align: middle;
+    text-align: center;
+    border-right: 1px solid #f3f4f6;
+  }
+  .target-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .target-individual {
+    background: #dcfce7;
+    color: #166534;
+  }
+  .target-corporate {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  /* Rule of thumb */
+  td.rule-cell {
+    width: 160px;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .web-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .web2 {
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+  .web3 {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  /* Category separator */
+  tr.cat-separator td {
+    background: #e5e7eb;
+    height: 2px;
+    padding: 0;
+  }
+
+  /* Alternating row shade */
+  tbody tr.row-silver { background: #fff; }
+  tbody tr.row-gold   { background: #fffdf5; }
+  tbody tr.row-platinum { background: #f9fafb; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Note */
+  .note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AdopTree Service Class</h1>
+  <p>Platform fee per tree / year — two adoption categories, three service tiers each.</p>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr class="group-row">
+        <th colspan="2"></th>
+        <th colspan="2" class="fee-group">Platform Fee / year</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr class="col-row">
+        <th>Category</th>
+        <th>Service Class</th>
+        <th class="fee-col">Regular</th>
+        <th class="fee-col">Campaign</th>
+        <th>Feature</th>
+        <th>Target Market</th>
+        <th>Rule of thumb</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ── WAKAF ── -->
+      <tr class="row-silver">
+        <td class="cat-cell cat-wakaf" rowspan="3">
+          ☪️<br>WAKAF
+        </td>
+        <td class="class-cell">
+          <span class="badge badge-silver">🥈 Silver</span>
+        </td>
+        <td class="fee-cell">$1.00</td>
+        <td class="fee-cell fee-campaign">$1.50</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> My Forest Dashboard</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-individual">Individual</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web2">web2</span><br>
+          1 year
+        </td>
+      </tr>
+
+      <tr class="row-gold">
+        <td class="class-cell">
+          <span class="badge badge-gold">🥇 Gold</span>
+        </td>
+        <td class="fee-cell">$2.00</td>
+        <td class="fee-cell fee-campaign">$2.50</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Dashboard PM</li>
+            <li><span class="check">✓</span> NFT</li>
+            <li><span class="check">✓</span> Monitoring</li>
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> Social Media Platform (Forum, Informasi, Komunikasi, Konsultasi)</li>
+            <li><span class="check">✓</span> Market Place Platform</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-individual">Individual</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web3">web3</span><br>
+          1 year
+        </td>
+      </tr>
+
+      <tr class="row-platinum">
+        <td class="class-cell">
+          <span class="badge badge-platinum">💎 Platinum</span>
+        </td>
+        <td class="fee-cell">$2.50</td>
+        <td class="fee-cell fee-campaign">$3.00</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Periodic Surveillance (2x per year)</li>
+            <li><span class="check">✓</span> Periodic Report (2x per year)</li>
+            <li><span class="check">✓</span> Dashboard PM</li>
+            <li><span class="check">✓</span> NFT</li>
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> CSR Marketing</li>
+            <li><span class="check">✓</span> Social Media Platform (Forum, Informasi, Komunikasi, Konsultasi)</li>
+            <li><span class="check">✓</span> Market Place Platform</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-corporate">Corporate</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web3">web3</span><br>
+          Min. 3 years package
+        </td>
+      </tr>
+
+      <!-- separator -->
+      <tr class="cat-separator"><td colspan="7"></td></tr>
+
+      <!-- ── DONASI ── -->
+      <tr class="row-silver">
+        <td class="cat-cell cat-donasi" rowspan="3">
+          🌱<br>DONASI
+        </td>
+        <td class="class-cell">
+          <span class="badge badge-silver">🥈 Silver</span>
+        </td>
+        <td class="fee-cell">$1.00</td>
+        <td class="fee-cell fee-campaign">$1.50</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> My Forest Dashboard</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-individual">Individual</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web2">web2</span><br>
+          1 year
+        </td>
+      </tr>
+
+      <tr class="row-gold">
+        <td class="class-cell">
+          <span class="badge badge-gold">🥇 Gold</span>
+        </td>
+        <td class="fee-cell">$2.00</td>
+        <td class="fee-cell fee-campaign">$2.50</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Dashboard PM</li>
+            <li><span class="check">✓</span> NFT</li>
+            <li><span class="check">✓</span> Surveillance</li>
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> Social Media Platform (Forum, Informasi, Komunikasi, Konsultasi)</li>
+            <li><span class="check">✓</span> Market Place Platform</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-individual">Individual</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web3">web3</span><br>
+          1 year
+        </td>
+      </tr>
+
+      <tr class="row-platinum">
+        <td class="class-cell">
+          <span class="badge badge-platinum">💎 Platinum</span>
+        </td>
+        <td class="fee-cell">$3.00</td>
+        <td class="fee-cell fee-campaign">$3.00</td>
+        <td class="feature-cell">
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Periodic Surveillance (2x per year)</li>
+            <li><span class="check">✓</span> Periodic Report (2x per year)</li>
+            <li><span class="check">✓</span> Dashboard PM</li>
+            <li><span class="check">✓</span> NFT</li>
+            <li><span class="check">✓</span> Certificate (Asset Population / Coordinate)</li>
+            <li><span class="check">✓</span> CSR Marketing</li>
+            <li><span class="check">✓</span> Social Media Platform (Forum, Informasi, Komunikasi, Konsultasi)</li>
+            <li><span class="check">✓</span> Market Place Platform</li>
+          </ul>
+        </td>
+        <td class="target-cell">
+          <span class="target-badge target-corporate">Corporate</span>
+        </td>
+        <td class="rule-cell">
+          <span class="web-badge web3">web3</span><br>
+          Min. 3 years package
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#cbd5e1;"></div> Silver — Entry level, web2 features</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fcd34d;"></div> Gold — NFT + Platform access, individual</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#16a34a;"></div> Platinum — Full features, corporate CSR package</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ede9fe;border:1px solid #a78bfa;"></div> web3 = NFT-enabled tier</div>
+</div>
+
+<div class="note">
+  * Platform fee is charged per tree per year on top of the base tree adoption price.<br>
+  Campaign tier applies when merchants run active fundraising campaigns. All prices in USD.
+</div>
+
+</body>
+</html>
