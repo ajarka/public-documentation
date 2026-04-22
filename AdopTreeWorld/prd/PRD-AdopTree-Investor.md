@@ -49,7 +49,7 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
 
-> 📊 *See: [`market-opportunity.html`](assets/prd/market-opportunity.html) — TAM/SAM/SOM visualization*
+> 📊 *See: [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html) — TAM/SAM/SOM visualization*
 
 ---
 
@@ -146,7 +146,7 @@ Corporate CSR ─────┘         │
 
 ## 5. Market Opportunity
 
-> 📊 *Screenshot from: [`market-opportunity.html`](assets/prd/market-opportunity.html)*
+> 📊 *Screenshot from: [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html)*
 
 ### 5.1 Total Addressable Market (TAM) — $50 Billion
 
@@ -241,7 +241,7 @@ graph TD
 
 ### 6.3 Service Class Structure
 
-> 📊 *Screenshot from: [`tier-pricing.html`](assets/prd/tier-pricing.html)*
+> 📊 *Screenshot from: [`tier-pricing.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/tier-pricing.html)*
 
 AdopTree uses a **6-class service tier model**: two adoption categories (Donasi & Wakaf), each with three service levels (Silver, Gold, Platinum). Platform fee is charged per tree per year on top of the base adoption price.
 
@@ -273,7 +273,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 ## 7. Business Model & Revenue Streams
 
-> 📊 *Screenshot from: [`platform-ecosystem.html`](assets/prd/platform-ecosystem.html)*
+> 📊 *Screenshot from: [`platform-ecosystem.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/platform-ecosystem.html)*
 
 ### 7.1 Revenue Streams
 
@@ -656,7 +656,7 @@ gantt
 
 ## 14. Financial Projections
 
-> 📊 *Screenshot from: [`revenue-projection.html`](assets/prd/revenue-projection.html)*
+> 📊 *Screenshot from: [`revenue-projection.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/revenue-projection.html)*
 
 ### 14.1 Revenue Summary
 
@@ -815,10 +815,10 @@ Beyond capital, the ideal investor brings:
 
 | File | Description |
 |---|---|
-| [`market-opportunity.html`](assets/prd/market-opportunity.html) | TAM/SAM/SOM visualization |
-| [`tier-pricing.html`](assets/prd/tier-pricing.html) | Adoption tier comparison |
-| [`revenue-projection.html`](assets/prd/revenue-projection.html) | 3-year revenue forecast |
-| [`platform-ecosystem.html`](assets/prd/platform-ecosystem.html) | Platform stakeholder map |
+| [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html) | TAM/SAM/SOM visualization |
+| [`tier-pricing.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/tier-pricing.html) | Adoption tier comparison |
+| [`revenue-projection.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/revenue-projection.html) | 3-year revenue forecast |
+| [`platform-ecosystem.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/platform-ecosystem.html) | Platform stakeholder map |
 
 ### C. Glossary
 
