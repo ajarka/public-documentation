@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopsimari Haji — Berhaji & Berumroh dengan Aman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&family=Amiri:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand-50:#FAF6EF; --sand-100:#F2EAD8; --sand-200:#E5D7B8;
+    --sand-300:#D9C4A0; --sand-500:#BFA37A; --sand-600:#A87E4D;
+    --sand-700:#856539; --sand-800:#6B4A2B; --sand-900:#3E2A18;
+    --kop-green-500:#2A8A60; --kop-green-600:#1E7B4F; --kop-green-700:#176142;
+    --kop-gold-400:#D9B870; --kop-gold-500:#C9A35C;
+    --night:#1A1410; --bone:#FBFAF7; --terracotta:#B14B3E;
+    --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--sand-50); color: var(--sand-900);
+    font-size: 16px; line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* studio bar */
+  .studio-bar {
+    background: var(--night); color: var(--bone);
+    padding: 8px 32px; font-size: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100; font-family: 'JetBrains Mono', monospace;
+  }
+  .studio-bar a { color: var(--kop-gold-400); text-decoration: none; margin-left: 16px; }
+  .studio-bar a:hover { color: var(--bone); }
+
+  /* ════════════ HEADER ════════════ */
+  header.site-header {
+    position: fixed; top: 32px; left: 0; right: 0; z-index: 50;
+    transition: all 300ms var(--ease-out-soft);
+  }
+  header.site-header .inner {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 32px;
+  }
+  header.site-header .logo {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    font-size: 20px; color: var(--bone); letter-spacing: -0.01em;
+  }
+  header.site-header .logo small {
+    display: block; font-family: 'Inter', sans-serif; font-weight: 500;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--kop-gold-400); margin-top: -4px;
+  }
+  header.site-header nav {
+    display: flex; gap: 32px; align-items: center;
+  }
+  header.site-header nav a {
+    color: var(--bone); text-decoration: none; font-size: 14px; font-weight: 400;
+    transition: color 200ms ease;
+  }
+  header.site-header nav a:hover { color: var(--kop-gold-400); }
+  header.site-header .cta {
+    padding: 10px 20px; border-radius: 9999px;
+    background: var(--bone); color: var(--sand-900);
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: background 200ms ease;
+  }
+  header.site-header .cta:hover { background: var(--kop-gold-400); }
+  /* solid state after scroll */
+  header.site-header.solid {
+    top: 32px; background: rgba(251,250,247,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand-300);
+  }
+  header.site-header.solid .logo { color: var(--sand-900); }
+  header.site-header.solid nav a { color: var(--sand-800); }
+  header.site-header.solid nav a:hover { color: var(--kop-green-700); }
+  header.site-header.solid .cta { background: var(--kop-green-600); color: var(--bone); }
+  header.site-header.solid .cta:hover { background: var(--kop-green-700); }
+
+  /* ════════════ HERO ════════════ */
+  .hero {
+    min-height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 70% 60%, rgba(201, 163, 92, 0.45) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 30%, rgba(168, 126, 77, 0.35) 0%, transparent 60%),
+      linear-gradient(135deg, #1A1410 0%, #3E2A18 35%, #6B4A2B 65%, #A87E4D 100%);
+    animation: kenBurns 30s ease-in-out infinite alternate;
+  }
+  @keyframes kenBurns {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.08); }
+  }
+  .hero-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 50% 100%, rgba(26,20,16,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 0%, rgba(26,20,16,0.4) 0%, transparent 50%);
+  }
+  /* simulated arch silhouette */
+  .hero-bg::before {
+    content: ""; position: absolute; bottom: -10%; right: -5%; width: 60%; height: 90%;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(62,42,24,0.7) 0%, transparent 50%);
+    opacity: 0.5;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2; max-width: 760px; padding: 32px;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--kop-gold-400); font-weight: 500; margin-bottom: 24px;
+    opacity: 0; animation: fadeInUp 800ms 200ms var(--ease-out-soft) forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
+    font-size: clamp(48px, 8vw, 96px); line-height: 1.05; letter-spacing: -0.02em;
+    color: var(--bone); margin-bottom: 32px;
+  }
+  .hero-title span { display: block; opacity: 0; transform: translateY(24px); }
+  .hero-title span:nth-child(1) { animation: fadeInUp 800ms 400ms var(--ease-out-soft) forwards; }
+  .hero-title span:nth-child(2) { animation: fadeInUp 800ms 600ms var(--ease-out-soft) forwards; }
+  .hero-title span:nth-child(3) { animation: fadeInUp 800ms 800ms var(--ease-out-soft) forwards; }
+  @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+  .hero-lead {
+    font-size: 19px; color: var(--sand-200); max-width: 52ch; line-height: 1.7;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeInUp 800ms 1000ms var(--ease-out-soft) forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeInUp 800ms 1200ms var(--ease-out-soft) forwards;
+  }
+  .hero-cta .btn-primary {
+    padding: 16px 32px; border-radius: 9999px;
+    background: transparent; color: var(--bone);
+    border: 1px solid var(--kop-gold-500); font-size: 15px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .hero-cta .btn-primary:hover { background: var(--kop-gold-500); color: var(--sand-900); }
+  .hero-cta .btn-ghost {
+    color: var(--bone); text-decoration: underline; text-underline-offset: 6px;
+    text-decoration-color: var(--kop-gold-500); text-decoration-thickness: 1px;
+    font-size: 14px; transition: color 200ms ease;
+  }
+  .hero-cta .btn-ghost:hover { color: var(--kop-gold-400); }
+
+  .hero-scroll-indicator {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: var(--bone); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; opacity: 0.6; animation: pulseDown 2s infinite;
+  }
+  @keyframes pulseDown {
+    0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+  }
+  .hero-scroll-indicator::after {
+    content: ""; display: block; width: 1px; height: 32px; margin: 12px auto 0;
+    background: var(--kop-gold-400);
+  }
+
+  /* ════════════ SECTION COMMON ════════════ */
+  section.story { padding: 128px 0; }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sand-600); font-weight: 500; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic;
+    font-size: clamp(36px, 5vw, 64px); line-height: 1.10; letter-spacing: -0.02em;
+    color: var(--sand-900); margin-bottom: 24px;
+  }
+
+  /* ════════════ HERITAGE ════════════ */
+  .heritage { background: var(--sand-50); }
+  .heritage-grid {
+    display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: center;
+  }
+  .heritage-img {
+    aspect-ratio: 4/5; border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(217,184,112,0.2), transparent),
+      radial-gradient(ellipse at center, #6B4A2B 0%, #3E2A18 100%);
+    position: relative;
+  }
+  .heritage-img::after {
+    content: "1905"; position: absolute; bottom: 24px; left: 24px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 56px; color: var(--kop-gold-400); opacity: 0.7;
+  }
+  .heritage-narrative > div {
+    padding: 32px 0; border-bottom: 1px solid var(--sand-300);
+  }
+  .heritage-narrative > div:last-child { border-bottom: none; }
+  .heritage-num {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+    font-size: 64px; line-height: 1; color: var(--sand-600); margin-bottom: 16px;
+  }
+  .heritage-h3 {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+    font-size: 28px; line-height: 1.3; color: var(--sand-900); margin-bottom: 12px;
+  }
+  .heritage-p {
+    font-size: 16px; line-height: 1.7; color: var(--sand-800); max-width: 50ch;
+  }
+
+  /* ════════════ 4 PILAR ════════════ */
+  .pilars { background: var(--sand-900); color: var(--bone); }
+  .pilars .section-eyebrow { color: var(--kop-gold-400); }
+  .pilars .section-title { color: var(--bone); }
+  .pilars-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    margin-top: 80px;
+  }
+  .pilar {
+    padding: 40px 24px; text-align: center;
+    border-left: 1px solid rgba(217,184,112,0.2);
+  }
+  .pilar:first-child { border-left: none; }
+  .pilar svg {
+    width: 48px; height: 48px; stroke: var(--kop-gold-400); fill: none; stroke-width: 1.5;
+    margin-bottom: 24px;
+  }
+  .pilar-name {
+    font-size: 14px; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--bone); margin-bottom: 4px;
+  }
+  .pilar-arabic {
+    font-family: 'Amiri', serif; font-size: 18px; color: var(--kop-gold-400);
+    opacity: 0.5; margin-bottom: 16px;
+  }
+  .pilar-desc {
+    font-size: 14px; color: var(--sand-300); line-height: 1.6; max-width: 22ch; margin: 0 auto;
+  }
+
+  /* ════════════ BURSA ════════════ */
+  .bursa { background: var(--sand-50); }
+  .bursa-filter {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    padding: 24px 0; margin-bottom: 48px; border-bottom: 1px solid var(--sand-300);
+  }
+  .bursa-filter .pill {
+    padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--sand-300);
+    background: var(--bone); color: var(--sand-800); font-size: 13px;
+    cursor: pointer; transition: all 200ms ease;
+  }
+  .bursa-filter .pill:hover { border-color: var(--kop-gold-500); }
+  .bursa-filter .pill.active { background: var(--sand-900); color: var(--bone); border-color: var(--sand-900); }
+  .bursa-filter .sep { flex: 1; }
+  .bursa-filter .sort {
+    font-size: 13px; color: var(--sand-700); cursor: pointer; padding: 8px 16px;
+    background: transparent; border: 1px solid var(--sand-300); border-radius: 4px;
+  }
+  .bursa-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+
+  .pkg {
+    background: var(--bone); border: 1px solid var(--sand-300); border-radius: 12px;
+    overflow: hidden;
+    transition: transform 600ms var(--ease-out-soft), box-shadow 600ms var(--ease-out-soft);
+  }
+  .pkg:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(62,42,24,0.10); }
+  .pkg-img {
+    aspect-ratio: 4/5; transition: transform 600ms var(--ease-out-soft);
+  }
+  .pkg:hover .pkg-img { transform: scale(1.04); }
+  .pkg-1 .pkg-img { background: linear-gradient(135deg, #C9A35C 0%, #6B4A2B 60%, #3E2A18 100%); }
+  .pkg-2 .pkg-img { background: linear-gradient(160deg, #FAF6EF 0%, #D9C4A0 50%, #A87E4D 100%); }
+  .pkg-3 .pkg-img { background: linear-gradient(180deg, #1E7B4F 0%, #3E2A18 100%); }
+  .pkg-4 .pkg-img { background: linear-gradient(135deg, #1A1410 0%, #6B4A2B 50%, #C9A35C 100%); }
+  .pkg-5 .pkg-img { background: linear-gradient(220deg, #D9B870 0%, #A87E4D 50%, #1A1410 100%); }
+  .pkg-6 .pkg-img { background: linear-gradient(45deg, #3E2A18 0%, #6B4A2B 50%, #C9A35C 100%); }
+
+  .pkg-body { padding: 24px; }
+  .pkg-eyebrow {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--sand-600); font-weight: 600; margin-bottom: 8px;
+  }
+  .pkg-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    font-size: 22px; line-height: 1.2; margin-bottom: 16px; color: var(--sand-900);
+    min-height: 54px;
+  }
+  .pkg-divider { height: 1px; background: var(--sand-300); margin: 16px 0; }
+  .pkg-price { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--sand-900); }
+  .pkg-meta { font-size: 13px; color: var(--sand-700); margin-top: 4px; }
+  .pkg-arrow {
+    margin-top: 20px; display: inline-block; font-size: 12px; font-weight: 500;
+    color: var(--kop-green-700); text-transform: uppercase; letter-spacing: 0.08em;
+    text-decoration: underline; text-underline-offset: 4px;
+    text-decoration-color: var(--kop-gold-500); text-decoration-thickness: 1px;
+  }
+  .bursa-more {
+    margin-top: 48px; text-align: center;
+  }
+  .bursa-more a {
+    font-size: 14px; color: var(--sand-900); text-decoration: underline;
+    text-underline-offset: 6px; text-decoration-color: var(--kop-gold-500);
+  }
+
+  /* ════════════ HOW IT WORKS ════════════ */
+  .how { background: var(--bone); }
+  .how-timeline { margin-top: 80px; position: relative; }
+  .how-timeline::before {
+    content: ""; position: absolute; left: 16px; top: 16px; bottom: 16px;
+    width: 1px; background: var(--sand-300);
+  }
+  .how-step {
+    display: grid; grid-template-columns: 64px 1fr; gap: 32px;
+    padding: 48px 0;
+  }
+  .how-step .node {
+    position: relative; width: 32px; height: 32px;
+    border: 2px solid var(--kop-green-600); border-radius: 50%;
+    background: var(--bone); display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--kop-green-700);
+    font-weight: 500;
+  }
+  .how-step.active .node { background: var(--kop-green-600); color: var(--bone); }
+  .how-step h3 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    font-size: 36px; line-height: 1.2; color: var(--sand-900); margin-bottom: 12px;
+  }
+  .how-step p { color: var(--sand-800); max-width: 60ch; line-height: 1.7; margin-bottom: 24px; }
+  .how-step .visual {
+    background: var(--sand-100); border-radius: 8px; padding: 32px;
+    margin-top: 16px; max-width: 600px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sand-700);
+  }
+  .how-step .visual .row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    border-bottom: 1px dashed var(--sand-300);
+  }
+  .how-step .visual .row:last-child { border-bottom: none; }
+  .how-step .visual .ok { color: var(--kop-green-700); }
+
+  /* ════════════ TESTIMONIAL ════════════ */
+  .testimonial { background: var(--sand-100); padding: 128px 0; }
+  .testimonial-grid {
+    display: grid; grid-template-columns: 4fr 5fr; gap: 64px; align-items: center;
+  }
+  .testimonial-photo {
+    aspect-ratio: 4/5; border-radius: 8px;
+    background: linear-gradient(180deg, #1E7B4F 0%, #6B4A2B 60%, #3E2A18 100%);
+    position: relative;
+  }
+  .testimonial-photo::after {
+    content: '"'; position: absolute; top: 24px; left: 24px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 200px; color: var(--kop-gold-400); opacity: 0.3; line-height: 0.8;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
+    font-size: 36px; line-height: 1.4; color: var(--sand-900); margin-bottom: 40px;
+  }
+  .testimonial-cite {
+    font-size: 13px; color: var(--sand-800); line-height: 1.6;
+  }
+  .testimonial-cite strong {
+    display: block; font-size: 16px; color: var(--sand-900); margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .testimonial-nav { margin-top: 32px; display: flex; gap: 12px; align-items: center; color: var(--sand-700); font-size: 12px; }
+  .testimonial-nav .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sand-300); }
+  .testimonial-nav .dot.active { background: var(--sand-900); }
+
+  /* ════════════ FAQ ════════════ */
+  .faq { padding: 128px 0; background: var(--bone); }
+  .faq-list { max-width: 760px; }
+  .faq-item { border-bottom: 1px solid var(--sand-300); padding: 28px 0; }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+    font-size: 19px; font-weight: 500; color: var(--sand-900); list-style: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q .plus {
+    font-size: 24px; line-height: 1; color: var(--sand-600); font-weight: 300;
+    transition: transform 200ms ease;
+  }
+  .faq-item[open] .faq-q .plus { transform: rotate(45deg); }
+  .faq-a { margin-top: 16px; font-size: 15px; line-height: 1.7; color: var(--sand-800); max-width: 65ch; }
+
+  /* ════════════ FINAL CTA ════════════ */
+  .final-cta { background: var(--kop-green-600); padding: 128px 0; text-align: center; color: var(--bone); }
+  .final-cta h2 {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
+    font-size: clamp(36px, 5vw, 56px); line-height: 1.15; color: var(--bone); margin-bottom: 16px;
+  }
+  .final-cta p { font-size: 18px; color: var(--sand-200); max-width: 50ch; margin: 0 auto 40px; opacity: 0.9; }
+  .final-cta a {
+    display: inline-block; padding: 18px 48px; border-radius: 9999px;
+    background: var(--bone); color: var(--kop-green-700); font-size: 16px; font-weight: 600;
+    text-decoration: none; transition: background 200ms ease, color 200ms ease;
+  }
+  .final-cta a:hover { background: var(--kop-gold-400); color: var(--sand-900); }
+
+  /* ════════════ FOOTER ════════════ */
+  footer.site-footer {
+    background: var(--sand-900); color: var(--sand-200); padding: 80px 0 40px;
+  }
+  footer.site-footer .grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px;
+  }
+  footer.site-footer .logo {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500; font-style: italic;
+    font-size: 24px; color: var(--bone); margin-bottom: 8px;
+  }
+  footer.site-footer .tagline {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--kop-gold-400); margin-bottom: 24px;
+  }
+  footer.site-footer p { font-size: 14px; line-height: 1.7; max-width: 36ch; }
+  footer.site-footer h4 {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--kop-gold-400); font-weight: 500; margin-bottom: 16px;
+  }
+  footer.site-footer ul { list-style: none; }
+  footer.site-footer ul li { margin-bottom: 8px; }
+  footer.site-footer ul li a { color: var(--sand-200); text-decoration: none; font-size: 14px; transition: color 200ms; }
+  footer.site-footer ul li a:hover { color: var(--bone); }
+
+  .compliance-lockup {
+    border-top: 1px solid rgba(217,184,112,0.2);
+    padding-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+  .compliance-lockup .item {
+    padding: 16px; border: 1px solid rgba(217,184,112,0.2); border-radius: 6px;
+    text-align: center;
+  }
+  .compliance-lockup .item .top {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--kop-gold-400); font-weight: 500; margin-bottom: 4px;
+  }
+  .compliance-lockup .item .name {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--bone);
+  }
+
+  .copyright {
+    margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(217,184,112,0.2);
+    font-size: 12px; color: var(--sand-300); text-align: center;
+  }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .heritage-grid { grid-template-columns: 1fr; }
+    .pilars-grid { grid-template-columns: repeat(2, 1fr); }
+    .bursa-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    footer.site-footer .grid { grid-template-columns: 1fr 1fr; }
+    .compliance-lockup { grid-template-columns: repeat(2, 1fr); }
+    header.site-header nav { display: none; }
+  }
+  @media (max-width: 600px) {
+    .pilars-grid { grid-template-columns: 1fr; }
+    .pilar { border-left: none; border-top: 1px solid rgba(217,184,112,0.2); }
+    .pilar:first-child { border-top: none; }
+    .compliance-lockup { grid-template-columns: 1fr 1fr; }
+    section.story { padding: 80px 0; }
+    .testimonial { padding: 80px 0; }
+    .faq { padding: 80px 0; }
+    .final-cta { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- studio bar -->
+<div class="studio-bar">
+  <span>📐 Mockup · /documentation/mockup/03-landing.html · v2 "Mecca Premium"</span>
+  <span><a href="index.html">Index</a><a href="01-moodboard.html">Moodboard</a><a href="02-components.html">Components</a></span>
+</div>
+
+<!-- ════════════ HEADER ════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="inner">
+    <div class="logo">
+      Kopsimari Haji
+      <small>Sejak 1905</small>
+    </div>
+    <nav>
+      <a href="#bursa">Paket</a>
+      <a href="#how">Cara Kerja</a>
+      <a href="#heritage">Tentang</a>
+      <a href="#" style="opacity:0.7;">Masuk</a>
+      <a href="#" class="cta">Daftar Anggota</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Koperasi Syarikat Islam · Sejak 1905</p>
+      <h1 class="hero-title">
+        <span>Setiap langkah</span>
+        <span>di Tanah Suci,</span>
+        <span><em>diawali dari sini.</em></span>
+      </h1>
+      <p class="hero-lead">
+        Platform terpercaya bagi anggota koperasi. Dana terjaga di Bank Syariah,
+        dirilis hanya setelah ibadah selesai — bukan ke rekening agent.
+      </p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Mulai Perjalanan →</a>
+        <a href="#bursa" class="btn-ghost">Lihat paket</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">Scroll</div>
+</section>
+
+<!-- ════════════ HERITAGE ════════════ -->
+<section class="story heritage" id="heritage">
+  <div class="container">
+    <p class="section-eyebrow">Heritage</p>
+    <h2 class="section-title">Lebih dari satu abad<br>melayani umat.</h2>
+
+    <div class="heritage-grid" style="margin-top: 80px;">
+      <div class="heritage-img"></div>
+      <div class="heritage-narrative">
+        <div>
+          <div class="heritage-num">01</div>
+          <h3 class="heritage-h3">1905, Surabaya</h3>
+          <p class="heritage-p">Syarikat Islam Indonesia berdiri sebagai ormas Islam pertama yang membela kepentingan ekonomi pribumi — jauh sebelum kemerdekaan.</p>
+        </div>
+        <div>
+          <div class="heritage-num">02</div>
+          <h3 class="heritage-h3">Sayap ekonomi: Kopsimari</h3>
+          <p class="heritage-p">Lebih dari satu abad kemudian, Koperasi Syarikat Islam Mandiri hadir sebagai sayap ekonomi melanjutkan amanah para pendiri.</p>
+        </div>
+        <div>
+          <div class="heritage-num">03</div>
+          <h3 class="heritage-h3">Hari ini</h3>
+          <p class="heritage-p">Marketplace digital haji & umroh dengan jaminan Bank Syariah dan transparansi penuh untuk anggota — Rumah Sinergi 3 pihak.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 4 PILAR ════════════ -->
+<section class="story pilars">
+  <div class="container">
+    <p class="section-eyebrow">Empat Pilar</p>
+    <h2 class="section-title">Profesionalisme<br>yang berakar iman.</h2>
+
+    <div class="pilars-grid">
+      <div class="pilar">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><circle cx="17" cy="7" r="0.6" fill="currentColor"/></svg>
+        <p class="pilar-name">Iman</p>
+        <p class="pilar-arabic">إيمان</p>
+        <p class="pilar-desc">Setiap layanan berlandas niat ibadah dan ketaqwaan.</p>
+      </div>
+      <div class="pilar">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4l12.8-12.8"/></svg>
+        <p class="pilar-name">Profesional</p>
+        <p class="pilar-arabic">مهنية</p>
+        <p class="pilar-desc">Standar syariah + DSN-MUI fatwa, prosedur ketat.</p>
+      </div>
+      <div class="pilar">
+        <svg viewBox="0 0 24 24"><path d="M3 12c0-1.66 1.34-3 3-3h2c1.66 0 3 1.34 3 3"/><circle cx="14" cy="12" r="4"/><path d="M11 9V6c0-1.1.9-2 2-2"/></svg>
+        <p class="pilar-name">Amanah</p>
+        <p class="pilar-arabic">أمانة</p>
+        <p class="pilar-desc">Dana jamaah adalah amanah syar'i — escrow Bank Syariah.</p>
+      </div>
+      <div class="pilar">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/><circle cx="12" cy="16" r="6"/></svg>
+        <p class="pilar-name">Sinergi</p>
+        <p class="pilar-arabic">شراكة</p>
+        <p class="pilar-desc">Anggota koperasi + agent PPIU + Bank Syariah, kolaboratif.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ BURSA ════════════ -->
+<section class="story bursa" id="bursa">
+  <div class="container">
+    <p class="section-eyebrow">Bursa Haji & Umroh</p>
+    <h2 class="section-title">Paket terverifikasi<br>dari mitra agent.</h2>
+    <p style="color: var(--sand-700); max-width: 60ch; font-size: 16px; margin-bottom: 32px;">
+      Pilih sesuai jadwal & anggaran Anda. Setiap paket lulus verifikasi dokumen agent + dijamin dana terjaga via escrow Bank Syariah.
+    </p>
+
+    <div class="bursa-filter">
+      <button class="pill active">Semua</button>
+      <button class="pill">Reguler</button>
+      <button class="pill">Plus</button>
+      <button class="pill">VIP</button>
+      <button class="pill">Haji Khusus</button>
+      <span class="sep"></span>
+      <button class="sort">Urutkan: Terbaru ▾</button>
+    </div>
+
+    <div class="bursa-grid">
+      <article class="pkg pkg-1">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Umroh Reguler · 12 Hari</p>
+          <h3 class="pkg-title">Madinah — Mekkah Februari 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 32.500.000</div>
+          <div class="pkg-meta">per jamaah · departure 15.02.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+      <article class="pkg pkg-2">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Umroh Plus · 15 Hari</p>
+          <h3 class="pkg-title">Madinah · Mekkah · Aqabah Maret 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 48.500.000</div>
+          <div class="pkg-meta">per jamaah · departure 03.03.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+      <article class="pkg pkg-3">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Haji Khusus · 25 Hari</p>
+          <h3 class="pkg-title">Haji Khusus VIP Mei 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 95.000.000</div>
+          <div class="pkg-meta">per jamaah · departure 12.05.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+      <article class="pkg pkg-4">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Umroh Reguler · 9 Hari</p>
+          <h3 class="pkg-title">Express Umroh April 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 28.000.000</div>
+          <div class="pkg-meta">per jamaah · departure 20.04.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+      <article class="pkg pkg-5">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Umroh VIP · 14 Hari</p>
+          <h3 class="pkg-title">Umroh VIP Hotel Bintang 5 Februari 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 65.000.000</div>
+          <div class="pkg-meta">per jamaah · departure 22.02.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+      <article class="pkg pkg-6">
+        <div class="pkg-img"></div>
+        <div class="pkg-body">
+          <p class="pkg-eyebrow">Umroh Reguler · 12 Hari</p>
+          <h3 class="pkg-title">Madinah — Mekkah Maret 2026</h3>
+          <div class="pkg-divider"></div>
+          <div class="pkg-price">Rp 33.500.000</div>
+          <div class="pkg-meta">per jamaah · departure 28.03.2026</div>
+          <a href="#" class="pkg-arrow">Lihat detail →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="bursa-more">
+      <a href="#">Lihat semua paket →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ HOW IT WORKS ════════════ -->
+<section class="story how" id="how">
+  <div class="container">
+    <p class="section-eyebrow">Cara Kerja</p>
+    <h2 class="section-title">Dana aman,<br>rilis bertahap.</h2>
+
+    <div class="how-timeline">
+
+      <div class="how-step">
+        <div class="node">01</div>
+        <div>
+          <h3>Pilih Paket</h3>
+          <p>Telusuri bursa, bandingkan harga &amp; jadwal, pilih paket dari agent PPIU terverifikasi. Tanpa membership terbatas — semua anggota Kopsimari aktif bisa akses.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="node">02</div>
+        <div>
+          <h3>Akad &amp; Setor Dana</h3>
+          <p>Tandatangan akad syariah secara digital. Transfer ke rekening escrow Bank Syariah Indonesia — bukan ke rekening agent. Dana <strong>tetap milik Anda</strong> sampai milestone keberangkatan.</p>
+          <div class="visual">
+            <div class="row"><span>Dana jamaah</span><span class="ok">Rp 32.500.000 → Escrow BSI ✓</span></div>
+            <div class="row"><span>Status agent</span><span>Pending verifikasi visa</span></div>
+            <div class="row"><span>Rilis ke agent</span><span>0% (locked)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="node">03</div>
+        <div>
+          <h3>Persiapan Keberangkatan</h3>
+          <p>Visa, manasik, perlengkapan — dipantau melalui dashboard. Update real-time dari agent. Setiap milestone dicapai → 25% dana dirilis ke agent.</p>
+        </div>
+      </div>
+
+      <div class="how-step active">
+        <div class="node">04</div>
+        <div>
+          <h3>Tanah Suci &amp; Rilis Final</h3>
+          <p>Bank Syariah merilis dana ke agent secara bertahap berdasarkan rating layanan Anda. Bila ibadah tidak terlaksana sesuai akad → refund otomatis dari escrow.</p>
+          <div class="visual">
+            <div class="row"><span>Milestone keberangkatan</span><span class="ok">✓ Dirilis 25%</span></div>
+            <div class="row"><span>Milestone tiba di Madinah</span><span class="ok">✓ Dirilis 25%</span></div>
+            <div class="row"><span>Milestone Mekkah</span><span class="ok">✓ Dirilis 25%</span></div>
+            <div class="row"><span>Rating &amp; closure</span><span class="ok">✓ Dirilis 25% final</span></div>
+          </div>
+          <a href="#" class="pkg-arrow" style="margin-top: 24px; display:inline-block;">Pelajari syarat akad →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ TESTIMONIAL ════════════ -->
+<section class="testimonial">
+  <div class="container">
+    <div class="testimonial-grid">
+      <div class="testimonial-photo"></div>
+      <div>
+        <p class="testimonial-quote">Pertama kali merasakan tenang saat menyetor dana untuk umroh. Tahu betul ke mana uangnya, dan kapan dirilis.</p>
+        <div class="testimonial-cite">
+          <strong>Pak Hasanudin, 58</strong>
+          Anggota Kopsimari, Bandung<br>
+          Umroh Februari 2026
+        </div>
+        <div class="testimonial-nav">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span style="margin-left:16px;">01 / 03</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FAQ ════════════ -->
+<section class="faq">
+  <div class="container">
+    <p class="section-eyebrow">FAQ</p>
+    <h2 class="section-title">Pertanyaan umum.</h2>
+
+    <div class="faq-list" style="margin-top: 64px;">
+      <details class="faq-item">
+        <summary class="faq-q">Apa beda Kopsimari dengan biro umroh biasa? <span class="plus">+</span></summary>
+        <div class="faq-a">Kopsimari bukan biro umroh — kami marketplace anggota koperasi. Paket dijual oleh agent PPIU resmi yang sudah lolos verifikasi dokumen + escrow Bank Syariah. Anda dapat akses harga kompetitif via konsorsium SII Saudi, plus jaminan dana kembali kalau ibadah tidak terlaksana sesuai akad.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Bagaimana sistem escrow Bank Syariah? <span class="plus">+</span></summary>
+        <div class="faq-a">Setelah Anda akad dengan agent, dana ditransfer ke rekening escrow Bank Syariah Indonesia (BSI) — bukan ke rekening agent. Bank merilis dana ke agent secara bertahap berbasis milestone keberangkatan + rating layanan Anda. Sesuai PP 38/2021 dan fatwa DSN-MUI.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Siapa saja yang bisa mendaftar? <span class="plus">+</span></summary>
+        <div class="faq-a">Anggota aktif Koperasi Syarikat Islam Mandiri (KOPSIMARI). Belum jadi anggota? Daftar gratis di tombol <em>Daftar Anggota</em> — KYC online dalam 24 jam.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Apakah dana saya benar-benar aman jika agent default? <span class="plus">+</span></summary>
+        <div class="faq-a">Ya. Karena dana ada di Bank Syariah, bukan di rekening agent. Bila agent gagal kirim layanan sesuai akad, Anda bisa file dispute via dashboard — dana di-refund dari escrow. Ada DPS (Dewan Pengawas Syariah) sebagai mediator.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Bagaimana jika ibadah tidak terlaksana karena force majeure? <span class="plus">+</span></summary>
+        <div class="faq-a">Force majeure (pandemi, bencana, perang, dll) tertangani oleh klausul akad: dana tetap di escrow, tidak dirilis ke agent, dan dikembalikan ke jamaah dipotong biaya operasional yang sudah terjadi (mis. visa). Detail di akad syariah yang Anda tandatangani sebelum transfer.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FINAL CTA ════════════ -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Mulai perjalanan Anda hari ini.</h2>
+    <p>Daftar gratis sebagai anggota koperasi. Akses langsung ke seluruh paket terverifikasi.</p>
+    <a href="#">Daftar Sekarang</a>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <div class="logo">Kopsimari Haji</div>
+        <p class="tagline">Sejak 1905</p>
+        <p>Berhaji &amp; Berumroh dengan Aman. Platform marketplace di bawah naungan Koperasi Syarikat Islam Mandiri — sayap ekonomi Syarikat Islam Indonesia.</p>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#bursa">Bursa Paket</a></li>
+          <li><a href="#how">Cara Kerja</a></li>
+          <li><a href="#">Daftar Anggota</a></li>
+          <li><a href="#">Untuk Agent PPIU</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Tentang</h4>
+        <ul>
+          <li><a href="#heritage">Heritage SII</a></li>
+          <li><a href="#">Kepengurusan</a></li>
+          <li><a href="#">Kompliansi</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hukum</h4>
+        <ul>
+          <li><a href="#">Syarat &amp; Ketentuan</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">Akad Syariah Template</a></li>
+          <li><a href="#">UU PDP</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compliance-lockup">
+      <div class="item">
+        <div class="top">Diawasi</div>
+        <div class="name">Bank Syariah</div>
+      </div>
+      <div class="item">
+        <div class="top">Fatwa</div>
+        <div class="name">DSN–MUI</div>
+      </div>
+      <div class="item">
+        <div class="top">Regulasi</div>
+        <div class="name">PP 38 / 2021</div>
+      </div>
+      <div class="item">
+        <div class="top">Heritage</div>
+        <div class="name">SII · 1905</div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      © 2026 Koperasi Syarikat Islam Mandiri. Diawasi oleh DSN-MUI dan Bank Syariah Indonesia.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky header solid state after scroll past hero
+  const header = document.getElementById('siteHeader');
+  const heroEl = document.querySelector('.hero');
+  function onScroll() {
+    if (window.scrollY > heroEl.offsetHeight - 100) {
+      header.classList.add('solid');
+    } else {
+      header.classList.remove('solid');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>
