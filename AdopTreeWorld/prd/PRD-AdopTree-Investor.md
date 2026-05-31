@@ -529,7 +529,8 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 ### 7.1 Revenue Streams
 
 ```mermaid
-pie title Revenue Mix (Year 3 Projection)
+pie showData
+    title Revenue Mix — Year 3 Projection
     "Tree Adoptions B2C" : 34.5
     "Corporate CSR B2B" : 28.7
     "Campaign Platform Fee" : 24.5
@@ -629,21 +630,21 @@ pie title Revenue Mix (Year 3 Projection)
 
 ```mermaid
 flowchart LR
-    A([🌐 Landing Page]) --> B{New or\nReturning?}
-    B -->|New| C[Browse Lands\n/explore]
-    B -->|Returning| D[My Forest\nDashboard]
-    C --> E[View Land Detail\nGIS Map + Trees]
-    E --> F{Select\nAdoption Tier}
+    A([🌐 Landing Page]) --> B{New or<br/>Returning?}
+    B -->|New| C[Browse Lands<br/>/explore]
+    B -->|Returning| D[My Forest<br/>Dashboard]
+    C --> E[View Land Detail<br/>GIS Map + Trees]
+    E --> F{Select<br/>Adoption Tier}
     F -->|Donation $8| G[Add to Cart]
     F -->|AdopTree $75| G
-    G --> H[Checkout\nMidtrans / Solana]
-    H --> I{Payment\nSuccess?}
-    I -->|Yes| J[Certificate\nGenerated]
+    G --> H[Checkout<br/>Midtrans / Solana]
+    H --> I{Payment<br/>Success?}
+    I -->|Yes| J[Certificate<br/>Generated]
     I -->|No| H
-    J --> K[NFT Minted\nSolana]
-    K --> L[My Forest\nUpdated]
-    L --> M[Email + App\nNotification]
-    M --> N([Annual Renewal\nReminder])
+    J --> K[NFT Minted<br/>Solana]
+    K --> L[My Forest<br/>Updated]
+    L --> M[Email + App<br/>Notification]
+    M --> N([Annual Renewal<br/>Reminder])
 
     style A fill:#f0fdf4,stroke:#22c55e
     style J fill:#dcfce7,stroke:#16a34a
@@ -656,14 +657,14 @@ flowchart LR
 ```mermaid
 flowchart TD
     A([Corporate Inquiry]) --> B[Sales Demo / Onboarding Call]
-    B --> C[Select Land & Tree Volume\n100–10,000 trees]
-    C --> D[Custom Pricing Quote\nPlatform + Merchant]
-    D --> E[Bulk Checkout\nInvoice / Midtrans]
-    E --> F[Trees Assigned\nGIS Coordinates]
-    F --> G[Corporate Dashboard\nLive Tracking]
-    G --> H[Quarterly ESG Reports\nPDF + Data Export]
-    H --> I[Annual Certificate Bundle\nFor Sustainability Report]
-    I --> J([Renewal / Upsell\nNext Year])
+    B --> C[Select Land & Tree Volume<br/>100–10,000 trees]
+    C --> D[Custom Pricing Quote<br/>Platform + Merchant]
+    D --> E[Bulk Checkout<br/>Invoice / Midtrans]
+    E --> F[Trees Assigned<br/>GIS Coordinates]
+    F --> G[Corporate Dashboard<br/>Live Tracking]
+    G --> H[Quarterly ESG Reports<br/>PDF + Data Export]
+    H --> I[Annual Certificate Bundle<br/>For Sustainability Report]
+    I --> J([Renewal / Upsell<br/>Next Year])
 
     style A fill:#eff6ff,stroke:#3b82f6
     style I fill:#dcfce7,stroke:#16a34a
@@ -674,17 +675,17 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A([NGO / Merchant\nRegistration]) --> B[Identity Verification\nAdmin Review]
-    B --> C[Land Registration\nUpload GIS Polygon]
-    C --> D[Tree Data Entry\nCSV Import or Manual]
-    D --> E{Activate\nCampaign?}
-    E -->|Yes| F[Create Campaign\nSet Custom Pricing]
-    E -->|No| G[List Available\nTrees on Platform]
+    A([NGO / Merchant<br/>Registration]) --> B[Identity Verification<br/>Admin Review]
+    B --> C[Land Registration<br/>Upload GIS Polygon]
+    C --> D[Tree Data Entry<br/>CSV Import or Manual]
+    D --> E{Activate<br/>Campaign?}
+    E -->|Yes| F[Create Campaign<br/>Set Custom Pricing]
+    E -->|No| G[List Available<br/>Trees on Platform]
     F --> G
-    G --> H[Donors Browse\n& Adopt]
-    H --> I[Platform Fee\nDeducted 5–15%]
-    I --> J[Merchant Earnings\nDashboard Updated]
-    J --> K[Withdrawal Request\nBank Transfer]
+    G --> H[Donors Browse<br/>& Adopt]
+    H --> I[Platform Fee<br/>Deducted 5–15%]
+    I --> J[Merchant Earnings<br/>Dashboard Updated]
+    J --> K[Withdrawal Request<br/>Bank Transfer]
 
     style A fill:#f0fdf4,stroke:#22c55e
     style J fill:#dcfce7,stroke:#16a34a
@@ -701,13 +702,13 @@ flowchart TD
         A4[Bot Tira Subscription]
     end
     subgraph "Platform"
-        B[AdopTree\nPlatform Fee 5–15%]
+        B[AdopTree<br/>Platform Fee 5–15%]
     end
     subgraph "Money Out"
-        C1[Merchant Stewardship\n85–95%]
-        C2[Payment Gateway\nMidtrans 2.9%]
-        C3[Infrastructure\nCloud + Blockchain]
-        C4[Operations\nTeam + Support]
+        C1[Merchant Stewardship<br/>85–95%]
+        C2[Payment Gateway<br/>Midtrans 2.9%]
+        C3[Infrastructure<br/>Cloud + Blockchain]
+        C4[Operations<br/>Team + Support]
     end
     A1 & A2 & A3 & A4 --> B
     B --> C1 & C2 & C3 & C4
@@ -724,31 +725,31 @@ flowchart TD
 ```mermaid
 graph TB
     subgraph "Web Client (Next.js 16)"
-        FE["⚛️ Next.js App Router\nTypeScript · Tailwind v4\nshadcn/ui · Mapbox GL\nZustand · sonner"]
+        FE["⚛️ Next.js App Router<br/>TypeScript · Tailwind v4<br/>shadcn/ui · Mapbox GL<br/>Zustand · sonner"]
     end
     subgraph "Mobile Client (Flutter 3.24)"
-        MO["📱 Flutter · Dart\nRiverpod · go_router\nDrift SQLite (offline-first)\nDio + JWT interceptor\nFCM · Geolocator · Camera"]
+        MO["📱 Flutter · Dart<br/>Riverpod · go_router<br/>Drift SQLite (offline-first)<br/>Dio + JWT interceptor<br/>FCM · Geolocator · Camera"]
     end
     subgraph "Backend (Rust / Axum)"
-        BE["🦀 Rust · Axum · SQLx\nAsync · High Performance\nJWT (4h + 30d refresh)\nREST API + WebSocket"]
+        BE["🦀 Rust · Axum · SQLx<br/>Async · High Performance<br/>JWT (4h + 30d refresh)<br/>REST API + WebSocket"]
     end
     subgraph "Data Layer"
-        DB["🐘 PostgreSQL + PostGIS\n(Geospatial queries)"]
-        RD["⚡ Redis\n(Cache · Sessions · OAuth)"]
-        MS["🔍 Meilisearch\n(Full-text search)"]
+        DB["🐘 PostgreSQL + PostGIS<br/>(Geospatial queries)"]
+        RD["⚡ Redis<br/>(Cache · Sessions · OAuth)"]
+        MS["🔍 Meilisearch<br/>(Full-text search)"]
     end
     subgraph "External Services"
-        R2["☁️ Cloudflare R2\n(Media · APK · zero-egress)"]
-        MT["💳 Midtrans\n(Payment Gateway)"]
-        SOL["🔮 Solana\n(NFT · Blockchain)"]
-        MB["🗺️ Mapbox GL + Static API\n(Maps · GIS · watermark)"]
-        BOT["🤖 Bot Tira\n(Gemini + function-calling)"]
-        FCM["🔔 Firebase FCM v1\n(Push notifications)"]
+        R2["☁️ Cloudflare R2<br/>(Media · APK · zero-egress)"]
+        MT["💳 Midtrans<br/>(Payment Gateway)"]
+        SOL["🔮 Solana<br/>(NFT · Blockchain)"]
+        MB["🗺️ Mapbox GL + Static API<br/>(Maps · GIS · watermark)"]
+        BOT["🤖 Bot Tira<br/>(Gemini + function-calling)"]
+        FCM["🔔 Firebase FCM v1<br/>(Push notifications)"]
     end
     subgraph "Infrastructure"
-        CI["🔧 Jenkins CI/CD\n(Auto-deploy on push)"]
-        CF["🌐 Cloudflare Tunnel + CDN\n(Zero-trust ingress + nginx cache)"]
-        WUD["🐳 WUD\n(Container updates)"]
+        CI["🔧 Jenkins CI/CD<br/>(Auto-deploy on push)"]
+        CF["🌐 Cloudflare Tunnel + CDN<br/>(Zero-trust ingress + nginx cache)"]
+        WUD["🐳 WUD<br/>(Container updates)"]
     end
 
     FE <-->|REST + WS| BE
