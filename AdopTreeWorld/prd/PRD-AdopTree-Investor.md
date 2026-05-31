@@ -1,9 +1,12 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.0 · April 2026
+### Investor Edition · v2.2 · May 2026
 
-> **Status:** Staging Live (`staging.adoptreeworld.com`) · Public Launch Target: H2 2026
-> **Prepared for:** Investor Presentation
-> **Prepared by:** AdopTree World Team — CKsan (CEO) · Aditira (CTO) · BEKs (C.Media & Design)
+> **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
+> **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.2 highlights** — Full visual refresh with inline web, mobile, and market visuals across every section · Solution and financial diagrams upgraded to professional charts · Founder bios expanded.
+>
+> **v2.1 highlights** — Mobile Field App and Contributor Tier System sections added · Pre-revenue status clarified throughout (no paying merchants yet — this raise is designed to change that).
 
 ---
 
@@ -15,16 +18,20 @@
 4. [Solution](#4-solution)
 5. [Market Opportunity](#5-market-opportunity)
 6. [Product Overview](#6-product-overview)
+   - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Service Class Structure
+   - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)*
 7. [Business Model & Revenue Streams](#7-business-model--revenue-streams)
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
 10. [Technology Architecture](#10-technology-architecture)
+    - 10.1 Stack · 10.2 Why Rust · 10.3 Differentiators · 10.4 Mobile Architecture *(new in v2.1)*
 11. [Competitive Landscape](#11-competitive-landscape)
 12. [Go-to-Market Strategy](#12-go-to-market-strategy)
 13. [Roadmap & Milestones](#13-roadmap--milestones)
 14. [Financial Projections](#14-financial-projections)
 15. [Risks & Mitigations](#15-risks--mitigations)
 16. [Investment Ask](#16-investment-ask)
+- Appendix: A. Tech Stack · B. Visualization Assets · C. Glossary · D. Delivered Phases v2.0→v2.1 *(new)*
 
 ---
 
@@ -42,14 +49,17 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 - Indonesian corporate CSR spending exceeds **$1 billion/year**, with ~20% directed to environmental programs
 
 **Current traction:**
-- Platform fully operational at `staging.adoptreeworld.com`
-- First real merchant partner on-boarded: **Akademi Buah Nusantara**
+- Web platform fully operational at `staging.adoptreeworld.com`
+- **Android Field App live** — APK Build 14 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
+- **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
 - Full payment infrastructure live: Midtrans (bank transfer, QRIS, e-wallet, credit card) + Solana (SOL)
+- 17 product phases delivered between v2.0 and v2.1 (Apr → May 2026): review queue, public contributor system, QR tree verification, tagging spacing awareness, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
 
-> 📊 *See: [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html) — TAM/SAM/SOM visualization*
+![Market Opportunity — TAM/SAM/SOM visualization with aerial forest backdrop](assets/prd/html/market-opportunity.png)
+*Figure 1 — Multi-billion dollar green impact market. TAM ($50B global voluntary carbon market) → SAM ($2.4B SEA environmental impact investment) → SOM ($24M Indonesia Year 3 target, 1% capture).*
 
 ---
 
@@ -57,24 +67,59 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 ### 2.1 Founding Team
 
-| Name | Role | Responsibility |
-|------|------|----------------|
-| **CKsan** | CEO | Business development, investor relations, strategic partnerships |
-| **Aditira** | CTO | Platform architecture, engineering, product delivery |
-| **BEKs** | C.Media & Design | Brand identity, UI/UX design, content & media strategy |
+#### 🌳 Sandhy Krisnamurthi — Chief Executive Officer ("CKsan")
+
+**Role:** Founder, business strategy, investor relations, strategic partnerships (corporate CSR, government/MUI, land owners).
+
+**Background:** Telecommunications & RF engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator who pivoted to building a verifiable-impact greentech platform after seeing firsthand the lack of accountability in traditional reforestation programs.
+
+**Why he founded AdopTree:** The 91M ha of Indonesian forest is too important to leave to "trust me, we planted them" PDF reports. CKsan's engineering rigor shaped AdopTree's core thesis: *every tree must be measurable, verifiable, and tradeable*.
+
+**Connect:** [linkedin.com/in/sandhy-krisnamurthi-083a6336](https://www.linkedin.com/in/sandhy-krisnamurthi-083a6336/)
+
+---
+
+#### 💻 Aditira Jamhuri — Chief Technology Officer
+
+**Role:** Platform architecture, full-stack engineering, product delivery, technical hiring, infrastructure.
+
+**Background:** 5+ years senior software engineer. Master Instructor at **Ruangguru CAMP** (Indonesia's largest edtech) — built bots that auto-graded assignments for hundreds of students. 3+ years at **BrainCode** (Indonesia's specialist in mobile services) mentoring mid-level engineers and modernizing legacy systems. Currently Senior Project Manager / Business Analyst level with deep full-stack expertise (Rust/Axum backend, Next.js/TypeScript frontend, Flutter mobile).
+
+**What he ships at AdopTree:** Single-handedly architected and built the entire production stack — backend (Rust + PostgreSQL + SQLx), web platform (Next.js + Mapbox + Solana wallet), Android Field App (Flutter + offline-first sync + GPS-locked camera), and CI/CD pipeline (Jenkins → VPS Docker).
+
+**Why this matters for investors:** AdopTree is **CTO-led**, not founder-promise. The platform exists, runs on staging 24/7, and ships at high velocity — eliminating the #1 risk in pre-seed greentech investments: "Will they actually build it?"
+
+**Connect:** [linkedin.com/in/aditira-jamhuri-82698311b](https://www.linkedin.com/in/aditira-jamhuri-82698311b/)
+
+---
+
+#### 🎨 Subekti Febriansyah — Chief Media & Design ("BEKs")
+
+**Role:** Brand identity, UI/UX design system, content strategy, visual storytelling, marketing collateral.
+
+**Background:** Senior Graphic Designer at **PT Kios Cipta Kreasi**. Prior roles at **PT Waskita Karya Realty**, **OB Golf & Lifestyle Magazine**, **TOTEM.Inc**, and **Dapur Otak** design agency. Educated at **Indonesian Polytechnic of Creative Media** (Polimedia). Core skills: logo design, branding & identity systems, UI/UX, promotions, illustration.
+
+**What he ships at AdopTree:** The complete AdopTree brand system — logomark, logo lockup (light + mono variants), official color palette (Forest #006838 · Lime #8bc53f · Mid #3b9f47), Manrope typography hierarchy, brand guidelines document, web hero compositions, in-app illustrations, social media templates. Brand v2.1 rebrand (May 2026) integrated across mobile launcher icon, splash screen, in-app surfaces, and web platform.
+
+**Why this matters:** Trust in greentech is visual-first. Investors evaluating "is this a serious company or a side project?" make that judgment in the first 5 seconds — from the landing page hero, the app icon on the launcher, the certificate template, the merchant dashboard polish. BEKs makes that 5-second judgment land in our favor.
+
+**Connect:** [linkedin.com/in/subekti-febriansyah-32012b76](https://www.linkedin.com/in/subekti-febriansyah-32012b76/)
+
+---
 
 ### 2.2 Dewan Pembina / Advisors
 
-| Name | Role |
-|------|------|
-| **Ahmad Junaedi** | Pembina / Mentor |
-| **Udoro KA** | Advisor |
+| Name | Role | Domain |
+|------|------|--------|
+| **Ahmad Junaedi** | Pembina / Mentor | Environmental governance, NGO operations |
+| **Udoro KA** | Advisor | Strategic guidance |
 
 ### 2.3 Why This Team
 
-- **CTO-led product**: The platform is built, tested, and staging-live — demonstrating execution capability before raising capital
-- **Balanced triad**: Business (CEO), technology (CTO), and brand (CMO) roles covered from day one
-- **Advised by practitioners**: Advisors bring domain expertise in the environmental and governance space
+- **CTO-led, not founder-promised**: Aditira built the entire platform — backend, web, mobile, infrastructure — *before* raising capital. Staging is live, APK ships weekly. The single biggest pre-seed greentech risk ("can they build?") is already resolved.
+- **Triangulated coverage from day one**: Business & partnerships (CKsan, CEO) · Technology & product (Aditira, CTO) · Brand & visual identity (BEKs, CMD) — every critical function has a dedicated owner, no role gaps.
+- **Operator backgrounds**: CKsan brings telecom-engineering rigor (Ericsson, TeleChoice); Aditira brings edtech-scale shipping discipline (Ruangguru, BrainCode); BEKs brings 10+ years of brand systems for established Indonesian companies (Waskita Karya, OB Magazine, PT Kios).
+- **Advised by practitioners**: Pak Ahmad Junaedi & Pak Udoro KA bring domain expertise in environmental governance and strategic positioning — the two areas where a tech-first founding team most needs guidance.
 
 ---
 
@@ -113,11 +158,53 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 AdopTree World solves all three sides of this problem through a **multi-sided marketplace with verifiable impact infrastructure.**
 
-```
-Individual Donor ──┐
-                   ├──► AdopTree Platform ──► Real Forest Land ──► Verified Impact
-Corporate CSR ─────┘         │
-                         NGO / Merchant
+```mermaid
+flowchart LR
+    subgraph Demand["💚 Demand Side"]
+        D1[🙋 Individual Donor<br/><i>retail adoption</i>]
+        D2[🏢 Corporate CSR<br/><i>bulk Platinum</i>]
+        D3[☪️ Wakaf / Donasi<br/><i>perpetual giving</i>]
+    end
+
+    subgraph Platform["🌳 AdopTree Platform"]
+        direction TB
+        P1[Marketplace<br/>+ Payments]
+        P2[Mobile Field App<br/>+ Anti-tamper Evidence]
+        P3[Bot Tira AI<br/>+ Solana NFT]
+        P1 --- P2 --- P3
+    end
+
+    subgraph Supply["🌱 Supply Side"]
+        M1[NGO / Merchant<br/><i>land + trees</i>]
+        L1[Land Owner<br/><i>partner via invite</i>]
+        C1[Field Contributor<br/><i>3-tier validation</i>]
+    end
+
+    subgraph Impact["✅ Verified Impact"]
+        I1[GPS-locked Trees]
+        I2[Periodic Surveillance]
+        I3[Real-time CO₂ Tracking]
+        I4[ESG-grade Reports]
+    end
+
+    D1 --> Platform
+    D2 --> Platform
+    D3 --> Platform
+    Platform --> M1
+    Platform --> L1
+    Platform --> C1
+    M1 --> Impact
+    L1 --> Impact
+    C1 --> Impact
+
+    classDef demand fill:#dcfce7,stroke:#16a34a,color:#115031
+    classDef platform fill:#115031,stroke:#86efac,color:#fff
+    classDef supply fill:#fef3c7,stroke:#f59e0b,color:#92400e
+    classDef impact fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a
+    class D1,D2,D3 demand
+    class P1,P2,P3 platform
+    class M1,L1,C1 supply
+    class I1,I2,I3,I4 impact
 ```
 
 ### Core Value Propositions
@@ -146,7 +233,7 @@ Corporate CSR ─────┘         │
 
 ## 5. Market Opportunity
 
-> 📊 *Screenshot from: [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html)*
+![Market Opportunity full visualization](assets/prd/html/market-opportunity.png)
 
 ### 5.1 Total Addressable Market (TAM) — $50 Billion
 
@@ -180,6 +267,9 @@ Year 3 realistic capture target:
 
 ## 6. Product Overview
 
+![AdopTree landing page — opening fold with brand hero, login modal, and aerial mangrove background](assets/prd/web/landing-hero.png)
+*Figure 2 — Live at `staging.adoptreeworld.com`. Brand hero: "Bersama, Kita Tumbuhkan Masa Depan yang Lebih Hijau" with primary CTAs (Donasi Instan · Jelajahi Pohon) and inline login modal. Aerial mangrove backdrop reinforces the impact-first narrative.*
+
 ### 6.1 Platform Architecture (Multi-sided)
 
 ```mermaid
@@ -203,23 +293,38 @@ graph TD
 | **Browse & Search** | Explore lands by region, type, availability, campaign | ✅ Built |
 | **GIS Map** | Interactive map with polygon boundaries + tree dot tracking | ✅ Built |
 | **Multi-tier Adoption** | 4 tiers from $8 donation to $75 NFT | ✅ Built |
-| **Cart & Checkout** | Multi-item cart, Midtrans payment (Rupiah), Solana (SOL) | ✅ Built |
+| **Cart & Checkout** | Multi-item cart with batch checkout, race-condition safe, Midtrans (IDR) + Solana (SOL) | ✅ Built |
 | **Digital Certificate** | Auto-generated PDF certificate with QR verification | ✅ Built |
 | **My Forest Dashboard** | Personal adoption tracker, carbon credits, certificates | ✅ Built |
 | **NFT Ownership** | Solana-minted NFT for AdopTree tier — transferable asset | ✅ Built |
 | **360° Tree View** | Photo sphere viewer for immersive tree experience | ✅ Built |
 | **Carbon Credits** | Allocated at adoption, tracked in dashboard | ✅ Built |
-| **Wishlist** | Save lands and trees for future adoption | ✅ Built |
-| **Forum / Community** | Posts, comments, follows, likes — social layer | ✅ Built |
-| **Bot Tira** | AI chatbot for tree & adoption queries | ✅ Built |
-| **Multi-language** | English, Indonesian, Arabic | ✅ Built |
-| **Notifications** | In-app and email notification system | ✅ Built |
+| **Wishlist** | Save lands and trees for future adoption — with adoption slot progress | ✅ Built |
+| **Forum / Community** | Posts (rich text + image editor + markdown), comments, follows, likes | ✅ Built |
+| **Bot Tira** | AI chatbot (Gemini + function-calling against live data) for tree & adoption queries | ✅ Built |
+| **Multi-language** | English, Indonesian, Arabic (RTL) | ✅ Built |
+| **Notifications** | In-app, email, and Firebase Cloud Messaging push (Phase 2.9) with deeplink routing | ✅ Built |
+| **Realtime Chat** *(new)* | WebSocket-based 1:1 chat — voice notes, WhatsApp-style optimistic send, conversation actions (Phase 2.26) | ✅ Built |
+| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 14 latest) | ✅ Built |
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/explore-page.png" alt="Explore page — land discovery with map and merchant cards"/><br/><sub><b>1. Explore</b> — interactive map with land markers + horizontal scrollers for Jelajahi per Merchant, Kampanye Aktif, and Rekomendasi Untuk Anda.</sub></td>
+    <td width="50%"><img src="assets/prd/web/land-detail.png" alt="Land detail page with hero, KPIs, Mapbox polygon, species, gallery"/><br/><sub><b>2. Land Detail</b> — hero header with land name + merchant, adoption KPIs (Lahan/Pohon/Adopsi), Mapbox polygon with tree markers, species list, gallery, and adoption tier picker.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/my-forest.png" alt="My Forest dashboard — adopted trees, CO2 tracking, tier distribution"/><br/><sub><b>3. My Forest</b> — donor's personal forest dashboard: 15 trees adopted across 5 lands, 305g CO₂ sequestered live, tier distribution chart (Silver/Gold/Donasi), tabs for Pohon/Lahan/Adopsi/Sertifikat.</sub></td>
+    <td width="50%"><img src="assets/prd/web/certificate-portfolio.png" alt="Sertifikat Portfolio Hutan modal — branded certificate with donor name and statistics"/><br/><sub><b>4. Sertifikat Portfolio Hutan</b> — branded certificate modal with donor name (Aditira Jamhuri), aggregate impact statistics, and downloadable PDF rendering. Acts as the legally-meaningful proof for tax filings and ESG reports.</sub></td>
+  </tr>
+</table>
+
+*Figure 3a — Donor experience flow: discovery → land deep-dive → personal forest → certificate. Same flow works across all four adoption tiers (Donation $8 · Wakaf $10 · Green Society $12 · AdopTree $75 NFT).*
 
 #### Merchant-Facing Features
 
 | Feature | Description | Status |
 |---|---|---|
-| **Land Management** | CRUD for land plots with GIS polygon upload | ✅ Built |
+| **Land Management** | CRUD for land plots with GIS polygon upload + wilayah dropdown | ✅ Built |
 | **Tree Management** | Per-tree CRUD, CSV bulk import, media management | ✅ Built |
 | **Campaign System** | Fundraising campaigns with custom pricing & tree allocation | ✅ Built |
 | **Land Partnerships** | Two-tier invite system for land owner collaboration | ✅ Built |
@@ -227,6 +332,26 @@ graph TD
 | **Bot Tira Subscription** | AI bot for merchant's donor-facing chat | ✅ Built |
 | **Analytics** | Bot interactions, adoption stats, campaign performance | ✅ Built |
 | **Posts & Updates** | Merchant feed for sharing land progress | ✅ Built |
+| **Review Queue** *(new)* | Approve/reject contributor submissions: Tag Lahan, Plant Tree, surveillance (Phase 2.11) | ✅ Built |
+| **Planting Jobs Marketplace** *(new)* | Job listings for field contributors (Phase 2.17–2.19) | ✅ Built |
+| **Contributor Map** *(new)* | Live GPS radar of active field contributors on merchant lands (Phase 2.17) | ✅ Built |
+| **Contributor Management** *(new)* | Manage field team, invites, capability flags | ✅ Built |
+| **QR Code Management** *(new)* | Tree QR identity verification — anti-misidentification (Phase 2.23) | ✅ Built |
+| **Species Request Workflow** *(new)* | Request new species → admin approval | ✅ Built |
+| **Dark Mode Dashboard** *(new)* | Scoped dark mode for merchant/admin/land-owner dashboards (public stays light) | ✅ Built |
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/merchant-overview-dark.png" alt="Merchant overview KPI dashboard, dark mode"/><br/><sub><b>Overview</b> — KPI cards (lands · trees · earnings · adoptions) + revenue chart. <b>Dark mode</b> is a v2.1 ship.</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-lands-dark.png" alt="Merchant lands management with GIS map"/><br/><sub><b>Land Management</b> — list view with polygon previews, tree count, assignment algorithm (random/sequential/nearest_center/cluster) per land.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/merchant-earnings-dark.png" alt="Merchant earnings breakdown"/><br/><sub><b>Earnings</b> — payout history, fee breakdown per tier, monthly trends. Direct payout in IDR (Midtrans) or SOL (Solana).</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-review-queue-dark.png" alt="Merchant review queue for contributor-submitted observations"/><br/><sub><b>Review Queue</b> — moderation interface for contributor-submitted tree observations & inspections (v2.1 contributor system).</sub></td>
+  </tr>
+</table>
+
+*Figure 3b — Merchant dashboard ecosystem (dark mode). Built for NGOs and land-managing organizations to run full operations: land registration → tree inventory → campaign creation → earnings reconciliation → contributor moderation.*
 
 #### Admin & Platform Features
 
@@ -238,10 +363,28 @@ graph TD
 | **Site Configuration** | Dynamic homepage images (Cloudflare R2) | ✅ Built |
 | **Transaction Management** | Full transaction audit trail | ✅ Built |
 | **Analytics** | Platform-wide analytics, revenue breakdown | ✅ Built |
+| **Review Queue (Admin)** *(new)* | Global review of high-trust submissions, species approvals, contributor verification | ✅ Built |
+| **Land Owners Management** *(new)* | Dedicated dashboard for land owner accounts + invitation flow | ✅ Built |
+| **Contributor Management** *(new)* | Manage public/verified contributors, tier promotions, leaderboard | ✅ Built |
+| **Session Resilience** *(new)* | 4-hour access + 30-day refresh token, axios interceptor mutex queue — eliminates spurious logouts | ✅ Built |
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/admin-dashboard-dark.png" alt="Admin platform-wide overview dashboard"/><br/><sub><b>Admin Dashboard</b> (<code>/admin</code>) — revenue + adoption totals, active merchants count, recent transactions feed.</sub></td>
+    <td width="50%"><img src="assets/prd/web/admin-analytics-dark.png" alt="Admin analytics deep-dive"/><br/><sub><b>Analytics</b> — time-series breakdowns: adoption velocity, merchant performance, tier mix, geographic distribution.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/admin-review-queue-dark.png" alt="Admin review queue for contributor submissions"/><br/><sub><b>Review Queue</b> — platform-level moderation for contributor observations + inspections (tier-gated trust system).</sub></td>
+    <td width="50%"><img src="assets/prd/web/admin-contributor-map-dark.png" alt="Admin contributor heatmap showing field activity geographically"/><br/><sub><b>Contributor Map</b> — geographic heatmap of field contributor activity (Public/Verified/Inspector tiers).</sub></td>
+  </tr>
+</table>
+
+*Figure 3c — Admin console (dark mode). Platform-wide operational visibility: revenue, contributor activity, moderation backlog, merchant performance — all live on staging.*
 
 ### 6.3 Service Class Structure
 
-> 📊 *Screenshot from: [`tier-pricing.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/tier-pricing.html)*
+![AdopTree Service Class — pricing matrix per tier × category](assets/prd/html/tier-pricing.png)
+*Figure 4 — Platform fee per tree per year. Two adoption categories (Wakaf · Donasi) × three service tiers (Silver · Gold · Platinum). Regular vs. Campaign pricing distinguishes evergreen adoption from time-bound fundraising campaigns.*
 
 AdopTree uses a **6-class service tier model**: two adoption categories (Donasi & Wakaf), each with three service levels (Silver, Gold, Platinum). Platform fee is charged per tree per year on top of the base adoption price.
 
@@ -271,9 +414,117 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 ---
 
+### 6.4 Mobile Field App — Android (Live)
+
+> The web platform handles **online** adoption & monitoring. The mobile app handles **on-the-ground fulfillment** — without it, "GPS-verified tree ownership" is a promise; with it, it's evidence.
+
+**Status:** Live · APK Build 14 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
+
+<table>
+  <tr>
+    <td width="33%"><img src="assets/prd/mobile/01-login.png" alt="Login screen with brand logo, Build 14"/><br/><sub><b>1. Login</b> — fresh brand logo (Build 14, May 2026). Single-tap auth for field contributors.</sub></td>
+    <td width="33%"><img src="assets/prd/mobile/02-home.png" alt="Home dashboard with adopoin balance and contributor badge"/><br/><sub><b>2. Home</b> — adopoin balance (300 pts), Contributor tier badge, bottom nav (Home · Peta · Plot · Chat · Submisi).</sub></td>
+    <td width="33%"><img src="assets/prd/mobile/03-plant-tree-map.png" alt="Plant Tree map view with land polygon and existing trees"/><br/><sub><b>3. Plant Tree</b> — interactive land polygon with 5 existing trees rendered as dots. Contributor adds new tree position.</sub></td>
+  </tr>
+  <tr>
+    <td width="33%"><img src="assets/prd/mobile/04-tag-tree-form.png" alt="Tag tree form with species and height chips"/><br/><sub><b>4. Tag Tree</b> — species dropdown, height chip selector, mandatory photo capture before submit.</sub></td>
+    <td width="33%"><img src="assets/prd/mobile/05-tree-radar.png" alt="Tree radar with custom radius slider"/><br/><sub><b>5. Tree Radar</b> — proximity-based tree discovery within user's GPS radius. Slider sets radius (5m → 500m).</sub></td>
+    <td width="33%"><img src="assets/prd/mobile/06-tree-list.png" alt="Nearest trees list with status pills"/><br/><sub><b>6. Tree List</b> — "Pohon Terdekat" sorted by distance, each with status pill (verified / pending / disputed).</sub></td>
+  </tr>
+</table>
+
+*Figure 5a — Mobile Field App workflow on a real Android device. 9 production builds shipped in 5 weeks. Brand logo rebrand fully integrated across launcher icon, splash, and in-app surfaces.*
+
+**Why mobile is non-negotiable:**
+
+| Without Mobile App | With Mobile App |
+|---|---|
+| Field photos can be faked, GPS manipulated | In-app camera burns GPS + timestamp + mini-map into pixels at capture — anti-tamper |
+| Field teams offline = no data | Offline-first (Drift SQLite) — sync when online |
+| Surveillance requires expensive professional teams | Crowdsourced contributors with tier-based trust system |
+| Tag-after-planting workflow is manual & ad-hoc | Standardized Plant Tree wizard with spacing awareness + QR identity verification |
+
+**Key workflows (all shipped):**
+
+| Workflow | Description | Phase |
+|---|---|---|
+| **Plant Tree (multi-photo camera-first)** | Wizard for tagging new tree with GPS + watermarked photos + species selector | 2.12 |
+| **Tree Inspection** | Dual-gate verification (must be within 10 m of tree + heading ±45°) + multi-stage camera (close-up + wide + landscape) with burned watermark | 2.20 |
+| **Tagging Spacing Awareness** | Live status pill (✓ Optimal / ⚠ Too close / 🚫 Outside boundary) + bottom sheet warning | 2.24 |
+| **QR Tree Identity Verification** | Auto-generated QR at tagging, scan before inspection to verify tree identity — eliminates misidentification | 2.23 |
+| **Contributor Tracking** | GPS session + offline buffer + auto-start hooks for active jobs | 2.17 |
+| **Tag Lahan Baru (Land Submission)** | Public users can submit new land plots → admin/merchant review queue | 2.10–2.11 |
+| **Realtime Chat** | WebSocket-backed chat with merchants — voice notes, read receipts, conversation actions | 2.26 |
+| **In-app Notifications** | Bell icon, deeplink routing (web routes auto-open browser) | Build 8 + |
+| **Tree Density & Distance Tools** | Custom radius radar (1–200 km), distance measurement, density preview | 2.21 |
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/mobile/07-inspection-QR-or-No.png" alt="Inspection dual-gate: scan QR or proceed without"/><br/><sub><b>Inspection Dual-Gate</b> — Scan QR for max trust (+25 evidence points) <i>or</i> "Lanjut tanpa QR" for visual-only inspection. Tier system uses this to score evidence quality.</sub></td>
+    <td width="50%"><img src="assets/prd/mobile/08-take-inspection.png" alt="Live camera capture with GPS watermark, timestamp, mini-map, and distance indicator"/><br/><sub><b>Anti-Tamper Capture</b> — live camera with burned-in watermark: GPS coordinates (-6.4180°, 106.9800°), timestamp (21:33), distance from target tree (1m / 15m threshold), and Jauh/Sedang/Dekat range pills. Photo is unusable without these badges.</sub></td>
+  </tr>
+</table>
+
+*Figure 5b — The single most-differentiating mobile workflow: dual-gate inspection + anti-tamper evidence capture. Without these badges burned into the pixel data, the photo is not accepted as inspection evidence. This is the visual proof of the "GPS-verified, not GPS-promised" thesis that separates AdopTree from every other tree-planting platform.*
+
+**Stack:**
+- **Flutter 3.24** + Dart · **Riverpod** state management
+- **Drift SQLite** for offline-first storage + `mobile_sync_queue` table for idempotent batch sync
+- **Dio** HTTP client with JWT auto-refresh interceptor
+- **Geolocator** + `flutter_compass` for GPS + heading dual-gate
+- **Camera + `image` (pure-Dart)** to burn watermark (timestamp + coord + mini-map from Mapbox Static API) directly into JPEG pixels
+- **Firebase Cloud Messaging (FCM v1)** for push notifications
+- **Google Sign-In** OAuth (frictionless onboarding)
+- `go_router` navigation · `workmanager` background sync · `flutter_secure_storage` for credentials
+
+**Distribution:** Android APK via Cloudflare R2 (versioned releases + `latest` alias for auto-update). iOS distribution via TestFlight.
+
+**Build cadence:** 14 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 14 (29 May 2026, brand identity refresh).
+
+---
+
+### 6.5 Contributor Tier System — Crowdsourced Field Operations (Live)
+
+> **The competitive moat that makes 500M trees achievable.** Instead of hiring expensive field teams to validate every tree, we crowdsource validation from the public — with a trust system inspired by Wikipedia (anyone edits) + Waze (community validates) + iNaturalist (experts verify) + Strava (gamified contribution).
+
+**Status:** Tier 1 (Public Contributor) live in production · Tier 2 (Verified) auto-promotion live · Tier 3 (Field Inspector) manual upgrade live.
+
+**Tier architecture:**
+
+| Tier | How to Reach | Permissions | Submission Flow |
+|------|--------------|-------------|----------------|
+| 🌱 **Public Contributor** | Auto-assigned on first Google Sign-In from mobile | Public lands only (`is_public = true`) — inspect, plant-tree, tag-lahan-baru | Submissions go to review queue; points awarded only after merchant/admin approval |
+| 🌿 **Verified Contributor** | Auto-promoted after **5 approved submissions** | Public lands + lands explicitly assigned by merchant; eligible to redeem points | Submissions auto-approved (skip review queue); surveillance still pending review |
+| 🌳 **Field Inspector** | Manual upgrade by merchant or admin | Internal team / staff — tied to specific lands via assignment | All submissions auto-approved (including surveillance) |
+
+**Points & gamification:**
+- +200 points for GPS-tagging a plot (status → `planted`)
+- +100 points for completing an inspection
+- Leaderboard (monthly + alltime) with PostgreSQL `RANK()` window
+- Levels calculated from cumulative points (Pemula → Aktivis → Penjaga Hutan → Inspektur Hijau)
+- Redemption roadmap: 2027 (rewards marketplace)
+
+**Why this works for investors:**
+1. **Lower operational cost** — surveillance crowdsourced, not staffed. Margin expansion as adoption scales.
+2. **Higher data density** — more eyes on every tree = better evidence for ESG/CSR claims.
+3. **Network effect** — gamification + leaderboard drives organic growth on supply side without paid acquisition.
+4. **Anti-fraud** — tier-gated trust + review queue + watermarked camera + GPS dual-gate makes fake submissions economically irrational.
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/mobile/09-leaderboard.png" alt="Adopoin & rewards screen with points, level, redemption catalog"/><br/><sub><b>Mobile — Poin & Reward</b> — Adopoin balance (300 pts), Level 1 Pemula, 60% to Level 2. KPI tiles (Inspeksi · Tag GPS · Surveillance · hari Streak). Reward catalog: foto pohon +100pt, tag GPS +200pt, surveillance +500pt, 7-day streak +1000pt. Redeemable for Pulsa/Kuota.</sub></td>
+    <td width="50%"><img src="assets/prd/web/admin-contributor-map-dark.png" alt="Admin contributor heatmap (recap from §6.3)"/><br/><sub><b>Web Admin — Contributor Map</b> — geographic heatmap of all contributor field activity across Indonesia. Filterable by tier (Public / Verified / Inspector) and time window. Proves on-ground engagement at scale, not synthetic.</sub></td>
+  </tr>
+</table>
+
+*Figure 5c — Contributor tier system in action: mobile gamification drives field contribution (left), admin visibility proves the scale of crowdsourced validation (right).*
+
+---
+
 ## 7. Business Model & Revenue Streams
 
-> 📊 *Screenshot from: [`platform-ecosystem.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/platform-ecosystem.html)*
+![Platform Ecosystem — how AdopTree connects donors, merchants, mobile field app, contributors, NFT, and impact reporting](assets/prd/html/platform-ecosystem.png)
+*Figure 6 — Multi-sided platform ecosystem map. 8 actors interconnected through AdopTree as the verification layer; Mobile Field App + Field Contributors (v2.1) close the on-ground evidence loop.*
 
 ### 7.1 Revenue Streams
 
@@ -472,36 +723,42 @@ flowchart TD
 
 ```mermaid
 graph TB
-    subgraph "Frontend (Next.js 16)"
-        FE["⚛️ Next.js App Router\nTypeScript · Tailwind CSS\nshadcn/ui · Mapbox GL"]
+    subgraph "Web Client (Next.js 16)"
+        FE["⚛️ Next.js App Router\nTypeScript · Tailwind v4\nshadcn/ui · Mapbox GL\nZustand · sonner"]
+    end
+    subgraph "Mobile Client (Flutter 3.24)"
+        MO["📱 Flutter · Dart\nRiverpod · go_router\nDrift SQLite (offline-first)\nDio + JWT interceptor\nFCM · Geolocator · Camera"]
     end
     subgraph "Backend (Rust / Axum)"
-        BE["🦀 Rust · Axum · SQLx\nAsync · High Performance\nJWT Auth · REST API"]
+        BE["🦀 Rust · Axum · SQLx\nAsync · High Performance\nJWT (4h + 30d refresh)\nREST API + WebSocket"]
     end
     subgraph "Data Layer"
         DB["🐘 PostgreSQL + PostGIS\n(Geospatial queries)"]
-        RD["⚡ Redis\n(Cache · Sessions)"]
+        RD["⚡ Redis\n(Cache · Sessions · OAuth)"]
         MS["🔍 Meilisearch\n(Full-text search)"]
     end
     subgraph "External Services"
-        R2["☁️ Cloudflare R2\n(Media Storage)"]
+        R2["☁️ Cloudflare R2\n(Media · APK · zero-egress)"]
         MT["💳 Midtrans\n(Payment Gateway)"]
         SOL["🔮 Solana\n(NFT · Blockchain)"]
-        MB["🗺️ Mapbox GL\n(Maps · GIS)"]
-        BOT["🤖 Bot Tira\n(AI Chatbot)"]
+        MB["🗺️ Mapbox GL + Static API\n(Maps · GIS · watermark)"]
+        BOT["🤖 Bot Tira\n(Gemini + function-calling)"]
+        FCM["🔔 Firebase FCM v1\n(Push notifications)"]
     end
     subgraph "Infrastructure"
-        CI["🔧 Jenkins CI/CD\n(Auto-deploy)"]
-        CF["🌐 Cloudflare Tunnel\n(Zero-trust ingress)"]
+        CI["🔧 Jenkins CI/CD\n(Auto-deploy on push)"]
+        CF["🌐 Cloudflare Tunnel + CDN\n(Zero-trust ingress + nginx cache)"]
         WUD["🐳 WUD\n(Container updates)"]
     end
 
-    FE <-->|REST API| BE
+    FE <-->|REST + WS| BE
+    MO <-->|REST + WS + sync queue| BE
     BE <--> DB & RD & MS
-    BE <--> R2 & MT & SOL
+    BE <--> R2 & MT & SOL & FCM
     FE <--> MB
+    MO <--> MB
     BE <--> BOT
-    CI --> FE & BE
+    CI --> FE & BE & MO
 ```
 
 ### 10.2 Why Rust for Backend?
@@ -519,10 +776,23 @@ graph TB
 ### 10.3 Key Technical Differentiators
 
 - **PostGIS** — Geospatial polygon storage and tree-level GPS tracking at sub-meter precision
-- **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates
+- **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates, **and APK distribution** (versioned + `latest.apk` alias)
 - **Solana NFT** — Low-fee (~$0.01/tx), high-speed blockchain for tree ownership certificates *(infrastructure live; on-chain minting activating Q3 2026)*
 - **Meilisearch** — Sub-millisecond full-text search across 100K+ trees and lands
 - **Multi-language** — English, Indonesian, Arabic (RTL support) — opens Gulf market
+- **Offline-first mobile** — Drift SQLite + idempotent sync queue (`mobile_sync_queue` with `client_ref UNIQUE`); field teams work in zero-signal forest areas, data syncs on reconnect
+- **Anti-tamper field evidence** — In-app camera burns GPS + timestamp + mini-map *into pixel data* at capture (`image` pure-Dart package); EXIF + watermark are independent attestations
+- **Session resilience** — JWT (4h access + 30d refresh) with axios interceptor mutex queue; eliminates spurious logouts during long field sessions
+
+### 10.4 Mobile Architecture Highlights
+
+- **Sync queue with idempotency** — Every mobile submission carries a `client_ref` (UUID v7); BE dedups via `UNIQUE` constraint. Retry-safe; partial-success batches don't corrupt state.
+- **Dual-gate inspection** — Inspection upload requires both proximity (≤10 m from tree GPS) AND heading alignment (±45° from tree-to-observer bearing). Combined with watermarked camera, this makes desk-spoofing field reports computationally hostile.
+- **Tier-aware UI** — Mobile UI dynamically gates actions by contributor tier (capability flags fetched at login). Public users see "submit for review"; Verified users see direct submit; Field Inspectors see surveillance options.
+- **Brand-aligned distribution** — APK launcher icon + splash + in-app logos all generated from canonical brand SVG (`flutter_launcher_icons` + `flutter_native_splash`) — single source of truth across web + mobile.
+
+![APK release history page — Build 14 down to Build 6 with changelog cards](assets/prd/web/apk-release-history.png)
+*Figure 7 — Live release page. 9 production builds shipped in 5 weeks (Build 6 → 14, late April through end of May 2026) — concrete engineering velocity. Each card shows version, build number, release date, file size, and changelog. Latest build is auto-promoted as the default download.*
 
 ---
 
@@ -567,7 +837,7 @@ AdopTree's go-to-market is built on three mutually reinforcing pillars confirmed
 
 **Focus:** Prove supply-demand fit with real merchants and real transactions
 
-- Expand from first real merchant (**Akademi Buah Nusantara**) → 30 merchant/NGO partners (Java, Kalimantan, Papua)
+- Move from demonstration merchant (**"Akademi Buah Nusantara"** — staging-only seed data used to validate end-to-end flows) → first paying merchant cohort → 30 active merchant/NGO partners (Java, Kalimantan, Papua)
 - Activate B2C campaigns via Instagram/TikTok targeting eco-conscious millennials 25–35
 - Close 2–3 pilot corporate CSR packages (Donasi/Wakaf Platinum)
 - Activate Bot Tira subscription for early merchants
@@ -638,8 +908,14 @@ gantt
 
 | Milestone | Target Date | Success Metric |
 |---|---|---|
-| **First Real Merchant** | ✅ April 2026 | Akademi Buah Nusantara on-boarded |
 | **Staging Live** | ✅ April 2026 | Full platform accessible at staging domain |
+| **End-to-end Flow Validated** | ✅ April 2026 | Demo merchant ("Akademi Buah Nusantara") exercises every flow — land → tree → campaign → checkout → earnings → withdrawal |
+| **First Paying Merchant** | Target Q3 2026 | Move from demo data to first real merchant transacting with real donors — primary objective of this raise |
+| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational |
+| **Public Contributor System** | ✅ May 2026 | Tier 1 + Tier 2 auto-promotion live, leaderboard operational |
+| **Review Queue (Quality Gate)** | ✅ May 2026 | Admin/merchant approval workflow for all field submissions |
+| **QR Tree Identity Verification** | ✅ May 2026 (Phase 2.23) | Anti-misidentification QR system live |
+| **Realtime Chat** | ✅ May 2026 (Phase 2.26) | WebSocket 1:1 chat with voice notes |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
 | **Solana NFT Minting Live** | Q3 2026 | On-chain minting activated (infrastructure ready) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
@@ -652,11 +928,14 @@ gantt
 | **100K Ha Under Management** | 2028 | 500M trees reserved — 3yr commercial target |
 | **$2.6M Annual Revenue** | EOY 2028 | Series A readiness |
 
+> **Note on v2.1 update:** Six milestones marked ✅ above were originally scheduled for Q3 2026 in v2.0 but were delivered 4–8 weeks ahead of schedule. This execution velocity is the primary signal we ask investors to weigh — *"raising to grow, not to build"* is now demonstrably true.
+
 ---
 
 ## 14. Financial Projections
 
-> 📊 *Screenshot from: [`revenue-projection.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/revenue-projection.html)*
+![Revenue Growth Forecast 2026–2028 — bar chart + KPI cards](assets/prd/html/revenue-projection.png)
+*Figure 8 — Conservative scenario. Public launch H2 2026 ($23K) → 2027 ($498K, 2,065% YoY) → 2028 ($2.6M, 422% YoY, Series A ready). Break-even Q3 2027. Seed round $300K–$500K for 15–20% equity.*
 
 ### 14.1 Revenue Summary
 
@@ -711,13 +990,14 @@ gantt
 
 | Risk | Probability | Impact | Mitigation |
 |---|---|---|---|
-| **Slow merchant onboarding** | Medium | High | Pre-identified NGO partners, simplified onboarding flow |
+| **Pre-revenue, no paying merchants yet** | High (current state) | High | This is the explicit problem this raise solves — 35% of funds go to Sales & BD specifically to convert the staging demo into a real merchant cohort. Platform is built, demo flow validated end-to-end; the gap is distribution, not product |
+| **Slow merchant onboarding velocity** | Medium | High | Three parallel acquisition channels — existing NGO/Islamic networks (CEO-led), B2C donor pull (creating bottom-up demand for supply), and outbound corporate-CSR sales |
 | **Carbon credit regulation uncertainty** | Medium | Medium | Build feature but don't depend on it for core revenue |
 | **Payment gateway friction (IDR)** | Low | Medium | Midtrans + QRIS covers 95% of Indonesian payment methods |
 | **Blockchain (Solana) volatility** | Low | Low | NFT is optional tier; core product works without Web3 |
-| **Greenwashing accusations** | Low | High | GIS tracking + blockchain provides audit trail — industry-leading transparency |
-| **Competition from large platforms** | Low | Medium | Indonesia-native + Wakaf + supply-side moat hard to replicate quickly |
-| **Merchant churn** | Medium | Medium | Bot Tira subscription creates stickiness; earnings dashboard value |
+| **Greenwashing accusations** | Low | High | GIS tracking + blockchain + mobile-app field evidence (watermarked GPS-locked camera) provides audit trail — industry-leading transparency |
+| **Competition from large platforms** | Low | Medium | Indonesia-native + Wakaf + supply-side moat (contributor tier system) hard to replicate quickly |
+| **Merchant churn (once acquired)** | Medium | Medium | Bot Tira subscription creates stickiness; earnings dashboard value; Field App reduces operational cost per merchant |
 | **Regulatory (Forestry law)** | Low | High | Working within existing Perhutanan Sosial framework; legal review ongoing |
 
 ---
@@ -755,20 +1035,29 @@ gantt
 
 ### 16.3 Financial Path to Break-even
 
-```
-Raise (Apr 2026) ──► Public Launch (H2 2026) ──► $23K revenue
-                                 │
-                                 ▼
-                    Scale to 150 merchants (2027) ──► $498K revenue
-                                 │
-                                 ▼
-                         Break-even: Q3 2027
-                                 │
-                                 ▼
-                    400 merchants · 30K trees (2028) ──► $2.6M revenue
-                                 │
-                                 ▼
-                            Series A ready
+```mermaid
+flowchart TD
+    Raise["💰 <b>Seed Round Closed</b><br/>Q2 2026 · $300K–$500K"]
+    Launch["🚀 <b>Public Launch</b><br/>H2 2026"]
+    Y1["📊 <b>Year 1</b><br/>30 merchants · 500 adoptions<br/>$23K revenue"]
+    Y2["📈 <b>Year 2 — 2027</b><br/>150 merchants · 8K adoptions<br/>$498K revenue"]
+    BE["⚖️ <b>BREAK-EVEN</b><br/>Q3 2027"]
+    Y3["🌟 <b>Year 3 — 2028</b><br/>400 merchants · 30K adoptions<br/>$2.6M revenue"]
+    SA["🦄 <b>Series A Ready</b><br/>2,065% YoY → 422% YoY growth"]
+
+    Raise --> Launch
+    Launch --> Y1
+    Y1 --> Y2
+    Y2 --> BE
+    BE --> Y3
+    Y3 --> SA
+
+    classDef milestone fill:#dcfce7,stroke:#16a34a,color:#115031
+    classDef breakeven fill:#fbbf24,stroke:#92400e,color:#000
+    classDef ready fill:#115031,stroke:#86efac,color:#fff
+    class Raise,Launch,Y1,Y2,Y3 milestone
+    class BE breakeven
+    class SA ready
 ```
 
 ### 16.4 What We're Looking For in an Investor
@@ -781,8 +1070,8 @@ Beyond capital, the ideal investor brings:
 
 ### 16.5 Why Now?
 
-1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com` today
-2. **First merchant is real** — Akademi Buah Nusantara proves end-to-end merchant-to-adoption flow works
+1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, mobile Field App is shipping (Build 14), and the codebase has shipped 17 phases in the 5 weeks before this raise
+2. **End-to-end flow is proven, not just promised** — a demonstration merchant ("Akademi Buah Nusantara") on staging exercises every step from land registration through donor adoption, payment processing, and merchant payout. The product is ready to onboard a real merchant the day Sales & BD funding is deployed; we are not pre-product or pre-flow, we are pre-revenue
 3. **IDX Carbon launched 2023** — Indonesia's regulated carbon market is forming; early platform players will capture the registry advantage
 4. **Indonesia's NDC commitments** (29% emission reduction by 2030) create immediate regulatory pressure on corporations to invest in verifiable green programs
 5. **No dominant player** in Indonesia tree-adoption tech with GIS + NFT + Wakaf + AI — first-mover window is closing
@@ -796,29 +1085,42 @@ Beyond capital, the ideal investor brings:
 
 | Layer | Technology |
 |---|---|
-| Frontend | Next.js 16, TypeScript, Tailwind CSS, shadcn/ui |
-| Backend | Rust, Axum, SQLx |
+| Web Frontend | Next.js 16 (App Router), TypeScript, Tailwind CSS v4, shadcn/ui, Zustand, sonner |
+| Mobile App | Flutter 3.24 (Dart), Riverpod, go_router, Drift SQLite (offline-first), Dio + JWT interceptor |
+| Backend | Rust, Axum, SQLx (compile-time SQL verification) |
 | Database | PostgreSQL + PostGIS |
-| Cache | Redis |
+| Cache & Sessions | Redis |
 | Search | Meilisearch |
-| Maps | Mapbox GL |
-| Storage | Cloudflare R2 |
-| Payment | Midtrans Snap |
-| Blockchain | Solana (SPL NFT) |
-| AI | Bot Tira (proprietary) |
-| Auth | JWT, Google OAuth, Solana SIWS |
-| CI/CD | Jenkins + Docker + WUD |
-| CDN | Cloudflare Tunnel (zero-trust) |
-| Languages | Indonesian, English, Arabic |
+| Maps | Mapbox GL JS (web) + Mapbox Static API (mobile watermark) + flutter_map |
+| Storage | Cloudflare R2 (media + APK distribution, zero-egress) |
+| Payment | Midtrans Snap (IDR) + Solana (SOL) |
+| Blockchain | Solana (SPL NFT) — minting Q3 2026 |
+| AI | Bot Tira — Gemini + function-calling against live platform data |
+| Auth | JWT (4h access + 30d refresh, mutex queue), Google OAuth, Solana SIWS |
+| Push Notifications | Firebase Cloud Messaging (FCM v1) — web + mobile, deeplink routing |
+| Realtime | WebSocket (chat, presence) |
+| Field Evidence | In-app camera with pixel-burned watermark (GPS + timestamp + mini-map), dual-gate inspection (proximity + heading) |
+| CI/CD | Jenkins + Docker + WUD (auto-deploy on push) |
+| CDN & Edge | Cloudflare Tunnel (zero-trust), Cloudflare CDN with per-path Cache Rules, nginx VPS reverse proxy |
+| Languages | Indonesian, English, Arabic (RTL) |
 
-### B. Visualization Assets
+### B. Visualization Index
 
-| File | Description |
-|---|---|
-| [`market-opportunity.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/market-opportunity.html) | TAM/SAM/SOM visualization |
-| [`tier-pricing.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/tier-pricing.html) | Adoption tier comparison |
-| [`revenue-projection.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/revenue-projection.html) | 3-year revenue forecast |
-| [`platform-ecosystem.html`](https://ajarka.github.io/public-documentation/AdopTreeWorld/prd/html/platform-ecosystem.html) | Platform stakeholder map |
+All visuals are embedded inline at the sections referenced below.
+
+| Visual | Section | Purpose |
+|---|---|---|
+| Market Opportunity (TAM / SAM / SOM rings) | §1 Executive Summary · §5 Market Opportunity | Multi-billion dollar green impact market funnel — global potential → regional reach → realistic Year-3 capture |
+| Service Class Pricing Matrix | §6.3 Service Class Structure | Platform fee per tree per year across Silver/Gold/Platinum tiers × Wakaf/Donasi categories |
+| Revenue Growth Forecast 2026–2028 | §13 Roadmap & Milestones | Conservative scenario bar chart + KPI cards, break-even Q3 2027 |
+| Platform Ecosystem Map | §7 Business Model | 8-actor multi-sided platform: donors · merchants · land owners · contributors · mobile · NFT · bot · impact |
+| Web Donor Experience (4-grid) | §6 Product Overview | Explore → Land detail → My Forest → Sertifikat Portfolio Hutan |
+| Web Merchant Dashboard (4-grid, dark mode) | §6.2 Merchant Features | Overview · Lands · Earnings · Review Queue |
+| Web Admin Console (4-grid, dark mode) | §6.2 Admin Features | Dashboard · Analytics · Review Queue · Contributor Map |
+| Mobile Field App (6-grid) | §6.4 Mobile Field App | Login · Home · Plant Tree · Tag Tree · Tree Radar · Tree List |
+| Mobile Anti-Tamper Evidence | §6.4 Mobile Field App | Dual-gate inspection · GPS-watermarked capture |
+| Mobile Contributor Rewards + Admin Map | §6.5 Contributor Tier System | Adopoin balance + reward catalog · platform-wide contributor heatmap |
+| APK Release History | §10 Technology Architecture | Live release page proving 9-build/5-week shipping cadence |
 
 ### C. Glossary
 
@@ -834,8 +1136,39 @@ Beyond capital, the ideal investor brings:
 | **IDX Carbon** | Indonesia Stock Exchange's carbon trading platform |
 | **PostGIS** | PostgreSQL extension for geospatial data |
 | **Solana** | High-speed, low-cost blockchain network for NFT minting |
+| **FCM** | Firebase Cloud Messaging — push notification service |
+| **Drift** | Flutter SQLite ORM used for offline-first mobile storage |
+| **APK** | Android Package — Field App distribution format |
+| **Contributor Tier** | Trust-tier system gating field submissions (Public → Verified → Field Inspector) |
+
+### D. Delivered Phases (v2.0 → v2.1, April → May 2026)
+
+Concrete execution log between PRD revisions. Each phase ships through Linear (issue tracker) → development branch → Jenkins auto-deploy.
+
+| Phase | Title | Surface |
+|---|---|---|
+| 2.9 | Push notifications (FCM v1) | Backend + Web + Mobile |
+| 2.10 | Public Contributor modal pre-check | Web + Mobile |
+| 2.11 | Review Queue (Lahan submissions) | Web (admin/merchant) |
+| 2.11.1 | Capability flag — Tag Lahan Baru | Backend |
+| 2.12 | Plant Tree mobile workflow + wizard refactor + species request | Mobile + Web + BE |
+| 2.16 | Contributor tracking architecture | BE + Roadmap |
+| 2.17 | Contributor tracking — GPS session + offline buffer + auto-start | Mobile + Web + BE |
+| 2.18 | Land Owner dashboard redesign | Web |
+| 2.19 | Planting Jobs flow + tracking consent default-ON | Mobile + Web + BE |
+| 2.20 | Inspection Evidence Strengthening — watermark + multi-stage camera | Mobile + BE |
+| 2.21 | Tree Density & Distance Measurement Tools | Mobile + Web |
+| 2.23 | QR Tree Identity Verification | Mobile + Web + BE |
+| 2.24 | Tagging Spacing Awareness — live status pill + warnings | Mobile |
+| 2.25 | Livin'-style redesign + Tree List per Land + Submission detail | Mobile |
+| 2.26 | Realtime Chat — WebSocket + voice notes + conversation actions | Mobile + BE |
+| — | Brand Identity Refresh — new logo, Manrope, scoped dark mode | Web + Mobile (APK Build 14) |
+| — | Session Resilience — JWT 4h/30d + interceptor mutex queue | BE + Web |
+
+**APK releases shipped:** Build 6 (initial beta) → Build 7 (WA distribution) → Build 8 (notification UI) → Build 9 (in-app notifications) → Build 10 (inspection evidence) → Build 12 (QR + spacing) → Build 13 (realtime chat) → **Build 14 (brand rebrand, 29 May 2026 — latest)**.
 
 ---
 
 *© 2026 AdopTree World. All projections are forward-looking estimates based on comparable greentech platforms in Southeast Asia. Actual results may differ.*
-*Document version 2.0 — Compiled from: founding team input (CKsan/Aditira/BEKs), codebase analysis, and staging platform exploration (`staging.adoptreeworld.com`). For investor discussion purposes only.*
+
+*Document version 2.2 · May 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*

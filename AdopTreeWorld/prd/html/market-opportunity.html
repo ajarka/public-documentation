@@ -8,13 +8,23 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2218 0%, #115031 60%, #1a3a20 100%);
+    /* Fresh forest hero — gradient overlay over aerial mangrove + river photo */
+    background:
+      linear-gradient(180deg,
+        rgba(15, 50, 33, 0.78) 0%,
+        rgba(17, 80, 49, 0.70) 30%,
+        rgba(20, 90, 55, 0.68) 60%,
+        rgba(15, 50, 33, 0.85) 100%
+      ),
+      url('assets/forest-bg.jpeg') center/cover no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 48px 24px;
+    color: #fff;
   }
   .header {
     text-align: center;
@@ -40,131 +50,133 @@
     color: #86efac;
   }
 
-  /* ── Circles ── */
+  /* ── Circles — concentric rings with more breathing room ── */
   .circles-wrapper {
     position: relative;
-    width: 580px;
-    height: 580px;
+    width: 780px;
+    height: 780px;
     margin: 0 auto;
     flex-shrink: 0;
   }
   .circle {
     position: absolute;
     border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
   }
 
-  /* TAM — 580×580, occupies full wrapper */
+  /* TAM — outer ring (780×780), subtle frosted glass */
   .tam {
-    width: 580px; height: 580px;
+    width: 780px; height: 780px;
     top: 0; left: 0;
-    background: rgba(34,197,94,0.10);
-    border: 2px solid rgba(34,197,94,0.38);
+    background: rgba(139, 197, 63, 0.06);
+    border: 1.5px solid rgba(139, 197, 63, 0.45);
+    box-shadow:
+      inset 0 0 80px rgba(139, 197, 63, 0.08),
+      0 0 60px rgba(139, 197, 63, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
-  /* SAM — 380×380, centered → offset 100px */
+  /* SAM — mid ring (530×530, centered → offset 125) */
   .sam {
-    width: 380px; height: 380px;
-    top: 100px; left: 100px;
-    background: rgba(34,197,94,0.17);
-    border: 2px solid rgba(34,197,94,0.55);
+    width: 530px; height: 530px;
+    top: 125px; left: 125px;
+    background: rgba(139, 197, 63, 0.14);
+    border: 1.5px solid rgba(139, 197, 63, 0.65);
+    box-shadow:
+      inset 0 0 60px rgba(139, 197, 63, 0.15),
+      0 0 40px rgba(139, 197, 63, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
-  /* SOM — 200×200, centered → offset 190px */
+  /* SOM — inner disc (290×290, centered → offset 245) */
   .som {
-    width: 200px; height: 200px;
-    top: 190px; left: 190px;
-    background: rgba(34,197,94,0.35);
-    border: 2px solid rgba(34,197,94,0.9);
+    width: 290px; height: 290px;
+    top: 245px; left: 245px;
+    background:
+      radial-gradient(circle at center,
+        rgba(139, 197, 63, 0.55) 0%,
+        rgba(86, 152, 79, 0.45) 100%
+      );
+    border: 2px solid rgba(189, 230, 138, 0.95);
+    box-shadow:
+      inset 0 0 40px rgba(255, 255, 255, 0.15),
+      0 0 40px rgba(139, 197, 63, 0.5),
+      0 0 80px rgba(139, 197, 63, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
-  /* ── TAM text — sits in top band (y: 20–100) of the outer ring ── */
-  .tam .circle-label {
+  /* ── Text bands inside the rings (each ring has its own horizontal band) ── */
+  .ring-label {
     position: absolute;
-    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+  }
+  .ring-label .acronym {
+    display: inline-block;
+    background: rgba(139, 197, 63, 0.35);
+    border: 1.5px solid rgba(189, 230, 138, 0.85);
+    border-radius: 99px;
+    padding: 5px 16px;
     font-size: 13px;
     font-weight: 900;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #ffffff;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-  }
-  .tam .circle-value {
-    position: absolute;
-    top: 40px;
-    font-size: 34px;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
-  .tam .circle-desc {
-    position: absolute;
-    top: 80px;
-    font-size: 12px;
-    color: #d1fae5;
-    max-width: 160px;
-    line-height: 1.4;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
-  }
-
-  /* ── SAM text — sits in top band (y: 14–88) of the SAM ring ── */
-  .sam .circle-label {
-    position: absolute;
-    top: 14px;
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #ffffff;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-  }
-  .sam .circle-value {
-    position: absolute;
-    top: 34px;
-    font-size: 28px;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
-  .sam .circle-desc {
-    position: absolute;
-    top: 68px;
-    font-size: 11px;
-    color: #d1fae5;
-    max-width: 150px;
-    line-height: 1.4;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
-  }
-
-  /* ── SOM text — centered in the inner disc ── */
-  .som .circle-label {
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 4px;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
-  }
-  .som .circle-value {
-    font-size: 28px;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1;
-    margin-bottom: 6px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  }
-  .som .circle-desc {
-    font-size: 11px;
-    color: #d1fae5;
-    max-width: 110px;
-    line-height: 1.4;
+    color: #f0fff4;
     text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    margin-bottom: 8px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   }
+  .ring-label .full-name {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(220, 252, 231, 0.95);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+  }
+  .ring-label .val {
+    display: block;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.85), 0 0 28px rgba(139, 197, 63, 0.5);
+    margin-bottom: 8px;
+  }
+  .ring-label .dsc {
+    display: block;
+    font-size: 13px;
+    color: #ecfdf5;
+    line-height: 1.5;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.85);
+    margin: 0 auto;
+    font-weight: 500;
+  }
+
+  /* TAM band — top arc of outer ring (gap 0–125, 125px tall). */
+  .ring-label.tam-lbl { top: 10px; }
+  .ring-label.tam-lbl .acronym { background: rgba(139, 197, 63, 0.22); border-color: rgba(189, 230, 138, 0.65); margin-bottom: 6px; padding: 4px 14px; font-size: 12px; }
+  .ring-label.tam-lbl .full-name { font-size: 11px; margin-bottom: 4px; }
+  .ring-label.tam-lbl .val { font-size: 36px; margin-bottom: 4px; }
+  .ring-label.tam-lbl .dsc { max-width: 300px; font-size: 12px; }
+
+  /* SAM band — gap 125–245 (120px tall). */
+  .ring-label.sam-lbl { top: 138px; }
+  .ring-label.sam-lbl .acronym { background: rgba(139, 197, 63, 0.32); border-color: rgba(189, 230, 138, 0.8); margin-bottom: 5px; padding: 4px 14px; font-size: 12px; }
+  .ring-label.sam-lbl .full-name { font-size: 11px; margin-bottom: 4px; }
+  .ring-label.sam-lbl .val { font-size: 30px; margin-bottom: 4px; }
+  .ring-label.sam-lbl .dsc { max-width: 260px; font-size: 11.5px; }
+
+  /* SOM band — inner disc 245–535 (290px tall, center y=390). */
+  .ring-label.som-lbl { top: 335px; }
+  .ring-label.som-lbl .acronym { background: rgba(255, 255, 255, 0.35); border-color: rgba(255, 255, 255, 0.95); color: #115031; font-weight: 900; margin-bottom: 5px; padding: 4px 14px; font-size: 12px; text-shadow: none; }
+  .ring-label.som-lbl .full-name { color: rgba(255, 255, 255, 1); font-size: 11px; margin-bottom: 4px; font-weight: 800; }
+  .ring-label.som-lbl .val { font-size: 38px; margin-bottom: 5px; text-shadow: 0 2px 16px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.4); }
+  .ring-label.som-lbl .dsc { max-width: 220px; font-size: 11.5px; color: rgba(255, 255, 255, 1); font-weight: 600; }
 
   /* ── Cards ── */
   .cards {
@@ -177,13 +189,16 @@
     width: 100%;
   }
   .card {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(189, 230, 138, 0.25);
     border-radius: 16px;
     padding: 22px 20px;
     flex: 1;
     min-width: 155px;
     text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   }
   .card .dot {
     width: 13px; height: 13px;
@@ -206,14 +221,20 @@
     margin-top: 24px;
     max-width: 760px;
     width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(74,222,128,0.25);
+    background:
+      linear-gradient(135deg,
+        rgba(139, 197, 63, 0.18) 0%,
+        rgba(86, 152, 79, 0.15) 100%);
+    border: 1px solid rgba(189, 230, 138, 0.45);
     border-radius: 16px;
     padding: 22px 28px;
     display: flex;
     align-items: center;
     gap: 32px;
     flex-wrap: wrap;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.2);
   }
   .vision-text { flex: 1; min-width: 200px; }
   .vision-section .v-label {
@@ -235,34 +256,102 @@
     text-align: center;
     line-height: 1.6;
   }
+
+  /* ── Brand bar ── */
+  .brand-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(134,239,172,0.18);
+    width: 100%;
+    max-width: 760px;
+  }
+  .brand-bar .brand-lockup { display: flex; align-items: center; gap: 12px; }
+  .brand-bar .brand-lockup svg { height: 36px; width: auto; flex-shrink: 0; }
+  .brand-bar .brand-lockup .b-wordmark {
+    font-size: 18px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+  }
+  .brand-bar .brand-lockup .b-wordmark .b-tree {
+    color: #86efac;
+  }
+  .brand-bar .brand-meta {
+    font-size: 11px;
+    color: rgba(134,239,172,0.7);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .brand-bar .brand-meta .b-url {
+    font-size: 12px;
+    color: #86efac;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    margin-top: 2px;
+    display: block;
+  }
 </style>
 </head>
 <body>
+
+<div class="brand-bar">
+  <div class="brand-lockup">
+    <!-- AdopTree logomark — on dark bg use lime + light forest greens -->
+    <svg viewBox="1054 322 379 457" role="img" aria-label="AdopTree">
+      <path d="M1203.11,524.43v114.81l-88.7,88.7c-20.16-18.87-36.2-42.1-46.58-68.21l135.28-135.3Z" fill="#8bc53f"/>
+      <path d="M1203.11,639.24h81.17v135.36c-13.08,2.87-26.66,4.39-40.59,4.39s-27.51-1.51-40.59-4.39v-135.36Z" fill="#8bc53f"/>
+      <path d="M1419.56,659.7c-10.38,26.11-26.41,49.36-46.58,68.23l-88.7-88.7v-114.81l135.28,135.28Z" fill="#8bc53f"/>
+      <rect x="1203.11" y="524.43" width="81.17" height="114.81" fill="#3b9f47"/>
+      <path d="M1432.92,589.76c0,11.47-1.01,22.71-2.98,33.61l-145.65-145.65v46.71h-81.17v-46.71l-145.65,145.65c-1.97-10.9-2.98-22.14-2.98-33.61,0-49.87,19.28-95.24,50.83-129.05l138.39-138.39,129.4,129.4,8.93,8.91c31.57,33.81,50.9,79.22,50.9,129.13Z" fill="#54984F"/>
+    </svg>
+    <span class="b-wordmark">Adop<span class="b-tree">tree</span></span>
+  </div>
+  <div class="brand-meta">
+    Investor Brief
+    <span class="b-url">adoptreeworld.com</span>
+  </div>
+</div>
 
 <div class="header">
   <div class="label">Market Opportunity</div>
   <h1>A Multi-Billion Dollar<br>Green Impact Market</h1>
   <p>Voluntary carbon market + ESG investment + Indonesia CSR landscape + Islamic finance</p>
+  <p style="margin-top: 14px; font-size: 13px; color: #bbf7d0; opacity: 0.85; font-style: italic;">
+    Total → Serviceable → Obtainable — the standard funnel from global potential to realistic capture
+  </p>
 </div>
 
 <div class="circles-wrapper">
-  <!-- TAM — text in top band, above SAM ring -->
-  <div class="circle tam">
-    <span class="circle-label">TAM</span>
-    <span class="circle-value">$50B</span>
-    <span class="circle-desc">Global Voluntary Carbon Market by 2030</span>
+  <!-- Concentric ring backgrounds -->
+  <div class="circle tam"></div>
+  <div class="circle sam"></div>
+  <div class="circle som"></div>
+
+  <!-- TAM — top band of outer ring -->
+  <div class="ring-label tam-lbl">
+    <span class="acronym">🌍 TAM</span>
+    <span class="full-name">Total Addressable Market</span>
+    <span class="val">$50B</span>
+    <span class="dsc">Global Voluntary Carbon Market by 2030</span>
   </div>
-  <!-- SAM — text in its own top band, above SOM disc -->
-  <div class="circle sam">
-    <span class="circle-label">SAM</span>
-    <span class="circle-value">$2.4B</span>
-    <span class="circle-desc">SEA Environmental Impact Investment</span>
+  <!-- SAM — gap between SAM and SOM rings -->
+  <div class="ring-label sam-lbl">
+    <span class="acronym">🌏 SAM</span>
+    <span class="full-name">Serviceable Addressable Market</span>
+    <span class="val">$2.4B</span>
+    <span class="dsc">SEA Environmental Impact Investment</span>
   </div>
-  <!-- SOM — text centered in disc -->
-  <div class="circle som">
-    <span class="circle-label">SOM</span>
-    <span class="circle-value">$24M</span>
-    <span class="circle-desc">Indonesia<br>Year 3 Target</span>
+  <!-- SOM — centered inside inner disc -->
+  <div class="ring-label som-lbl">
+    <span class="acronym">🇮🇩 SOM</span>
+    <span class="full-name">Serviceable Obtainable Market</span>
+    <span class="val">$24M</span>
+    <span class="dsc">Indonesia · Year 3 Target</span>
   </div>
 </div>
 

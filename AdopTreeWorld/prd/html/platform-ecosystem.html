@@ -40,8 +40,8 @@
 
   .ecosystem {
     position: relative;
-    width: 780px;
-    height: 520px;
+    width: 900px;
+    height: 620px;
     margin: 0 auto;
   }
 
@@ -99,12 +99,16 @@
   .node h4 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
   .node p { font-size: 12px; line-height: 1.45; }
 
-  .node-donor    { background: #fff; border-color: #d1fae5; top: 20px; left: 20px; }
-  .node-merchant { background: #fff; border-color: #d1fae5; top: 20px; right: 20px; }
-  .node-corp     { background: #fff; border-color: #dbeafe; bottom: 20px; left: 20px; }
-  .node-land     { background: #fff; border-color: #fde68a; bottom: 20px; right: 20px; }
+  .node-donor    { background: #fff; border-color: #d1fae5; top: 20px; left: 70px; }
+  .node-merchant { background: #fff; border-color: #d1fae5; top: 20px; right: 70px; }
+  .node-corp     { background: #fff; border-color: #dbeafe; bottom: 20px; left: 70px; }
+  .node-land     { background: #fff; border-color: #fde68a; bottom: 20px; right: 70px; }
   .node-nft      { background: #fff; border-color: #ede9fe; top: 50%; left: -10px; transform: translateY(-50%); }
   .node-impact   { background: #fff; border-color: #d1fae5; top: 50%; right: -10px; transform: translateY(-50%); }
+  /* NEW v2.1 nodes — mobile + contributor + bot tira */
+  .node-mobile   { background: #fff; border-color: #fecaca; top: 20px; left: 50%; transform: translateX(-50%); }
+  .node-contrib  { background: #fff; border-color: #bbf7d0; bottom: 20px; left: 50%; transform: translateX(-50%); }
+  .node-bot      { background: #fff; border-color: #fef08a; top: 50%; right: 170px; transform: translateY(-50%); width: 120px; padding: 12px 10px; }
 
   .node-donor h4    { color: #16a34a; }
   .node-merchant h4 { color: #115031; }
@@ -112,6 +116,23 @@
   .node-land h4     { color: #92400e; }
   .node-nft h4      { color: #7c3aed; }
   .node-impact h4   { color: #16a34a; }
+  .node-mobile h4   { color: #dc2626; }
+  .node-contrib h4  { color: #15803d; }
+  .node-bot h4      { color: #a16207; font-size: 13px; }
+  .node-bot p       { font-size: 11px; }
+
+  .new-badge {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 99px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
 
   .status-dot {
     display: inline-block;
@@ -207,9 +228,59 @@
   }
   .gtm-pill .gp-icon { font-size: 20px; margin-bottom: 5px; }
   .gtm-pill .gp-text { font-size: 13px; font-weight: 700; color: #d1fae5; }
+
+  /* ── Brand bar (light theme) ── */
+  .brand-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #d1fae5;
+    max-width: 1080px;
+    width: 100%;
+  }
+  .brand-bar .brand-lockup { display: flex; align-items: center; gap: 12px; }
+  .brand-bar .brand-lockup svg { height: 34px; width: auto; flex-shrink: 0; }
+  .brand-bar .brand-lockup .b-wordmark {
+    font-size: 18px; font-weight: 900; color: #115031; letter-spacing: -0.3px;
+  }
+  .brand-bar .brand-lockup .b-wordmark .b-tree { color: #16a34a; }
+  .brand-bar .brand-meta {
+    font-size: 11px; color: #6b7280; letter-spacing: 1.5px;
+    text-transform: uppercase; text-align: right;
+  }
+  .brand-bar .brand-meta .b-url {
+    font-size: 12px; color: #16a34a; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: none; margin-top: 2px; display: block;
+  }
+
+  /* Center-node logo (overrides .center-node .icon emoji styling) */
+  .center-node .center-logo {
+    width: 56px; height: 56px;
+    margin-bottom: 4px;
+    display: block;
+  }
 </style>
 </head>
 <body>
+
+<div class="brand-bar">
+  <div class="brand-lockup">
+    <svg viewBox="1054 322 379 457" role="img" aria-label="AdopTree">
+      <path d="M1203.11,524.43v114.81l-88.7,88.7c-20.16-18.87-36.2-42.1-46.58-68.21l135.28-135.3Z" fill="#8bc53f"/>
+      <path d="M1203.11,639.24h81.17v135.36c-13.08,2.87-26.66,4.39-40.59,4.39s-27.51-1.51-40.59-4.39v-135.36Z" fill="#8bc53f"/>
+      <path d="M1419.56,659.7c-10.38,26.11-26.41,49.36-46.58,68.23l-88.7-88.7v-114.81l135.28,135.28Z" fill="#8bc53f"/>
+      <rect x="1203.11" y="524.43" width="81.17" height="114.81" fill="#3b9f47"/>
+      <path d="M1432.92,589.76c0,11.47-1.01,22.71-2.98,33.61l-145.65-145.65v46.71h-81.17v-46.71l-145.65,145.65c-1.97-10.9-2.98-22.14-2.98-33.61,0-49.87,19.28-95.24,50.83-129.05l138.39-138.39,129.4,129.4,8.93,8.91c31.57,33.81,50.9,79.22,50.9,129.13Z" fill="#006838"/>
+    </svg>
+    <span class="b-wordmark">Adop<span class="b-tree">tree</span></span>
+  </div>
+  <div class="brand-meta">
+    Investor Brief
+    <span class="b-url">adoptreeworld.com</span>
+  </div>
+</div>
 
 <div class="header">
   <div class="label">Platform Ecosystem</div>
@@ -225,24 +296,36 @@
 
 <div class="ecosystem">
   <!-- SVG connectors -->
-  <svg class="connectors" viewBox="0 0 780 520">
+  <svg class="connectors" viewBox="0 0 900 620">
     <!-- Donor (top-left) to center -->
-    <line class="connector" x1="155" y1="105" x2="330" y2="225" stroke="#22c55e" />
+    <line class="connector" x1="218" y1="120" x2="385" y2="270" stroke="#22c55e" />
     <!-- Merchant (top-right) to center -->
-    <line class="connector" x1="625" y1="105" x2="455" y2="225" stroke="#22c55e" />
+    <line class="connector" x1="685" y1="120" x2="515" y2="270" stroke="#22c55e" />
     <!-- Corporate (bottom-left) to center -->
-    <line class="connector" x1="155" y1="410" x2="330" y2="300" stroke="#3b82f6" />
+    <line class="connector" x1="218" y1="510" x2="385" y2="360" stroke="#3b82f6" />
     <!-- Land owner (bottom-right) to center -->
-    <line class="connector" x1="625" y1="410" x2="455" y2="300" stroke="#f59e0b" />
+    <line class="connector" x1="685" y1="510" x2="515" y2="360" stroke="#f59e0b" />
     <!-- NFT/Solana (left-mid) to center -->
-    <line class="connector" x1="120" y1="260" x2="325" y2="260" stroke="#7c3aed" />
+    <line class="connector" x1="135" y1="310" x2="385" y2="310" stroke="#7c3aed" />
     <!-- Impact (right-mid) to center -->
-    <line class="connector" x1="660" y1="260" x2="455" y2="260" stroke="#22c55e" />
+    <line class="connector" x1="765" y1="310" x2="515" y2="310" stroke="#22c55e" />
+    <!-- NEW v2.1: Mobile Field App (top-center) to center -->
+    <line class="connector" x1="450" y1="118" x2="450" y2="250" stroke="#dc2626" stroke-dasharray="4,3" />
+    <!-- NEW v2.1: Field Contributors (bottom-center) to center -->
+    <line class="connector" x1="450" y1="510" x2="450" y2="370" stroke="#15803d" stroke-dasharray="4,3" />
+    <!-- NEW v2.1: Bot Tira (right-mid) attached to merchant flow -->
+    <line class="connector" x1="635" y1="310" x2="515" y2="290" stroke="#a16207" stroke-dasharray="3,3" />
   </svg>
 
   <!-- Center -->
   <div class="center-node">
-    <div class="icon">🌳</div>
+    <svg class="center-logo" viewBox="1054 322 379 457" role="img" aria-label="AdopTree logomark">
+      <path d="M1203.11,524.43v114.81l-88.7,88.7c-20.16-18.87-36.2-42.1-46.58-68.21l135.28-135.3Z" fill="#8bc53f"/>
+      <path d="M1203.11,639.24h81.17v135.36c-13.08,2.87-26.66,4.39-40.59,4.39s-27.51-1.51-40.59-4.39v-135.36Z" fill="#8bc53f"/>
+      <path d="M1419.56,659.7c-10.38,26.11-26.41,49.36-46.58,68.23l-88.7-88.7v-114.81l135.28,135.28Z" fill="#8bc53f"/>
+      <rect x="1203.11" y="524.43" width="81.17" height="114.81" fill="#bbf7d0"/>
+      <path d="M1432.92,589.76c0,11.47-1.01,22.71-2.98,33.61l-145.65-145.65v46.71h-81.17v-46.71l-145.65,145.65c-1.97-10.9-2.98-22.14-2.98-33.61,0-49.87,19.28-95.24,50.83-129.05l138.39-138.39,129.4,129.4,8.93,8.91c31.57,33.81,50.9,79.22,50.9,129.13Z" fill="#ffffff"/>
+    </svg>
     <h3>AdopTree</h3>
     <p>Multiverse Platform</p>
     <div class="live-badge">● LIVE</div>
@@ -283,6 +366,27 @@
     <div class="n-icon">🌍</div>
     <h4>Real Impact</h4>
     <p>GIS tracking, CO₂ sequestration data, surveillance reports</p>
+  </div>
+
+  <!-- NEW v2.1: Mobile Field App -->
+  <div class="node node-mobile">
+    <div class="n-icon">📱</div>
+    <h4>Mobile Field App<span class="new-badge">v2.1</span></h4>
+    <p>APK Build 14 — anti-tamper camera, GPS-locked inspection, offline-first sync</p>
+  </div>
+
+  <!-- NEW v2.1: Field Contributors -->
+  <div class="node node-contrib">
+    <div class="n-icon">🌱</div>
+    <h4>Field Contributors<span class="new-badge">v2.1</span></h4>
+    <p>Crowdsourced tagging & inspection — 3-tier trust (Public → Verified → Inspector)</p>
+  </div>
+
+  <!-- NEW v2.1: Bot Tira (smaller, attached to merchant flow) -->
+  <div class="node node-bot">
+    <div class="n-icon">🤖</div>
+    <h4>Bot Tira AI</h4>
+    <p>Gemini + function-calling, donor engagement</p>
   </div>
 </div>
 
@@ -336,6 +440,22 @@
       <div>
         <h4>Carbon Credits <span class="arrow">→</span> Future Revenue <span class="badge-soon">2027</span></h4>
         <p>All adoptions generate real-time CO₂ tracking per species. Gold & Platinum tiers accumulate tradeable carbon credits. VCS certification targeted 2027 — enabling IDX Carbon exchange integration.</p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#fee2e2;">📱</div>
+      <div>
+        <h4>Mobile App <span class="arrow">→</span> Anti-Tamper Evidence <span class="badge-live">LIVE</span></h4>
+        <p>Flutter Field App (APK Build 14) — in-app camera burns GPS + timestamp + mini-map into pixel data. Drift SQLite offline-first sync. Idempotent batch queue. <strong>Without this, "GPS-verified" is a promise. With it, it's evidence.</strong></p>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="f-icon" style="background:#dcfce7;">🌱</div>
+      <div>
+        <h4>Field Contributors <span class="arrow">→</span> Crowdsourced Validation <span class="badge-live">LIVE</span></h4>
+        <p>Public → Verified → Inspector trust tiers. Anyone with Google account can contribute; submissions go through tier-gated review queue. Lowers per-tree surveillance cost; enables 500M tree target without proportional staffing.</p>
       </div>
     </div>
 
