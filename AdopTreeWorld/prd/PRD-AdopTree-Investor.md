@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.2 · May 2026
+### Investor Edition · v2.3 · June 2026
 
 > **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.3 highlights** — Blockchain & NFT claims honesty pass: every Solana/NFT mention re-scoped to match shipped reality. New §10.5 Blockchain Status Disclosure section. Advisors enriched with verified profiles (Akhmad Junaidi — BRIN · Udhoro Kasih Anggoro — IPB / Indonesia-Japan Business Network).
 >
 > **v2.2 highlights** — Full visual refresh with inline web, mobile, and market visuals across every section · Solution and financial diagrams upgraded to professional charts · Founder bios expanded.
 >
@@ -39,7 +41,7 @@
 
 **AdopTree World** is a multi-sided technology platform connecting donors (individuals, corporates, NGOs, governments) with verified reforestation land owners — making tree adoption transparent, trackable, and financially meaningful.
 
-Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **blockchain-backed NFT certificates (Solana)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today.
+Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. **Blockchain infrastructure (Solana SIWS wallet authentication + NFT metadata schema)** is in place; on-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
 
 **Vision:** To be the world's most trusted carbon recycling center — a multiverse platform where donors meet eco caretakers through Social Media, Marketplace, and Green Forum in a legally-compliant, fully transparent ecosystem.
 
@@ -52,7 +54,7 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 - Web platform fully operational at `staging.adoptreeworld.com`
 - **Android Field App live** — APK Build 14 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
-- Full payment infrastructure live: Midtrans (bank transfer, QRIS, e-wallet, credit card) + Solana (SOL)
+- **Payment infrastructure**: Midtrans live for production (bank transfer, QRIS, e-wallet, credit card). Solana (SOL) payment UI built — backend wire-up scheduled Q3 2026 alongside on-chain NFT minting
 - 17 product phases delivered between v2.0 and v2.1 (Apr → May 2026): review queue, public contributor system, QR tree verification, tagging spacing awareness, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
@@ -247,9 +249,9 @@ flowchart LR
 **For Donors (B2C):**
 - 🌱 Adopt a specific tree with GPS coordinates — *it's yours*
 - 📍 Track it live on an interactive GIS map
-- 📜 Receive a legally-meaningful digital certificate
-- 🔮 Mint an NFT (AdopTree tier) — a transferable, tradeable digital asset
+- 📜 Receive a legally-meaningful digital certificate (PDF + QR verification)
 - 📊 Receive carbon credit allocation for Green Society & AdopTree tiers
+- 🔮 **AdopTree tier roadmap:** transferable Solana NFT certificate scheduled Q3 2026 — wallet authentication (SIWS) and NFT metadata schema already live; on-chain minting is the Q3 2026 milestone
 
 **For Merchants / NGOs (Supply Side):**
 - 🏗️ Full land & tree management dashboard
@@ -323,7 +325,7 @@ flowchart TB
         Merchant["🏢 Merchant<br/>NGO"]
     end
 
-    Solana["🔮 Solana NFT"]
+    Solana["🔮 Solana NFT<br/><i>Q3 2026 roadmap</i>"]
     Impact["🌍 Real Impact"]
     Revenue["💰 Platform Revenue"]
 
@@ -332,7 +334,7 @@ flowchart TB
     Platform -->|Stewardship $$| Merchant
     Merchant -->|Manage Trees| Platform
     LandOwner -->|Partnership| Merchant
-    Platform ==>|NFT Mint| Solana
+    Platform -.->|NFT Mint roadmap| Solana
     Platform ==>|Verified Data| Impact
     Platform ==>|Platform Fee| Revenue
 
@@ -354,11 +356,14 @@ flowchart TB
 |---|---|---|
 | **Browse & Search** | Explore lands by region, type, availability, campaign | ✅ Built |
 | **GIS Map** | Interactive map with polygon boundaries + tree dot tracking | ✅ Built |
-| **Multi-tier Adoption** | 4 tiers from $8 donation to $75 NFT | ✅ Built |
-| **Cart & Checkout** | Multi-item cart with batch checkout, race-condition safe, Midtrans (IDR) + Solana (SOL) | ✅ Built |
+| **Multi-tier Adoption** | 4 tiers from $8 donation to $75 AdopTree | ✅ Built |
+| **Cart & Checkout** | Multi-item cart with batch checkout, race-condition safe, Midtrans (IDR) live in production | ✅ Built |
+| **Solana SOL Checkout** | Wallet connect UI, Phantom adapter, payment flow scaffolding | 🟡 UI built · backend wire-up Q3 2026 |
 | **Digital Certificate** | Auto-generated PDF certificate with QR verification | ✅ Built |
 | **My Forest Dashboard** | Personal adoption tracker, carbon credits, certificates | ✅ Built |
-| **NFT Ownership** | Solana-minted NFT for AdopTree tier — transferable asset | ✅ Built |
+| **Solana Wallet Authentication (SIWS)** | Production-ready ed25519 signature verification + nonce + JWT issuance | ✅ Built |
+| **NFT Metadata Schema & API** | Database tables + REST endpoints (`GET /nfts/{mint}`, `GET /nfts/{mint}/history`, `POST /nfts/refresh`) | ✅ Built |
+| **On-chain NFT Minting (AdopTree tier)** | Metaplex mint pipeline triggered on AdopTree-tier payment success | 📋 Q3 2026 milestone — see §10.5 |
 | **360° Tree View** | Photo sphere viewer for immersive tree experience | ✅ Built |
 | **Carbon Credits** | Allocated at adoption, tracked in dashboard | ✅ Built |
 | **Wishlist** | Save lands and trees for future adoption — with adoption slot progress | ✅ Built |
@@ -380,7 +385,7 @@ flowchart TB
   </tr>
 </table>
 
-*Figure 3a — Donor experience flow: discovery → land deep-dive → personal forest → certificate. Same flow works across all four adoption tiers (Donation $8 · Wakaf $10 · Green Society $12 · AdopTree $75 NFT).*
+*Figure 3a — Donor experience flow: discovery → land deep-dive → personal forest → certificate. Same flow works across all four adoption tiers (Donation $8 · Wakaf $10 · Green Society $12 · AdopTree $75 — NFT certificate activates Q3 2026, see §10.5).*
 
 #### Merchant-Facing Features
 
@@ -408,7 +413,7 @@ flowchart TB
     <td width="50%"><img src="assets/prd/web/merchant-lands-dark.png" alt="Merchant lands management with GIS map"/><br/><sub><b>Land Management</b> — list view with polygon previews, tree count, assignment algorithm (random/sequential/nearest_center/cluster) per land.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="assets/prd/web/merchant-earnings-dark.png" alt="Merchant earnings breakdown"/><br/><sub><b>Earnings</b> — payout history, fee breakdown per tier, monthly trends. Direct payout in IDR (Midtrans) or SOL (Solana).</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-earnings-dark.png" alt="Merchant earnings breakdown"/><br/><sub><b>Earnings</b> — payout history, fee breakdown per tier, monthly trends. Direct payout in IDR (Midtrans) live; SOL (Solana) payout activating alongside Q3 2026 NFT mint.</sub></td>
     <td width="50%"><img src="assets/prd/web/merchant-review-queue-dark.png" alt="Merchant review queue for contributor-submitted observations"/><br/><sub><b>Review Queue</b> — moderation interface for contributor-submitted tree observations & inspections (v2.1 contributor system).</sub></td>
   </tr>
 </table>
@@ -455,20 +460,20 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 | Class | Platform Fee / yr | Campaign Fee | Features | Target | Duration |
 |-------|-------------------|--------------|----------|--------|----------|
 | 🥈 **Silver** | $1.00/tree | $1.50/tree | Certificate, My Forest Dashboard | Individual | 1 year · web2 |
-| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT, Surveillance, Social & Marketplace | Individual | 1 year · web3 |
-| 💎 **Platinum** | $3.00/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web3 |
+| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT *(Q3 2026)*, Surveillance, Social & Marketplace | Individual | 1 year · web2 → web3 |
+| 💎 **Platinum** | $3.00/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web2 → web3 |
 
 #### Wakaf Category *(Shariah-compliant perpetual endowment)*
 
 | Class | Platform Fee / yr | Campaign Fee | Features | Target | Duration |
 |-------|-------------------|--------------|----------|--------|----------|
 | 🥈 **Silver** | $1.00/tree | $1.50/tree | Certificate, My Forest Dashboard | Individual | 1 year · web2 |
-| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT, Monitoring, Social & Marketplace | Individual | 1 year · web3 |
-| 💎 **Platinum** | $2.50/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web3 |
+| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT *(Q3 2026)*, Monitoring, Social & Marketplace | Individual | 1 year · web2 → web3 |
+| 💎 **Platinum** | $2.50/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web2 → web3 |
 
 > **Key distinctions:**
-> - **Silver** = entry-level, web2 experience (certificate + dashboard)
-> - **Gold** = NFT-backed, web3, full platform access (forum, marketplace)
+> - **Silver** = entry-level, web2 experience (certificate + dashboard) — fully live today
+> - **Gold** = full platform access (forum, marketplace) today, NFT-backed asset added Q3 2026 when on-chain minting activates
 > - **Platinum** = corporate-grade, includes periodic physical surveillance & reports, minimum 3-year commitment
 > - **Wakaf** tiers are Shariah-compliant — opens Islamic philanthropic market (Indonesia + Gulf)
 
@@ -603,7 +608,7 @@ pie showData
 #### Stream 1: Tree Adoption Fees (B2C)
 - Platform takes **5–15%** of each adoption transaction
 - Remainder goes to merchant for tree stewardship
-- Payment via Midtrans (IDR) or Solana (SOL)
+- Payment via Midtrans (IDR) live in production; Solana (SOL) payment activating Q3 2026
 - **Year 3 projection: $900K**
 
 #### Stream 2: Corporate CSR Packages (B2B)
@@ -638,7 +643,7 @@ pie showData
 | Bot Tira ARPU | $75/month |
 | Corporate Package Avg. | $10,000/deal |
 | Customer Acquisition Cost (est.) | $8–$15/user |
-| Retention Driver | Renewal reminders, carbon credit growth, NFT utility |
+| Retention Driver | Renewal reminders, carbon credit growth, future NFT utility (Q3 2026) |
 
 ---
 
@@ -652,7 +657,7 @@ pie showData
 - **Pain:** Doesn't trust generic "plant a tree" programs — no proof of impact
 - **Goal:** Adopt a tree she can literally point to on a map and show friends
 - **Entry:** Social media ad → landing page → Donasi Silver ($1/tree/yr) → upgrades to Gold on renewal
-- **LTV:** $2–$5/tree/year, renewals + referrals + NFT unlock at Gold
+- **LTV:** $2–$5/tree/year, renewals + referrals (Gold tier unlocks NFT-backed certificate after Q3 2026 mint activation)
 
 ### Persona 2 — Pak Budi, The CSR Manager (Donasi/Wakaf Platinum)
 > *"My CEO wants our annual report to show measurable environmental impact."*
@@ -680,8 +685,8 @@ pie showData
 - **Age:** 55 | **Location:** Riyadh (or diaspora in Jakarta)
 - **Behavior:** Active in Islamic philanthropy, familiar with Wakaf (Islamic endowment)
 - **Pain:** Most green investment options are not Shariah-compliant
-- **Goal:** Perpetual tree adoption as waqf — leaves a lasting legacy, halal, with NFT proof
-- **Entry:** Arabic language interface → Wakaf Silver ($1/tree/yr) → bulk Wakaf Gold with NFT for family legacy
+- **Goal:** Perpetual tree adoption as waqf — leaves a lasting legacy, halal, with verifiable digital proof (PDF certificate today, transferable NFT certificate post-Q3 2026)
+- **Entry:** Arabic language interface → Wakaf Silver ($1/tree/yr) → upgrades to Wakaf Gold for family legacy and forthcoming NFT-backed certificate
 - **LTV:** $500–$5,000+ depending on tree volume and tier
 
 ---
@@ -699,18 +704,18 @@ flowchart LR
     E --> F{Select<br/>Adoption Tier}
     F -->|Donation $8| G[Add to Cart]
     F -->|AdopTree $75| G
-    G --> H[Checkout<br/>Midtrans / Solana]
+    G --> H[Checkout<br/>Midtrans live · Solana Q3 2026]
     H --> I{Payment<br/>Success?}
     I -->|Yes| J[Certificate<br/>Generated]
     I -->|No| H
-    J --> K[NFT Minted<br/>Solana]
-    K --> L[My Forest<br/>Updated]
+    J --> L[My Forest<br/>Updated]
     L --> M[Email + App<br/>Notification]
     M --> N([Annual Renewal<br/>Reminder])
+    J -.->|Q3 2026 roadmap| K[NFT Minted<br/>Solana]
 
     style A fill:#f0fdf4,stroke:#22c55e
     style J fill:#dcfce7,stroke:#16a34a
-    style K fill:#ede9fe,stroke:#7c3aed
+    style K fill:#ede9fe,stroke:#7c3aed,stroke-dasharray: 5 5
     style N fill:#fef3c7,stroke:#f59e0b
 ```
 
@@ -803,7 +808,7 @@ graph TB
     subgraph "External Services"
         R2["☁️ Cloudflare R2<br/>(Media · APK · zero-egress)"]
         MT["💳 Midtrans<br/>(Payment Gateway)"]
-        SOL["🔮 Solana<br/>(NFT · Blockchain)"]
+        SOL["🔮 Solana<br/>(SIWS live · NFT mint Q3 2026)"]
         MB["🗺️ Mapbox GL + Static API<br/>(Maps · GIS · watermark)"]
         BOT["🤖 Bot Tira<br/>(Gemini + function-calling)"]
         FCM["🔔 Firebase FCM v1<br/>(Push notifications)"]
@@ -840,7 +845,7 @@ graph TB
 
 - **PostGIS** — Geospatial polygon storage and tree-level GPS tracking at sub-meter precision
 - **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates, **and APK distribution** (versioned + `latest.apk` alias)
-- **Solana NFT** — Low-fee (~$0.01/tx), high-speed blockchain for tree ownership certificates *(infrastructure live; on-chain minting activating Q3 2026)*
+- **Solana foundation** — Wallet authentication (SIWS — Sign-In With Solana) live in production with ed25519 signature verification; NFT metadata schema + REST API live; on-chain Metaplex minting scheduled Q3 2026 (see §10.5 for honest scope and gap)
 - **Meilisearch** — Sub-millisecond full-text search across 100K+ trees and lands
 - **Multi-language** — English, Indonesian, Arabic (RTL support) — opens Gulf market
 - **Offline-first mobile** — Drift SQLite + idempotent sync queue (`mobile_sync_queue` with `client_ref UNIQUE`); field teams work in zero-signal forest areas, data syncs on reconnect
@@ -857,6 +862,41 @@ graph TB
 ![APK release history page — Build 14 down to Build 6 with changelog cards](assets/prd/web/apk-release-history.png)
 *Figure 7 — Live release page. 9 production builds shipped in 5 weeks (Build 6 → 14, late April through end of May 2026) — concrete engineering velocity. Each card shows version, build number, release date, file size, and changelog. Latest build is auto-promoted as the default download.*
 
+### 10.5 Blockchain & NFT — Honest Status Disclosure
+
+> **Why this section exists.** Blockchain claims are easy to overstate and easy to verify. This section gives investors the unvarnished status so technical due diligence finds no surprises.
+
+#### What is shipped today (~15% of the long-term blockchain scope)
+
+| Component | Status | Evidence |
+|---|---|---|
+| **Solana Wallet Authentication (SIWS)** | ✅ Production-ready | Full ed25519 signature verification, nonce generation, JWT issuance, expiry handling. Phantom wallet supported. |
+| **NFT Metadata Database Schema** | ✅ Production-ready | Three tables (`nft_metadata`, `nft_transactions`, `tree_health_records`) with proper indexes on mint address, owner wallet, and transaction signature |
+| **NFT Metadata REST API** | ✅ Production-ready | Endpoints `GET /nfts/{mint}`, `GET /nfts/{mint}/history`, `POST /nfts/refresh` |
+| **Frontend Solana UI Components** | ✅ Production-ready | Wallet connection UI, Phantom detection, SOL balance display, payment flow scaffolding |
+
+#### What is stubbed / mock today (~35% of the long-term scope)
+
+| Component | Reality | Why it ships post-Q3 2026 |
+|---|---|---|
+| **Solana SOL Payment Processing** | UI complete; backend handler returns a mock wallet address and a 2-second simulated transaction | Backend wire-up requires adding `solana-client` + transaction verification — bundled with the NFT mint sprint |
+| **NFT Metadata Refresh** | API endpoint live; on-chain refresh logic only increments a counter (no Solana RPC call) | Activated alongside the mint pipeline (shares RPC client) |
+| **NFT Mint Trigger on AdopTree Adoption** | Database columns (`nft_mint_tx`, `nft_minted_at`) reserved; all code paths currently set them to `None` | Awaits the Metaplex mint service |
+
+#### What is planned but not yet started (~50%)
+
+- **Solana SDK integration** — `Cargo.toml` does not yet include `solana-client`, `solana-sdk`, `mpl-token-metadata`, or `spl-token`. Only signature-verification crates (`ed25519-dalek`, `bs58`, `base64`) are in use today.
+- **On-chain NFT minting pipeline** — Metaplex Token Metadata program integration, mint authority key management, treasury wallet hardening
+- **Secondary NFT marketplace** (peer-to-peer tree ownership trading) — roadmap Q1–Q3 2028
+- **Blockchain volatility handling** — Stablecoin fallback / SOL price circuit-breaker for AdopTree tier pricing
+
+#### What this means for the raise
+
+- **No claim in this PRD assumes NFT minting is live today.** Every NFT-related phrase is qualified with "(Q3 2026)" or scoped to the SIWS/metadata layer that is genuinely shipped.
+- **Core product works without Web3.** The Silver and Platinum tiers — and all merchant/admin/mobile flows — are entirely web2 today and remain functional regardless of NFT mint timing.
+- **NFT minting is a Q3 2026 engineering milestone**, included in the **Product & Technology** allocation of the seed round (§16.2 — 25% / $125K covers Solana mint + surveillance system + mobile app). Estimated 6–8 engineering weeks for mint pipeline + treasury hardening.
+- **Roadmap honesty is itself a moat.** Greentech buyers and Indonesian regulators (BAPPENAS, KLHK, BWI) consistently penalize over-claimed blockchain narratives. A platform that ships SIWS today and discloses the mint gap is more durable to due diligence than one that paints over the gap.
+
 ---
 
 ## 11. Competitive Landscape
@@ -865,7 +905,7 @@ graph TB
 
 | Platform | Geography | Transparency | NFT | GIS Tracking | Indonesia Focus | Price Point |
 |---|---|---|---|---|---|---|
-| **AdopTree** 🌳 | Indonesia / Global | ✅ GIS + Blockchain | ✅ Solana | ✅ Tree-level | ✅ Native | $8–$75 |
+| **AdopTree** 🌳 | Indonesia / Global | ✅ GIS + Field Evidence | 🟡 Foundation live · mint Q3 2026 | ✅ Tree-level | ✅ Native | $8–$75 |
 | Offset.earth | Global | Partial | ❌ | ❌ | ❌ | $5–$30/mo |
 | Gold Standard | Global | ✅ | ❌ | Partial | ❌ | Institutional |
 | Terrapass | USA | Partial | ❌ | ❌ | ❌ | $8–$200 |
@@ -874,7 +914,7 @@ graph TB
 
 ### 11.2 AdopTree's Moats
 
-1. **Transparent & Trusted** — GPS tracking + blockchain audit trail eliminates greenwashing doubt; *"A monitoring platform for your donation that ensures it goes to a proper place"*
+1. **Transparent & Trusted** — GPS tracking + watermarked anti-tamper field evidence (mobile in-app camera burns coordinates/timestamp/mini-map into pixel data) eliminates greenwashing doubt; *"A monitoring platform for your donation that ensures it goes to a proper place"*. Blockchain audit trail layered in as Q3 2026 reinforcement.
 2. **Multiverse Platform** — Not just a donation button; a full ecosystem with Social Media, Marketplace, and Green Forum connecting every stakeholder (donor, NGO, corporate, government, cooperative)
 3. **Legal-First** — Crowd funding umbrella for all **legal entities** (GO/NGO/individual/corporate/coop) with **legal standing soil** — rare in this space
 4. **Wakaf Tier** — Only tree adoption platform with Shariah-compliant perpetual endowment; opens Gulf + Indonesian Islamic market
@@ -904,7 +944,7 @@ AdopTree's go-to-market is built on three mutually reinforcing pillars confirmed
 - Activate B2C campaigns via Instagram/TikTok targeting eco-conscious millennials 25–35
 - Close 2–3 pilot corporate CSR packages (Donasi/Wakaf Platinum)
 - Activate Bot Tira subscription for early merchants
-- PR: *"Indonesia's first GIS-verified, blockchain-backed tree adoption platform"*
+- PR positioning: *"Indonesia's first GIS-verified tree adoption platform with anti-tamper field evidence and Solana blockchain foundation"* — leads with what is verifiably shipped (GIS + field evidence + SIWS) rather than over-claiming mint
 
 ### 12.3 Phase 2 — Scale (2027)
 
@@ -980,7 +1020,7 @@ gantt
 | **QR Tree Identity Verification** | ✅ May 2026 (Phase 2.23) | Anti-misidentification QR system live |
 | **Realtime Chat** | ✅ May 2026 (Phase 2.26) | WebSocket 1:1 chat with voice notes |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
-| **Solana NFT Minting Live** | Q3 2026 | On-chain minting activated (infrastructure ready) |
+| **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
 | **First Corporate CSR Deal** | Q4 2026 | Donasi/Wakaf Platinum package signed |
 | **30 Active Merchants** | Q4 2026 | Supply-side diversity established |
@@ -1057,8 +1097,9 @@ gantt
 | **Slow merchant onboarding velocity** | Medium | High | Three parallel acquisition channels — existing NGO/Islamic networks (CEO-led), B2C donor pull (creating bottom-up demand for supply), and outbound corporate-CSR sales |
 | **Carbon credit regulation uncertainty** | Medium | Medium | Build feature but don't depend on it for core revenue |
 | **Payment gateway friction (IDR)** | Low | Medium | Midtrans + QRIS covers 95% of Indonesian payment methods |
-| **Blockchain (Solana) volatility** | Low | Low | NFT is optional tier; core product works without Web3 |
-| **Greenwashing accusations** | Low | High | GIS tracking + blockchain + mobile-app field evidence (watermarked GPS-locked camera) provides audit trail — industry-leading transparency |
+| **NFT mint delivery risk (Q3 2026)** | Medium | Medium | Foundation already shipped (SIWS auth + metadata schema + REST API live). Remaining work is well-scoped Metaplex integration. Core product (Silver, Platinum, all merchant/admin/mobile flows) is fully web2 and works independent of mint timing — see §10.5 |
+| **Blockchain (Solana) price volatility** | Low | Low | SOL payment is an optional tier; IDR (Midtrans) is the primary production payment path; AdopTree-tier USD pricing buffered via stablecoin fallback (architecture pending mint sprint) |
+| **Greenwashing accusations** | Low | High | GIS tracking + watermarked anti-tamper field evidence (mobile in-app camera burns GPS + timestamp + mini-map into pixel data) + dual-gate proximity inspection provides today's audit trail. Blockchain audit layer activates Q3 2026 |
 | **Competition from large platforms** | Low | Medium | Indonesia-native + Wakaf + supply-side moat (contributor tier system) hard to replicate quickly |
 | **Merchant churn (once acquired)** | Medium | Medium | Bot Tira subscription creates stickiness; earnings dashboard value; Field App reduces operational cost per merchant |
 | **Regulatory (Forestry law)** | Low | High | Working within existing Perhutanan Sosial framework; legal review ongoing |
@@ -1089,7 +1130,7 @@ gantt
 | Category | % | Est. USD | Purpose |
 |----------|---|----------|---------|
 | **Sales & Business Development** | 35% | $175,000 | Merchant acquisition, corporate CSR outreach, partnership BD |
-| **Product & Technology** | 25% | $125,000 | Solana NFT minting live, surveillance system, mobile app |
+| **Product & Technology** | 25% | $125,000 | Solana on-chain NFT minting activation (Metaplex + treasury), Solana SOL payment backend wire-up, surveillance system enhancements, continued mobile app build velocity |
 | **Operations & Team** | 25% | $125,000 | Team salaries, VPS infrastructure, tooling |
 | **Legal & Compliance** | 10% | $50,000 | PT establishment, Wakaf endorsement (MUI/BWI), VCS carbon standard |
 | **Marketing & Community** | 5% | $25,000 | Brand campaigns, social media, Green Forum community building |
@@ -1137,7 +1178,7 @@ Beyond capital, the ideal investor brings:
 2. **End-to-end flow is proven, not just promised** — a demonstration merchant ("Akademi Buah Nusantara") on staging exercises every step from land registration through donor adoption, payment processing, and merchant payout. The product is ready to onboard a real merchant the day Sales & BD funding is deployed; we are not pre-product or pre-flow, we are pre-revenue
 3. **IDX Carbon launched 2023** — Indonesia's regulated carbon market is forming; early platform players will capture the registry advantage
 4. **Indonesia's NDC commitments** (29% emission reduction by 2030) create immediate regulatory pressure on corporations to invest in verifiable green programs
-5. **No dominant player** in Indonesia tree-adoption tech with GIS + NFT + Wakaf + AI — first-mover window is closing
+5. **No dominant player** in Indonesia tree-adoption tech with GIS + anti-tamper field evidence + Wakaf + AI (with Solana NFT activating Q3 2026) — first-mover window is closing
 6. **International from day one** — multi-language, multi-currency, Wakaf tier for Gulf market — rare for an Indonesia-based greentech startup at seed stage
 
 ---
@@ -1156,7 +1197,7 @@ Beyond capital, the ideal investor brings:
 | Search | Meilisearch |
 | Maps | Mapbox GL JS (web) + Mapbox Static API (mobile watermark) + flutter_map |
 | Storage | Cloudflare R2 (media + APK distribution, zero-egress) |
-| Payment | Midtrans Snap (IDR) + Solana (SOL) |
+| Payment | Midtrans Snap (IDR) live in production · Solana (SOL) UI built, backend wire-up Q3 2026 |
 | Blockchain | Solana (SPL NFT) — minting Q3 2026 |
 | AI | Bot Tira — Gemini + function-calling against live platform data |
 | Auth | JWT (4h access + 30d refresh, mutex queue), Google OAuth, Solana SIWS |
@@ -1234,4 +1275,4 @@ Concrete execution log between PRD revisions. Each phase ships through Linear (i
 
 *© 2026 AdopTree World. All projections are forward-looking estimates based on comparable greentech platforms in Southeast Asia. Actual results may differ.*
 
-*Document version 2.2 · May 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
+*Document version 2.3 · June 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
