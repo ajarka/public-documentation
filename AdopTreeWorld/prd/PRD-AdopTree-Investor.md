@@ -109,17 +109,52 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 ### 2.2 Dewan Pembina / Advisors
 
-| Name | Role | Domain |
-|------|------|--------|
-| **Ahmad Junaedi** | Pembina / Mentor | Environmental governance, NGO operations |
-| **Udoro KA** | Advisor | Strategic guidance |
+#### 🏛️ Akhmad Junaidi, S.E., M.E. — Pembina / Government Domain
+
+**Role:** Strategic advisor for government relations, policy navigation, and access to Indonesia's research and cooperative ecosystems.
+
+**Affiliation:** Researcher at **Badan Riset dan Inovasi Nasional (BRIN)** — specifically the **Pusat Riset Koperasi, Korporasi, dan Ekonomi Kerakyatan (PRKKEK)** under the Research Organization for Governance, Government, Economy, and Public Welfare (ORTKPEKM).
+
+**Research focus:** Cooperative Management · Micro Finance · Digitalization of Accounting for Cooperatives and SMEs · MSME Resilience. Notable publication: *"Ketahanan UMKM di Indonesia menghadapi Resesi Ekonomi"* (Jurnal Ekonomi dan Pembangunan BRIN, co-authored with Eugenia Mardanugraha).
+
+**Education:** Master of Economics (M.E.) / MBA.
+
+**Why this matters for AdopTree:** PRKKEK's research mandate covers **koperasi, BUMN, BUMD, BUMDes, and rural MSMEs** — precisely the institutional layer AdopTree partners with on the supply side (NGOs, land-managing organizations, village cooperatives). Pak Akhmad's BRIN affiliation gives AdopTree:
+- Direct credibility in government and academic stakeholder conversations
+- Access to cooperative and rural enterprise networks for Land Owner partnerships
+- Policy guidance on emerging carbon, ESG, and sustainability regulations
+- Research collaboration potential for evidence-based impact reporting
+
+**Connect:** [linkedin.com/in/akhmad-junaidi-37855a341](https://www.linkedin.com/in/akhmad-junaidi-37855a341) · [BRIN profile page](https://brin.go.id/ortkpekm/pusat-riset-koperasi-korporasi-dan-ekonomi-kerakyatan/page/profil-akhmad-junaidi-seme)
+
+---
+
+#### 🌾 Ir. Udhoro Kasih Anggoro, M.S. — Advisor / Agriculture & Strategic Networks
+
+**Role:** Strategic advisor for institutional partnerships, agricultural value chains, and international (Japan) corporate networks.
+
+**Current affiliation:** Executive Advisor at **Indonesia-Japan Business Network**.
+
+**Background:** Career civil servant and agricultural policy executive. Former **Direktur Jenderal Tanaman Pangan** at the **Kementerian Pertanian Republik Indonesia** (Director General of Food Crops, Ministry of Agriculture). Held the rank of Pembina Utama (IV/e). Earlier role at **PT Pupuk Kujang** and participation in the restructuring team for Indonesia's state-owned fertilizer companies (PT Pusri, PT PIM, PT Pupuk Kujang, PT Pupuk Kaltim, PT Petrokimia Gresik) — a joint program with **PricewaterhouseCoopers (PwC)** and financing from the **Asian Development Bank**.
+
+**Education:** **Institut Pertanian Bogor (IPB)** — Indonesia's leading agricultural university.
+
+**Why this matters for AdopTree:** Pak Udhoro's three decades in agricultural policy and BUMN restructuring give AdopTree:
+- Deep familiarity with Indonesia's agricultural land governance — directly applicable to Land Owner partnerships and reforestation site selection
+- BUMN restructuring experience translates to credibility when AdopTree engages corporate CSR programs at scale (the same BUMN ecosystem he reformed are now CSR-budget sources)
+- Indonesia-Japan corridor access for future international expansion (Japan is a leading buyer of voluntary carbon credits and ESG-verified impact projects)
+- IPB network — Indonesia's top agricultural research talent pipeline
+
+**Connect:** [linkedin.com/in/udhoro-kasih-anggoro-6b392067](https://www.linkedin.com/in/udhoro-kasih-anggoro-6b392067/)
+
+---
 
 ### 2.3 Why This Team
 
 - **CTO-led, not founder-promised**: Aditira built the entire platform — backend, web, mobile, infrastructure — *before* raising capital. Staging is live, APK ships weekly. The single biggest pre-seed greentech risk ("can they build?") is already resolved.
 - **Triangulated coverage from day one**: Business & partnerships (CKsan, CEO) · Technology & product (Aditira, CTO) · Brand & visual identity (BEKs, CMD) — every critical function has a dedicated owner, no role gaps.
 - **Operator backgrounds**: CKsan brings telecom-engineering rigor (Ericsson, TeleChoice); Aditira brings edtech-scale shipping discipline (Ruangguru, BrainCode); BEKs brings 10+ years of brand systems for established Indonesian companies (Waskita Karya, OB Magazine, PT Kios).
-- **Advised by practitioners**: Pak Ahmad Junaedi & Pak Udoro KA bring domain expertise in environmental governance and strategic positioning — the two areas where a tech-first founding team most needs guidance.
+- **Advised by senior practitioners**: Pak Akhmad Junaidi (BRIN — Government & cooperative research) and Pak Udhoro Kasih Anggoro (former Dirjen Tanaman Pangan · Indonesia-Japan Business Network) bring the institutional, policy, and partnership networks a tech-first founding team most needs to scale beyond initial product-market fit.
 
 ---
 
