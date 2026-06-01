@@ -308,15 +308,42 @@ Year 3 realistic capture target:
 ### 6.1 Platform Architecture (Multi-sided)
 
 ```mermaid
-graph TD
-    Donor["🙋 Individual Donor"] -->|Adopt Tree, Pay| Platform["🌳 AdopTree Platform"]
-    Corp["🏛️ Corporate / CSR"] -->|Bulk Adoption, ESG Reports| Platform
-    Platform -->|Stewardship Revenue| Merchant["🏢 Merchant / NGO"]
-    Merchant -->|Manage Lands & Trees| Platform
-    LandOwner["🌾 Land Owner"] -->|Partnership| Merchant
-    Platform -->|NFT Mint| Solana["🔮 Solana Blockchain"]
-    Platform -->|Verified Data| Impact["🌍 Real Impact"]
-    Platform -->|Platform Fee| Revenue["💰 Revenue"]
+flowchart TB
+    subgraph Demand["💚 Demand Side"]
+        direction LR
+        Donor["🙋 Individual<br/>Donor"]
+        Corp["🏛️ Corporate<br/>CSR"]
+    end
+
+    Platform["🌳 <b>AdopTree Platform</b><br/><i>multi-sided marketplace</i>"]
+
+    subgraph Supply["🌱 Supply Side"]
+        direction LR
+        LandOwner["🌾 Land<br/>Owner"]
+        Merchant["🏢 Merchant<br/>NGO"]
+    end
+
+    Solana["🔮 Solana NFT"]
+    Impact["🌍 Real Impact"]
+    Revenue["💰 Platform Revenue"]
+
+    Donor -->|Adopt + Pay| Platform
+    Corp -->|Bulk + ESG| Platform
+    Platform -->|Stewardship $$| Merchant
+    Merchant -->|Manage Trees| Platform
+    LandOwner -->|Partnership| Merchant
+    Platform ==>|NFT Mint| Solana
+    Platform ==>|Verified Data| Impact
+    Platform ==>|Platform Fee| Revenue
+
+    classDef demand fill:#dcfce7,stroke:#16a34a,color:#115031
+    classDef platform fill:#115031,stroke:#86efac,color:#fff,stroke-width:3px
+    classDef supply fill:#fef3c7,stroke:#f59e0b,color:#92400e
+    classDef outputs fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:2px
+    class Donor,Corp demand
+    class Platform platform
+    class LandOwner,Merchant supply
+    class Solana,Impact,Revenue outputs
 ```
 
 ### 6.2 Feature Matrix
