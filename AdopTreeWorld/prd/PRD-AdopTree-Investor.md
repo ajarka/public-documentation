@@ -4,8 +4,6 @@
 > **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
 >
-> **v2.4 highlights** — Founder revision pass from CKsan (Pak Cookie). New §0 **Background & Problems** establishing the 7 root-cause gaps AdopTree exists to solve. §1 Executive Summary expanded with the **"trusted multiverse Green field ecosystem"** framing, expanded Mission statement (devotion + counterbalance + amplifying global Green Eco movement), broader stakeholder map (caretakers · investors · legal authority · supplementary merchants), and 8 explicit use-case categories (Crowdfunding · Carbon Recycling Center · Land Aggregator · Carbon Investment · Marketplace [Next Phase] · CSR Delivery · Green Eco Social Media · Web3 NFT Solana [Next Phase]). CKsan founder bio enriched with his personal Motto.
->
 > **v2.3 highlights** — Blockchain & NFT claims honesty pass: every Solana/NFT mention re-scoped to match shipped reality. New §10.5 Blockchain Status Disclosure section. Advisors enriched with verified profiles (Akhmad Junaidi — BRIN · Udhoro Kasih Anggoro — IPB / Indonesia-Japan Business Network).
 >
 > **v2.2 highlights** — Full visual refresh with inline web, mobile, and market visuals across every section · Solution and financial diagrams upgraded to professional charts · Founder bios expanded.
