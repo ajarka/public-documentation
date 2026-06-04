@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.3 · June 2026
+### Investor Edition · v2.4 · June 2026
 
 > **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.4 highlights** — Founder revision pass from CKsan (Pak Cookie). New §0 **Background & Problems** establishing the 7 root-cause gaps AdopTree exists to solve. §1 Executive Summary expanded with the **"trusted multiverse Green field ecosystem"** framing, expanded Mission statement (devotion + counterbalance + amplifying global Green Eco movement), broader stakeholder map (caretakers · investors · legal authority · supplementary merchants), and 8 explicit use-case categories (Crowdfunding · Carbon Recycling Center · Land Aggregator · Carbon Investment · Marketplace [Next Phase] · CSR Delivery · Green Eco Social Media · Web3 NFT Solana [Next Phase]). CKsan founder bio enriched with his personal Motto.
 >
 > **v2.3 highlights** — Blockchain & NFT claims honesty pass: every Solana/NFT mention re-scoped to match shipped reality. New §10.5 Blockchain Status Disclosure section. Advisors enriched with verified profiles (Akhmad Junaidi — BRIN · Udhoro Kasih Anggoro — IPB / Indonesia-Japan Business Network).
 >
@@ -14,6 +16,7 @@
 
 ## Table of Contents
 
+0. [Background & Problems](#0-background--problems) *(new in v2.4)*
 1. [Executive Summary](#1-executive-summary)
 2. [Team](#2-team)
 3. [Problem Statement](#3-problem-statement)
@@ -26,31 +29,81 @@
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
 10. [Technology Architecture](#10-technology-architecture)
-    - 10.1 Stack · 10.2 Why Rust · 10.3 Differentiators · 10.4 Mobile Architecture *(new in v2.1)*
+    - 10.1 Stack · 10.2 Why Rust · 10.3 Differentiators · 10.4 Mobile Architecture *(new in v2.1)* · 10.5 Blockchain Status Disclosure *(new in v2.3)*
 11. [Competitive Landscape](#11-competitive-landscape)
 12. [Go-to-Market Strategy](#12-go-to-market-strategy)
 13. [Roadmap & Milestones](#13-roadmap--milestones)
 14. [Financial Projections](#14-financial-projections)
 15. [Risks & Mitigations](#15-risks--mitigations)
 16. [Investment Ask](#16-investment-ask)
-- Appendix: A. Tech Stack · B. Visualization Assets · C. Glossary · D. Delivered Phases v2.0→v2.1 *(new)*
+- Appendix: A. Tech Stack · B. Visualization Assets · C. Glossary · D. Delivered Phases
+
+---
+
+## 0. Background & Problems
+
+AdopTree World exists to address a set of **structural failures** in the global Green Eco landscape — gaps that conventional reforestation, CSR, and impact-funding programs have been unable to close on their own.
+
+| # | Root-cause Problem | Why It Matters |
+|---|---|---|
+| 1 | **Rapid environmental damage and deforestation** with unbalanced revitalization and restoration | The destruction rate exceeds the response rate; isolated programs do not aggregate into measurable impact |
+| 2 | **Air quality degradation, pollution, natural disasters, and climate change** lead to discomfort, unhealthy, and unsafe life situations | Every stakeholder — citizen, corporate, government — already bears the cost; the question is who organizes the response |
+| 3 | **Fraud in delivery / implementation** of restoration funds | Without verifiable evidence, "we planted X trees" claims cannot be audited — eroding donor trust and creating space for misappropriation |
+| 4 | **Weak supervision** in restoration-fund distribution and implementation | Funders lack tooling to verify each stage; oversight is typically post-hoc, paper-based, and easy to game |
+| 5 | **Lack of land-preservation tools and media surveillance** | Land-stewarding NGOs and cooperatives manage forest plots with spreadsheets and WhatsApp; surveillance is expensive and ad-hoc |
+| 6 | **Lack of a media aggregator** for the Green Eco movement and coordination | Donors, merchants, regulators, and field contributors operate in silos; no shared data layer means duplicated effort and no compounding network effect |
+| 7 | **Low trust in funds delivery and implementation** | The cumulative effect of the above gaps — donors disengage, corporate CSR programs default to photo-ops, and capital that wants to flow into environmental restoration does not |
+
+AdopTree World is the **integrated response to all seven** — a single trusted platform that aggregates land, funders, verification tooling, and a Green Eco community in one transparent ecosystem.
 
 ---
 
 ## 1. Executive Summary
 
-**AdopTree World** is a multi-sided technology platform connecting donors (individuals, corporates, NGOs, governments) with verified reforestation land owners — making tree adoption transparent, trackable, and financially meaningful.
+**AdopTree World** is a trusted multiverse **"Green field" ecosystem platform** (crowdfunding, marketplace, social community forum) where all the "Green Eco" stakeholders gather to support the earth's revitalization across re-forestation, agriculture, soil revitalization, land preservation, and conservation.
+
+### Mission
+
+As a form of **devotion and worship** to God, fellow human beings, the earth, and the universe — to create a better, healthier, and more comfortable life (**Universal Mission**). As a **counterbalance** to environmental damage and deforestation. As an **air-quality restoration and revitalization center**. **Amplifying the world's Green Eco movement**.
+
+### Vision
+
+To be the world's most trusted **carbon recycling center** — a multiverse platform where donors meet eco-caretakers through Social Media, Marketplace, and Green Forum in a legally-compliant, fully transparent ecosystem. To be the world's **"Green Lung" center**. To be the most reliable and leading **"Green Eco" platform** in the world.
+
+### AdopTree World Stakeholders
+
+| Stakeholder | Who | Role on the Platform |
+|---|---|---|
+| **Land Owners / Caretakers** | Individuals, corporates, NGOs, governments | Register and steward verified reforestation land plots |
+| **"Green Eco" Investors / Donors** | Individuals, corporates, NGOs, governments | Adopt trees, fund campaigns, sponsor CSR packages, allocate ESG budget |
+| **Legal Certification Authority** | Notary, MUI (Shariah), VCS / Gold Standard, KLHK, BWI | Issue certificates, validate Wakaf compliance, attest carbon credits |
+| **Supplementary Merchants** | Fertilizer suppliers, equipment / tooling vendors, agritech partners | Operate the marketplace layer that supports land stewardship at scale |
+
+All stakeholders are **trusted and verified** — making tree adoption transparent, trackable, and financially meaningful.
+
+### Features & Use Cases
+
+1. **Main use case** — A trusted re-forestation / agriculture / preservation / conservation **crowdfunding platform** where all stakeholders & every community element can participate to **monitor, contribute, and verify** the implementation of the fund.
+2. **Carbon recycling center** — Aggregated CO₂ sequestration accounting, per-tree and per-hectare, ready for carbon-credit certification.
+3. **Land aggregator** — Multiple plots, multiple merchants, one unified discovery and ownership layer.
+4. **Carbon investment ecosystem** — Long-horizon environmental capital allocation with verifiable impact metrics for institutional-grade ESG reporting.
+5. **Re-forestation / agriculture / preservation / conservation marketplace** *(Next Phase)* — A trading layer connecting merchants and buyers around supplementary goods (fertilizer, tools, seedlings, carbon credits).
+6. **Trusted "Green Eco" CSR delivery platform** with periodic surveillance and reporting system.
+7. **"Green Eco" social media & community platform** — Green Forum where stakeholders coordinate, share, and amplify the movement.
+8. **Web3 NFT Solana-based ecosystem** *(Next Phase)* — Transferable on-chain certificates for the AdopTree tier (see §10.5 Blockchain Status for shipped vs. roadmap detail).
+
+### Why it's defensible today
 
 Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. **Blockchain infrastructure (Solana SIWS wallet authentication + NFT metadata schema)** is in place; on-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
 
-**Vision:** To be the world's most trusted carbon recycling center — a multiverse platform where donors meet eco caretakers through Social Media, Marketplace, and Green Forum in a legally-compliant, fully transparent ecosystem.
+### The opportunity is significant
 
-**The opportunity is significant:**
 - Indonesia's forests cover 91 million hectares — one of the largest carbon sinks on Earth — yet deforestation continues at ~600,000 ha/year
 - Global voluntary carbon market is projected to reach **$50 billion by 2030**
 - Indonesian corporate CSR spending exceeds **$1 billion/year**, with ~20% directed to environmental programs
 
-**Current traction:**
+### Current traction
+
 - Web platform fully operational at `staging.adoptreeworld.com`
 - **Android Field App live** — APK Build 14 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
@@ -71,9 +124,11 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 #### 🌳 Sandhy Krisnamurthi — Chief Executive Officer ("CKsan")
 
-**Role:** Founder, business strategy, investor relations, strategic partnerships (corporate CSR, government/MUI, land owners).
+**Role:** Founder, system designer, business strategy, investor relations, strategic partnerships (corporate CSR, government / MUI, land owners).
 
-**Background:** Telecommunications & RF engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator who pivoted to building a verifiable-impact greentech platform after seeing firsthand the lack of accountability in traditional reforestation programs.
+**Background:** Telecommunications Design & Engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator who pivoted to building a verifiable-impact greentech platform after seeing firsthand the lack of accountability in traditional reforestation programs.
+
+**Motto:** *Every step is devotion to God and must have positive impact for The people and The Universe.. and fortune shall follow..*
 
 **Why he founded AdopTree:** The 91M ha of Indonesian forest is too important to leave to "trust me, we planted them" PDF reports. CKsan's engineering rigor shaped AdopTree's core thesis: *every tree must be measurable, verifiable, and tradeable*.
 
@@ -83,13 +138,19 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 
 #### 💻 Aditira Jamhuri — Chief Technology Officer
 
-**Role:** Platform architecture, full-stack engineering, product delivery, technical hiring, infrastructure.
+**Role:** Co-founder, platform architect, full-stack engineering lead, infrastructure & CI/CD ownership, product delivery, technical hiring.
 
-**Background:** 5+ years senior software engineer. Master Instructor at **Ruangguru CAMP** (Indonesia's largest edtech) — built bots that auto-graded assignments for hundreds of students. 3+ years at **BrainCode** (Indonesia's specialist in mobile services) mentoring mid-level engineers and modernizing legacy systems. Currently Senior Project Manager / Business Analyst level with deep full-stack expertise (Rust/Axum backend, Next.js/TypeScript frontend, Flutter mobile).
+**Background:** Senior software engineer with deep full-stack expertise. Master Instructor at **Ruangguru CAMP** — Indonesia's largest edtech company — where he engineered automation tooling that graded assignments for hundreds of students per cohort. Earlier, 3+ years at **BrainCode** (Indonesia's specialist in mobile services) mentoring mid-level engineers and modernizing legacy systems at production scale.
 
-**What he ships at AdopTree:** Single-handedly architected and built the entire production stack — backend (Rust + PostgreSQL + SQLx), web platform (Next.js + Mapbox + Solana wallet), Android Field App (Flutter + offline-first sync + GPS-locked camera), and CI/CD pipeline (Jenkins → VPS Docker).
+**Motto:** *Build systems, not features. Plant forests, not trees. Think in decades, deploy daily.*
 
-**Why this matters for investors:** AdopTree is **CTO-led**, not founder-promise. The platform exists, runs on staging 24/7, and ships at high velocity — eliminating the #1 risk in pre-seed greentech investments: "Will they actually build it?"
+**What he has shipped at AdopTree:** Architected and built the production stack end-to-end — Rust/Axum backend, Next.js/TypeScript web platform, Flutter Android Field App with offline-first sync and GPS-watermarked anti-tamper camera, plus a complete CI/CD pipeline (Jenkins → Docker → VPS). Concrete execution evidence:
+- **17 product phases delivered** between v2.0 → v2.1 (Apr → May 2026)
+- **9 production APK builds** shipped across the Field App in **5 weeks** (Build 6 → Build 14)
+- Platform live on staging 24/7 at `staging.adoptreeworld.com` — not a prototype, not a slide
+- Designed Solana SIWS wallet authentication + NFT metadata schema; minting pipeline scoped for Q3 2026 (see §10.5)
+
+**Why this matters for investors:** AdopTree is **CTO-led from day one**, not founder-promised. The "Will they actually build it?" risk — the single most common reason pre-seed greentech investments stall — is already retired. Aditira built the platform lean and solo to prove the architecture; with seed capital his immediate next move is scaling a small, senior team around the proven foundation rather than rewriting it.
 
 **Connect:** [linkedin.com/in/aditira-jamhuri-82698311b](https://www.linkedin.com/in/aditira-jamhuri-82698311b/)
 
@@ -1275,4 +1336,4 @@ Concrete execution log between PRD revisions. Each phase ships through Linear (i
 
 *© 2026 AdopTree World. All projections are forward-looking estimates based on comparable greentech platforms in Southeast Asia. Actual results may differ.*
 
-*Document version 2.3 · June 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
+*Document version 2.4 · June 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
