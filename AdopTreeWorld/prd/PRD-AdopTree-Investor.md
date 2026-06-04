@@ -88,7 +88,8 @@ All stakeholders are **trusted and verified** — making tree adoption transpare
 5. **Re-forestation / agriculture / preservation / conservation marketplace** *(Next Phase)* — A trading layer connecting merchants and buyers around supplementary goods (fertilizer, tools, seedlings, carbon credits).
 6. **Trusted "Green Eco" CSR delivery platform** with periodic surveillance and reporting system.
 7. **"Green Eco" social media & community platform** — Green Forum where stakeholders coordinate, share, and amplify the movement.
-8. **Web3 NFT Solana-based ecosystem** *(Next Phase)* — Transferable on-chain certificates for the AdopTree tier (see §10.5 Blockchain Status for shipped vs. roadmap detail).
+8. **"The Green Assets" implementation tracker** — Together, the **GIS layer** (tree-level GPS polygons, satellite-aligned land plots) and the **mobile field application** (Field App with watermarked anti-tamper camera and dual-gate inspection) form a powerful end-to-end system for tracking the real-world implementation of every adopted "Green Asset" — from initial registration through periodic surveillance.
+9. **Web3 NFT Solana-based ecosystem** *(Next Phase)* — Transferable on-chain certificates for the AdopTree tier (see §10.5 Blockchain Status for shipped vs. roadmap detail).
 
 ### Why it's defensible today
 
