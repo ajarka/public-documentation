@@ -4,6 +4,8 @@
 > **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
 >
+> **v2.4 highlights** — Founder revision pass from CKsan (Pak Cookie). New §0 **Background & Problems** establishing the 7 root-cause gaps AdopTree exists to solve. §1 Executive Summary expanded with the **"trusted multiverse Green field ecosystem"** framing, expanded Mission statement (devotion + counterbalance + amplifying global Green Eco movement), broader stakeholder map (caretakers · investors · legal authority · supplementary merchants), and 8 explicit use-case categories (Crowdfunding · Carbon Recycling Center · Land Aggregator · Carbon Investment · Marketplace [Next Phase] · CSR Delivery · Green Eco Social Media · Web3 NFT Solana [Next Phase]). CKsan founder bio enriched with his personal Motto.
+>
 > **v2.3 highlights** — Blockchain & NFT claims honesty pass: every Solana/NFT mention re-scoped to match shipped reality. New §10.5 Blockchain Status Disclosure section. Advisors enriched with verified profiles (Akhmad Junaidi — BRIN · Udhoro Kasih Anggoro — IPB / Indonesia-Japan Business Network).
 >
 > **v2.2 highlights** — Full visual refresh with inline web, mobile, and market visuals across every section · Solution and financial diagrams upgraded to professional charts · Founder bios expanded.
@@ -905,6 +907,7 @@ graph TB
 
 - **PostGIS** — Geospatial polygon storage and tree-level GPS tracking at sub-meter precision
 - **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates, **and APK distribution** (versioned + `latest.apk` alias)
+- **Mapbox (generous free tier)** — Maps GL JS (web), Static API (mobile watermark), and Mobile SDK run **inside Mapbox's free tier** at AdopTree's current scale: 50,000 web map loads/month, 50,000 Static API requests/month, 25,000 mobile MAU/month, and 100,000 Geocoding calls/month are all complimentary. AdopTree only crosses into paid usage **after** ~25K monthly active app users or ~50K daily web page-views — beyond Year 1 projections (see §14). Strategic cost advantage: zero infrastructure spend on mapping until product-market fit is proven; usage-based pricing thereafter scales linearly with revenue, not ahead of it.
 - **Solana foundation** — Wallet authentication (SIWS — Sign-In With Solana) live in production with ed25519 signature verification; NFT metadata schema + REST API live; on-chain Metaplex minting scheduled Q3 2026 (see §10.5 for honest scope and gap)
 - **Meilisearch** — Sub-millisecond full-text search across 100K+ trees and lands
 - **Multi-language** — English, Indonesian, Arabic (RTL support) — opens Gulf market
