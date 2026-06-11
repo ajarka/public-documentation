@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Montage — umrohlovers.id</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1600px; height:1010px; overflow:hidden; }
+  body {
+    font-family:'Segoe UI', system-ui, sans-serif;
+    background: radial-gradient(1100px 650px at 50% 20%, #122142 0%, #0a142b 55%, #060d1d 100%);
+    color:#e8edf7; position:relative; padding:40px 56px;
+  }
+  .pattern { position:absolute; inset:0; opacity:.05;
+    background-image: repeating-linear-gradient(45deg, #d4a843 0 1px, transparent 1px 28px),
+                      repeating-linear-gradient(-45deg, #d4a843 0 1px, transparent 1px 28px); }
+  .head { position:relative; display:flex; align-items:baseline; gap:18px; margin-bottom:22px; }
+  .head .dot { width:12px; height:12px; border-radius:50%; background:#d4a843; box-shadow:0 0 16px #d4a84388; align-self:center; }
+  h1 { font-size:28px; font-weight:800; }
+  .sub { font-size:14px; color:#9fb0cc; }
+  .grid { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .cell { border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.13);
+          background:#0d1830; box-shadow:0 18px 40px rgba(0,0,0,.45); }
+  .cell img { width:100%; height:360px; object-fit:cover; object-position:top center; display:block; }
+  .cap { display:flex; justify-content:space-between; align-items:center; padding:10px 16px; border-top:1px solid rgba(255,255,255,.08); }
+  .cap .t { font-size:14.5px; font-weight:700; color:#ecc568; }
+  .cap .d { font-size:12px; color:#8b9cba; }
+  .wm { position:absolute; bottom:14px; right:56px; font-size:12.5px; color:#d4a84366; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+<div class="pattern"></div>
+<div class="head"><div class="dot"></div><h1>One platform, every surface shipped</h1><div class="sub">Live on staging — staging.umrohlovers.id · captured June 2026</div></div>
+<div class="grid">
+  <div class="cell"><img src="shot-paket-map.png" alt=""><div class="cap"><div class="t">/paket — Group package marketplace</div><div class="d">Map view · Mapbox clustering across Indonesia</div></div></div>
+  <div class="cell"><img src="shot-mandiri-wizard.png" alt=""><div class="cap"><div class="t">/paket-mandiri — Date-first à la carte wizard</div><div class="d">Flight ±3d · hotel · auto-visa · live cart</div></div></div>
+  <div class="cell"><img src="shot-brand-calendar.png" alt=""><div class="cap"><div class="t">Brand dashboard — Manasik calendar</div><div class="d">Branch self-service · scheduling, RSVP, attendance</div></div></div>
+  <div class="cell"><img src="shot-admin-revenue.png" alt=""><div class="cap"><div class="t">Admin — Revenue ledger</div><div class="d">10 streams · KPI, source &amp; cabang breakdowns</div></div></div>
+</div>
+<div class="wm">umrohlovers.id · PRD v1.0</div>
+</body>
+</html>

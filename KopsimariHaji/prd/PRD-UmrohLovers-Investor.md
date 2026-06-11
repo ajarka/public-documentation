@@ -419,7 +419,7 @@ flowchart TB
 | **Webhook security** | HMAC signature verification + idempotency keys | ✅ Shipped |
 | **Performance** | gzip + Redis caching (observed 18× cache hit), k6 validated at 1,000 VUs, Lighthouse 92+/96/99/100 | ✅ Shipped |
 
-![Four-grid product montage — /paket map view, mandiri wizard, brand dashboard calendar, admin Kanban](assets/prd/web/product-montage.png)
+![Four-grid product montage — /paket map view, mandiri wizard, brand dashboard calendar, admin revenue ledger](assets/prd/web/product-montage.png)
 *Figure 3 — Product surface montage: (1) /paket Traveloka-style toolbar with grid/list/map, (2) Paket Mandiri stepper with auto-visa card, (3) brand-dashboard manasik calendar, (4) admin KYC Kanban. All live on staging.*
 
 ### 6.3 Paket Mandiri — the Date-First À La Carte Wizard (Unique)
