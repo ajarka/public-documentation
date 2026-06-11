@@ -137,11 +137,15 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 ---
 
-#### 💼 Cokie "CKsan" (Pak Cookie) — Strategic Partner, BD & Marketing
+#### 💼 Sandhy Krisnamurthi — Chief Executive Officer ("CKsan")
 
-**Role:** Business vision, go-to-market, marketing materials, bridge to the SII/KOPSIMARI institutional network.
+**Role:** Business vision, system design, go-to-market, investor relations, and the bridge to the SII/KOPSIMARI institutional network.
+
+**Background:** Telecommunications Design & Engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator and serial platform builder: concurrently CEO of **AdopTree World**, the verifiable-impact greentech platform he co-founded with the same core team.
 
 **Contribution to date:** Architected the "Rumah Sinergi" multi-stakeholder model in the foundational design meetings; owns the five-angle public presentation program (jamaah, travel agents, Indonesian vendors, Saudi vendors, branches), Salam Radio (SII's media arm) coordination, and the Arabic translation track for Saudi vendor onboarding.
+
+**Connect:** [linkedin.com/in/sandhy-krisnamurthi-083a6336](https://www.linkedin.com/in/sandhy-krisnamurthi-083a6336/)
 
 ---
 
@@ -168,7 +172,7 @@ The surrounding ecosystem includes **LPDB** (the government's cooperative revolv
 ### 2.3 Why This Team
 
 - **Built before raised** — the entire platform exists and is verifiable on staging today; engineering risk is retired.
-- **Every layer covered** — technology (Aditira), market & narrative (Cokie), capital & supply-side BD (Lukman), institutional trust (SII/KOPSIMARI network).
+- **Every layer covered** — technology (Aditira), market & narrative (Sandhy), capital & supply-side BD (Lukman), institutional trust (SII/KOPSIMARI network).
 - **The moat is the combination** — a tech team alone cannot get Saudi base prices or a cooperative legal structure; an institution alone cannot ship a dual-engine marketplace in five weeks. This team has both halves.
 
 ---
@@ -1022,4 +1026,4 @@ Concrete execution log — the entire platform below was designed, built, and E2
 
 *© 2026 umrohlovers.id — PT ARTASI · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
 
-*Document version 1.0 · June 2026 · Prepared by the umrohlovers team — Aditira Jamhuri (Tech Lead/CTO), with Cokie "CKsan" and Lukman (Lead Investor/BD).*
+*Document version 1.0 · June 2026 · Prepared by the umrohlovers team — Sandhy Krisnamurthi (CEO), Aditira Jamhuri (Tech Lead/CTO), with Lukman (Lead Investor/BD).*
