@@ -3,7 +3,7 @@
 
 > **Status** — Full platform live on staging (`staging.umrohlovers.id`) · Amani Bank integration in MoU stage (mock client shipped, technical spec delivered & accepted) · Pilot target Q3 2026 · Full public launch target November 2026 (Munas Syarikat Islam, Surabaya)
 >
-> **Branding chain** — **umrohlovers.id** (product) · by **PT ARTASI** (operator) · by **KOPSIMARI** — Koperasi Syarikat Islam Mandiri, the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905).
+> **Branding chain** — **umrohlovers.id** (product) · operated by **PT Arta Cipta Kreasi (ARTASI)** in partnership with **KOPSIMARI** (Koperasi Syarikat Islam Mandiri) — the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905), with a mature ~40-million-person network across Indonesia and the Middle East.
 >
 > **Honesty standard** — This document follows a strict SHIPPED vs MOCK vs PLANNED disclosure discipline. The platform is **pre-revenue with zero real transactions**: every feature marked ✅ is live on staging and verified end-to-end; the bank integration runs against a mock client pending MoU; the pilot has not started. Investors performing technical due diligence should find no surprises here.
 
@@ -54,11 +54,11 @@ umrohlovers.id is the **integrated response to all seven** — a member-gated ma
 
 ## 1. Executive Summary
 
-**umrohlovers.id** is a digital hajj & umroh marketplace — **"Rumah Sinergi"** (House of Synergy) — that connects jamaah, licensed travel agents (PPIU/PIHK), field sales agents, kabupaten-level community branches, Indonesian and Saudi vendors, and an Islamic partner bank into a single trusted ecosystem under the legal umbrella of a cooperative (KOPSIMARI) with 120 years of institutional heritage (Syarikat Islam, est. 1905).
+**umrohlovers.id** is a digital hajj & umroh marketplace operated by **PT Arta Cipta Kreasi (ARTASI)** in partnership with the **Koperasi Syarikat Islam Mandiri (KOPSIMARI)** — the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905), with a mature network reaching an estimated **40 million people** across Indonesia and the Middle East. The platform carries the vision of **"Rumah Sinergi"** (House of Synergy) — a multi-stakeholder collaboration space uniting the cooperative, licensed travel agents (PPIU/PIHK), field sales agents, kabupaten-level community branches, Indonesian and Saudi vendors, and an Islamic partner bank into a single trusted ecosystem — under the tagline *"Berhaji & Berumroh dengan Aman dan Nyaman"* (Performing Hajj & Umroh with Safety and Comfort).
 
 ### Mission
 
-To make the pilgrimage journey **safe end-to-end** — *"Berhaji & Berumroh dengan Aman"* — by removing the structural conditions that made fraud possible: pooled funds, unverified operators, and opaque pricing. Every rupiah a jamaah saves or pays sits in **their own named bank account**, released only as real milestones (visa issued, ticket issued, departure) are met.
+To make the pilgrimage journey **safe and comfortable end-to-end** — *"Berhaji & Berumroh dengan Aman dan Nyaman"* — by removing the structural conditions that made fraud possible: pooled funds, unverified operators, and opaque pricing. Every rupiah a jamaah saves or pays sits in **their own named bank account**, released only as real milestones (visa issued, ticket issued, departure) are met.
 
 ### Vision
 
@@ -118,7 +118,27 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 ## 2. Team
 
-### 2.1 Operating Team
+### 2.1 Founding Team
+
+#### 🤝 Lukman — Founder & Chairman / Chief Executive Officer
+
+**Role:** Founder, Chairman & CEO — capital strategy, supply-side relationships, and investor relations. Leads the Amani Bank directors' track, direct Saudi hotel contracting (Jeddah onboarding program), and direct airline relationships (Garuda, Lion, Saudia).
+
+**Contribution to date:** Set the revised commercial targets (20,000–50,000 accounts Year 1; 100,000–150,000 by Year 3), the Amani partnership structure, and the November 2026 Munas SI launch strategy. Drives the investor syndicate and bank-side negotiations.
+
+---
+
+#### 💼 Sandhy Krisnamurthi — Founder & President ("Cokie" / "CKsan")
+
+**Role:** Founder & President — business vision, system design, go-to-market, and the bridge to the SII/KOPSIMARI institutional network.
+
+**Background:** Telecommunications Design & Engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator and serial platform builder: concurrently CEO of **AdopTree World**, the verifiable-impact greentech platform he co-founded with the same core team.
+
+**Contribution to date:** Architected the "Rumah Sinergi" multi-stakeholder model in the foundational design meetings; owns the five-angle public presentation program (jamaah, travel agents, Indonesian vendors, Saudi vendors, branches), Salam Radio (SII's media arm) coordination, and the Arabic translation track for Saudi vendor onboarding.
+
+**Connect:** [linkedin.com/in/sandhy-krisnamurthi-083a6336](https://www.linkedin.com/in/sandhy-krisnamurthi-083a6336/)
+
+---
 
 #### 💻 Aditira Jamhuri — Tech Lead / CTO
 
@@ -137,26 +157,6 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 ---
 
-#### 💼 Sandhy Krisnamurthi — Chief Executive Officer ("CKsan")
-
-**Role:** Business vision, system design, go-to-market, investor relations, and the bridge to the SII/KOPSIMARI institutional network.
-
-**Background:** Telecommunications Design & Engineering background — formerly with **Ericsson** and **TeleChoice International**. Engineering-trained operator and serial platform builder: concurrently CEO of **AdopTree World**, the verifiable-impact greentech platform he co-founded with the same core team.
-
-**Contribution to date:** Architected the "Rumah Sinergi" multi-stakeholder model in the foundational design meetings; owns the five-angle public presentation program (jamaah, travel agents, Indonesian vendors, Saudi vendors, branches), Salam Radio (SII's media arm) coordination, and the Arabic translation track for Saudi vendor onboarding.
-
-**Connect:** [linkedin.com/in/sandhy-krisnamurthi-083a6336](https://www.linkedin.com/in/sandhy-krisnamurthi-083a6336/)
-
----
-
-#### 🤝 Lukman — Lead Investor / Strategic BD
-
-**Role:** Capital strategy and supply-side relationships: Amani Bank directors' track, direct Saudi hotel contracting (Jeddah onboarding program), and direct airline relationships (Garuda, Lion, Saudia).
-
-**Contribution to date:** Set the revised commercial targets (20,000–50,000 accounts Year 1; 100,000–150,000 by Year 3), the Amani partnership structure, and the November 2026 Munas SI launch strategy. Drives the investor syndicate and bank-side negotiations.
-
----
-
 ### 2.2 Institutional Network — KOPSIMARI / Syarikat Islam
 
 The platform's parent cooperative sits inside an institutional network of unusual depth for a seed-stage venture (per internal strategic-profile research; roles as publicly known):
@@ -172,7 +172,7 @@ The surrounding ecosystem includes **LPDB** (the government's cooperative revolv
 ### 2.3 Why This Team
 
 - **Built before raised** — the entire platform exists and is verifiable on staging today; engineering risk is retired.
-- **Every layer covered** — technology (Aditira), market & narrative (Sandhy), capital & supply-side BD (Lukman), institutional trust (SII/KOPSIMARI network).
+- **Every layer covered** — capital, supply-side BD & bank track (Lukman, Chairman/CEO), business vision, system design & institutional bridge (Sandhy, President), technology built end-to-end (Aditira, CTO), institutional trust (SII/KOPSIMARI network).
 - **The moat is the combination** — a tech team alone cannot get Saudi base prices or a cooperative legal structure; an institution alone cannot ship a dual-engine marketplace in five weeks. This team has both halves.
 
 ---
@@ -330,7 +330,7 @@ Anchored to the commercial targets set by the business team (June 2026): **100,0
 ## 6. Product Overview
 
 ![Landing page hero — umrohlovers.id with dual CTA and Kaaba photography](assets/prd/web/landing-hero.png)
-*Figure 2 — Live at `staging.umrohlovers.id`. Premium landing with the "Berhaji & Berumroh dengan Aman" promise, dual entry (Paket Grup · Paket Mandiri), and umrohlovers-dominant branding with ARTASI + KOPSIMARI attribution.*
+*Figure 2 — Live at `staging.umrohlovers.id`. Premium landing with the "Berhaji & Berumroh dengan Aman dan Nyaman" promise, dual entry (Paket Grup · Paket Mandiri), and umrohlovers-dominant branding with ARTASI + KOPSIMARI attribution.*
 
 ### 6.1 Platform Architecture (Multi-sided)
 
@@ -490,7 +490,7 @@ stateDiagram-v2
 |---|---|
 | Partnership proposal (doc 40) delivered to Amani Bank | ✅ Delivered, revised per investor feedback (June 2026) |
 | Technical specification (doc 41) delivered | ✅ Delivered & accepted at working level |
-| Directors' meeting / MoU | 🚧 In progress — lead investor track, June 2026 |
+| Directors' meeting / MoU | 🚧 In progress — Chairman/CEO track, June 2026 |
 | Sandbox / production API access | 📋 Post-MoU (target: August 2026 sandbox, September integration sprint) |
 
 #### What this means for the raise
@@ -878,7 +878,7 @@ gantt
 
 ### 14.4 Why the volume targets are credible (and where they aren't)
 
-- **For**: the lead investor's visa-trade benchmark (partners moving 40–71k visa units/year) anchors the 20–50k Year-1 account target; SI's 40M-person reach makes the distribution claim structural, not aspirational; Munas timing concentrates national attention.
+- **For**: the Chairman/CEO's visa-trade benchmark (partners moving 40–71k visa units/year) anchors the 20–50k Year-1 account target; SI's 40M-person reach makes the distribution claim structural, not aspirational; Munas timing concentrates national attention.
 - **Against (disclosed)**: zero conversion data exists today; savings-account → booking conversion is an assumption; the bank dependency is real. We model conservatively at 4% net take and present the conservative column for exactly this reason.
 
 ---
@@ -1024,6 +1024,6 @@ Concrete execution log — the entire platform below was designed, built, and E2
 
 ---
 
-*© 2026 umrohlovers.id — PT ARTASI · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
+*© 2026 umrohlovers.id — PT Arta Cipta Kreasi (ARTASI) · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
 
-*Document version 1.0 · June 2026 · Prepared by the umrohlovers team — Sandhy Krisnamurthi (CEO), Aditira Jamhuri (Tech Lead/CTO), with Lukman (Lead Investor/BD).*
+*Document version 1.0 · June 2026 · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*
