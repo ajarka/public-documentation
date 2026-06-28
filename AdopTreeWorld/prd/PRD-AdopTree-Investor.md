@@ -4,7 +4,7 @@
 > **Status** — Staging platform live · Android Field App live (Build 29) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
 >
-> **v2.5 highlights** — **Tira AI Co-Pilot** release: the assistant graduated from a donor Q&A chatbot into a multi-surface, multi-audience operator. Merchants now *create lands, campaigns, and their own merchant registration by chatting* — Tira fills the form live (client-side tool-calling → `react-hook-form`), normalizes uploaded geo files (KML/KMZ/GPX/GeoJSON boundaries + CSV/GeoJSON tree points) into the AdopTree geo standard via an AI `normalize-geo` endpoint, proposes species data, and stays bilingual to the platform locale (id/en/ar). A reusable **co-pilot security layer** (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) gates every write-capable AI surface. Plus: **AI Tree Baseline + satellite/imagery tree-count estimation** and a public Land-Analyzer mini-tool; **instant-donation smart defaults** (1-tap presets, recommendation algorithm, "Tira pilihkan untukku"); **land profile pictures**, **gallery photo-source labeling**, and **approved field-inspection photos publishable to the public land gallery**; **Instagram→Forum auto cross-post**; and a dedicated **land-owner CTA section** on the landing page. See updated §6.2 Feature Matrix, §6.6 Tira AI Co-Pilot, §10.3 Differentiators.
+> **v2.5 highlights** — **Tira AI Co-Pilot** release: the assistant graduated from a donor Q&A chatbot into a multi-surface, multi-audience operator. Merchants now *create lands, campaigns, and their own merchant registration by chatting* — Tira fills the form live (client-side tool-calling → `react-hook-form`), normalizes uploaded geo files (KML/KMZ/GPX/GeoJSON boundaries + CSV/GeoJSON tree points) into the AdopTree geo standard via an AI `normalize-geo` endpoint, proposes species data, and stays bilingual to the platform locale (id/en/ar). A reusable **co-pilot security layer** (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) gates every write-capable AI surface. Plus: **AI Tree Baseline + satellite/imagery tree-count estimation**; a public **Tools Hub** (`/tools`) with the **Carbon Calculator**, **3D Tree Tracker** (cinematic globe→ground), and **Land Analyzer**; **instant-donation smart defaults** (1-tap presets, recommendation algorithm, "Tira pilihkan untukku"); **land profile pictures**, **gallery photo-source labeling**, and **approved field-inspection photos publishable to the public land gallery**; **Instagram→Forum auto cross-post**; and a dedicated **land-owner CTA section** on the landing page. See updated §6.2 Feature Matrix, §6.6 Tira AI Co-Pilot, §6.7 Public Tools Hub, §10.3 Differentiators.
 >
 > **v2.4 highlights** — Founder revision pass from CKsan (Pak Cookie). New §0 **Background & Problems** establishing the 7 root-cause gaps AdopTree exists to solve. §1 Executive Summary expanded with the **"trusted multiverse Green field ecosystem"** framing, expanded Mission statement (devotion + counterbalance + amplifying global Green Eco movement), broader stakeholder map (caretakers · investors · legal authority · supplementary merchants), and 8 explicit use-case categories (Crowdfunding · Carbon Recycling Center · Land Aggregator · Carbon Investment · Marketplace [Next Phase] · CSR Delivery · Green Eco Social Media · Web3 NFT Solana [Next Phase]). CKsan founder bio enriched with his personal Motto.
 >
@@ -26,7 +26,7 @@
 5. [Market Opportunity](#5-market-opportunity)
 6. [Product Overview](#6-product-overview)
    - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Service Class Structure
-   - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)* · 6.6 Tira AI Co-Pilot *(new in v2.5)*
+   - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)* · 6.6 Tira AI Co-Pilot *(new in v2.5)* · 6.7 Public Tools Hub *(new in v2.5)*
 7. [Business Model & Revenue Streams](#7-business-model--revenue-streams)
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
@@ -430,6 +430,10 @@ flowchart TB
 | **NFT Metadata Schema & API** | Database tables + REST endpoints (`GET /nfts/{mint}`, `GET /nfts/{mint}/history`, `POST /nfts/refresh`) | ✅ Built |
 | **On-chain NFT Minting (AdopTree tier)** | Metaplex mint pipeline triggered on AdopTree-tier payment success | 📋 Q3 2026 milestone — see §10.5 |
 | **360° Tree View** | Photo sphere viewer for immersive tree experience | ✅ Built |
+| **Public Tools Hub** *(new)* | `/tools` — a public interactive-tools page (no login) hosting the three tools below; an acquisition + SEO surface. See §6.7 | ✅ Built |
+| **Carbon Calculator** *(new)* | `/tools/carbon-calculator` — estimate annual CO₂ absorbed by plant type (forest tree vs. agriculture) × tree count | ✅ Built |
+| **3D Tree Tracker** *(new)* | `/track` — cinematic 3D journey from globe to ground to find an adopted tree by code (or a sample tree); the "digital twin" experience made tangible | ✅ Built |
+| **Land Analyzer** *(new)* | `/tools/land-analyzer` — draw a land polygon or upload an image; AI estimates tree count + canopy cover from Sentinel-2 satellite imagery (the public-facing front of the AI tree-baseline engine) | ✅ Built |
 | **Carbon Credits** | Allocated at adoption, tracked in dashboard | ✅ Built |
 | **Wishlist** | Save lands and trees for future adoption — with adoption slot progress | ✅ Built |
 | **Forum / Community** | Posts (rich text + image editor + markdown), comments, follows, likes | ✅ Built |
@@ -680,6 +684,25 @@ Tira began as a donor-facing Q&A chatbot. It is now an **AI co-pilot that does w
 - **Transparent + reversible** — Tira announces every field it fills ("✓ Nama lahan diisi: …"); the merchant can override anything; validation still lives in the form + backend. Tira can be wrong without breaking data integrity.
 
 **Trajectory:** the tool/endpoint architecture is deliberately reusable for mobile — the same `/bot/chat` + `/bot/normalize-geo` contract serves web today and the Flutter field app next, with only the client-side executor differing.
+
+---
+
+### 6.7 Public Tools Hub (Live)
+
+A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acquisition + SEO surface: visitors get value before signing up, and each tool seeds intent for adoption or land registration. Three tools are live.
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/tools-hub.png" alt="Tools hub — Interactive Tools page listing Carbon Calculator, 3D Tree Tracker, Land Analyzer"/><br/><sub><b>1. Tools Hub</b> (<code>/tools</code>) — public landing for the interactive tools: Kalkulator Karbon, Lacak Pohon 3D, Analisis Lahan. No login required — value-first acquisition surface.</sub></td>
+    <td width="50%"><img src="assets/prd/web/carbon-calculator.png" alt="Carbon Calculator — plant type picker, tree count, live CO2 estimate"/><br/><sub><b>2. Carbon Calculator</b> (<code>/tools/carbon-calculator</code>) — pick plant type (Forest Tree 15.5 vs. Agriculture 2.5 kg CO₂/tree/yr) × tree count → live annual CO₂ estimate. Turns "impact" into a concrete number before adoption.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/tree-tracker-3d.png" alt="3D Tree Tracker — cinematic 3D Earth globe with tree-code lookup"/><br/><sub><b>3. 3D Tree Tracker</b> (<code>/track</code>) — the "digital twin" made tangible: a cinematic 3D journey from an Earth globe down to a specific adopted tree by code (or a sample tree). The wow-factor surface that differentiates AdopTree from spreadsheet-style competitors.</sub></td>
+    <td width="50%"><img src="assets/prd/web/land-analyzer.png" alt="Land Analyzer — draw polygon on map + AI tree-count estimation from satellite"/><br/><sub><b>4. Land Analyzer</b> (<code>/tools/land-analyzer</code>) — the public face of the AI tree-baseline engine: draw a land polygon (or upload imagery) and get an estimated tree count + canopy cover from Sentinel-2. Doubles as a land-owner lead magnet — note the "Daftarkan Lahan" CTA.</sub></td>
+  </tr>
+</table>
+
+*Figure 5d — Public Tools Hub. Each tool is a value-first acquisition surface: the Carbon Calculator quantifies impact for prospective donors, the 3D Tree Tracker showcases the digital-twin experience, and the Land Analyzer converts curious land owners into supply-side leads.*
 
 ---
 
