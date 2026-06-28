@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.4 · June 2026
+### Investor Edition · v2.5 · June 2026
 
-> **Status** — Staging platform live · Android Field App live (Build 14) · Public Launch target H2 2026
+> **Status** — Staging platform live · Android Field App live (Build 29) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.5 highlights** — **Tira AI Co-Pilot** release: the assistant graduated from a donor Q&A chatbot into a multi-surface, multi-audience operator. Merchants now *create lands, campaigns, and their own merchant registration by chatting* — Tira fills the form live (client-side tool-calling → `react-hook-form`), normalizes uploaded geo files (KML/KMZ/GPX/GeoJSON boundaries + CSV/GeoJSON tree points) into the AdopTree geo standard via an AI `normalize-geo` endpoint, proposes species data, and stays bilingual to the platform locale (id/en/ar). A reusable **co-pilot security layer** (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) gates every write-capable AI surface. Plus: **AI Tree Baseline + satellite/imagery tree-count estimation** and a public Land-Analyzer mini-tool; **instant-donation smart defaults** (1-tap presets, recommendation algorithm, "Tira pilihkan untukku"); **land profile pictures**, **gallery photo-source labeling**, and **approved field-inspection photos publishable to the public land gallery**; **Instagram→Forum auto cross-post**; and a dedicated **land-owner CTA section** on the landing page. See updated §6.2 Feature Matrix, §6.6 Tira AI Co-Pilot, §10.3 Differentiators.
 >
 > **v2.4 highlights** — Founder revision pass from CKsan (Pak Cookie). New §0 **Background & Problems** establishing the 7 root-cause gaps AdopTree exists to solve. §1 Executive Summary expanded with the **"trusted multiverse Green field ecosystem"** framing, expanded Mission statement (devotion + counterbalance + amplifying global Green Eco movement), broader stakeholder map (caretakers · investors · legal authority · supplementary merchants), and 8 explicit use-case categories (Crowdfunding · Carbon Recycling Center · Land Aggregator · Carbon Investment · Marketplace [Next Phase] · CSR Delivery · Green Eco Social Media · Web3 NFT Solana [Next Phase]). CKsan founder bio enriched with his personal Motto.
 >
@@ -24,7 +26,7 @@
 5. [Market Opportunity](#5-market-opportunity)
 6. [Product Overview](#6-product-overview)
    - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Service Class Structure
-   - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)*
+   - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)* · 6.6 Tira AI Co-Pilot *(new in v2.5)*
 7. [Business Model & Revenue Streams](#7-business-model--revenue-streams)
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
@@ -95,7 +97,7 @@ All stakeholders are **trusted and verified** — making tree adoption transpare
 
 ### Why it's defensible today
 
-Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. **Blockchain infrastructure (Solana SIWS wallet authentication + NFT metadata schema)** is in place; on-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
+Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. On the supply side, the **Tira AI Co-Pilot** lets a merchant onboard a land *by chatting* — filling the form, importing geo files (KML/GPX/CSV → AdopTree standard), and proposing species — which directly attacks the biggest growth bottleneck (supply onboarding friction). **Blockchain infrastructure (Solana SIWS wallet authentication + NFT metadata schema)** is in place; on-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
 
 ### The opportunity is significant
 
@@ -106,10 +108,10 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 ### Current traction
 
 - Web platform fully operational at `staging.adoptreeworld.com`
-- **Android Field App live** — APK Build 14 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
+- **Android Field App live** — APK Build 29 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
 - **Payment infrastructure**: Midtrans live for production (bank transfer, QRIS, e-wallet, credit card). Solana (SOL) payment UI built — backend wire-up scheduled Q3 2026 alongside on-chain NFT minting
-- 17 product phases delivered between v2.0 and v2.1 (Apr → May 2026): review queue, public contributor system, QR tree verification, tagging spacing awareness, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity
+- 20+ product phases delivered between v2.0 and v2.5 (Apr → Jun 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, and the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual)
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
@@ -317,8 +319,9 @@ flowchart LR
 
 **For Merchants / NGOs (Supply Side):**
 - 🏗️ Full land & tree management dashboard
+- 🤖 **Tira AI Co-Pilot** — onboard a land *by chatting*: Tira fills the form, imports geo files (KML/GPX/CSV→AdopTree standard), and proposes species — collapsing the hardest part of supply onboarding (see §6.6)
+- 🛰️ **AI asset quantification** — estimate tree count from satellite/imagery before transacting
 - 📢 Campaign fundraising tools with custom pricing
-- 🤖 Bot Tira — AI assistant for donor engagement
 - 💰 Recurring revenue from tree adoptions (not one-off donations)
 - 📈 Analytics and earnings reporting
 
@@ -430,11 +433,12 @@ flowchart TB
 | **Carbon Credits** | Allocated at adoption, tracked in dashboard | ✅ Built |
 | **Wishlist** | Save lands and trees for future adoption — with adoption slot progress | ✅ Built |
 | **Forum / Community** | Posts (rich text + image editor + markdown), comments, follows, likes | ✅ Built |
-| **Bot Tira** | AI chatbot (Gemini + function-calling against live data) for tree & adoption queries | ✅ Built |
-| **Multi-language** | English, Indonesian, Arabic (RTL) | ✅ Built |
+| **Tira AI Assistant** | Multi-provider AI (OpenAI/Gemini/Claude, runtime-switchable) with function-calling against live data; bilingual to the platform locale (id/en/ar); abuse-protected (rate limits + budget). See §6.6 | ✅ Built |
+| **Instant Donation** *(new)* | One-tap donation modal with smart defaults — quick-amount chips (1/5/10), a trust-weighted land recommendation algorithm, a logged-in "1-click" path, and a "Tira pick for me" deterministic auto-fill | ✅ Built |
+| **Multi-language** | English, Indonesian, Arabic (RTL) — UI + AI replies both follow the platform locale | ✅ Built |
 | **Notifications** | In-app, email, and Firebase Cloud Messaging push (Phase 2.9) with deeplink routing | ✅ Built |
 | **Realtime Chat** *(new)* | WebSocket-based 1:1 chat — voice notes, WhatsApp-style optimistic send, conversation actions (Phase 2.26) | ✅ Built |
-| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 14 latest) | ✅ Built |
+| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 29 latest) | ✅ Built |
 
 <table>
   <tr>
@@ -453,20 +457,24 @@ flowchart TB
 
 | Feature | Description | Status |
 |---|---|---|
-| **Land Management** | CRUD for land plots with GIS polygon upload + wilayah dropdown | ✅ Built |
-| **Tree Management** | Per-tree CRUD, CSV bulk import, media management | ✅ Built |
-| **Campaign System** | Fundraising campaigns with custom pricing & tree allocation | ✅ Built |
-| **Land Partnerships** | Two-tier invite system for land owner collaboration | ✅ Built |
-| **Earnings Dashboard** | Revenue tracking, withdrawal management | ✅ Built |
-| **Bot Tira Subscription** | AI bot for merchant's donor-facing chat | ✅ Built |
+| **Tira Co-Pilot — Create Land** *(new)* | Register a land *by chatting*: Tira fills the form live, imports boundary files (KML/KMZ/GPX/GeoJSON), proposes species, and guides the wizard. See §6.6 | ✅ Built |
+| **Tira Co-Pilot — Campaign & Registration** *(new)* | The same co-pilot drives the create-campaign wizard and the "become a merchant" registration form (a logged-in user can apply by chatting) | ✅ Built |
+| **AI Geo-Import** *(new)* | Upload boundaries (KML/KMZ/GPX/GeoJSON) and tree points (CSV/GeoJSON); an AI `normalize-geo` endpoint maps arbitrary columns to the AdopTree standard, fuzzy-matches species, validates inside/outside boundary, and bulk-imports with chunking | ✅ Built |
+| **AI Tree Baseline & Estimation** *(new)* | Quantify a forest asset before transacting — tree-count estimation from Sentinel-2 canopy + DeepForest on uploaded imagery, plus a public Land-Analyzer mini-tool | ✅ Built |
+| **Land Management** | CRUD for land plots with GIS polygon upload + wilayah dropdown; overlap detection; photo-based polygon field verification; land-profile picture | ✅ Built |
+| **Tree Management** | Per-tree CRUD, CSV bulk import, inline management in the land "Pohon" tab, media management | ✅ Built |
+| **Campaign System** | Fundraising campaigns with custom pricing & tree allocation, 4-step create wizard | ✅ Built |
+| **Land Partnerships & Ownership Claim** | Two-tier invite system for land-owner collaboration + land ownership claim flow | ✅ Built |
+| **Earnings Dashboard** | Revenue tracking (real service-tier fee math), withdrawal management | ✅ Built |
+| **Tira AI Subscription** | Merchant-configurable donor-facing AI chat; multi-provider; abuse-protected | ✅ Built |
 | **Analytics** | Bot interactions, adoption stats, campaign performance | ✅ Built |
-| **Posts & Updates** | Merchant feed for sharing land progress | ✅ Built |
-| **Review Queue** *(new)* | Approve/reject contributor submissions: Tag Lahan, Plant Tree, surveillance (Phase 2.11) | ✅ Built |
+| **Posts & Updates** | Merchant feed for sharing land progress; Instagram auto cross-post to the forum | ✅ Built |
+| **Review Queue** *(new)* | Approve/reject contributor submissions: Tag Lahan, Plant Tree, surveillance; on approval, publish field-inspection photos to the public land gallery (opt-in) | ✅ Built |
 | **Planting Jobs Marketplace** *(new)* | Job listings for field contributors (Phase 2.17–2.19) | ✅ Built |
 | **Contributor Map** *(new)* | Live GPS radar of active field contributors on merchant lands (Phase 2.17) | ✅ Built |
 | **Contributor Management** *(new)* | Manage field team, invites, capability flags | ✅ Built |
 | **QR Code Management** *(new)* | Tree QR identity verification — anti-misidentification (Phase 2.23) | ✅ Built |
-| **Species Request Workflow** *(new)* | Request new species → admin approval | ✅ Built |
+| **Species Request Workflow** *(new)* | Request new species → admin approval, with AI "fill for me" data autofill | ✅ Built |
 | **Dark Mode Dashboard** *(new)* | Scoped dark mode for merchant/admin/land-owner dashboards (public stays light) | ✅ Built |
 
 <table>
@@ -547,7 +555,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 > The web platform handles **online** adoption & monitoring. The mobile app handles **on-the-ground fulfillment** — without it, "GPS-verified tree ownership" is a promise; with it, it's evidence.
 
-**Status:** Live · APK Build 14 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
+**Status:** Live · APK Build 29 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
 
 <table>
   <tr>
@@ -608,7 +616,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 **Distribution:** Android APK via Cloudflare R2 (versioned releases + `latest` alias for auto-update). iOS distribution via TestFlight.
 
-**Build cadence:** 14 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 14 (29 May 2026, brand identity refresh).
+**Build cadence:** 29 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 29 (June 2026, photo-based land verification).
 
 ---
 
@@ -647,6 +655,31 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 </table>
 
 *Figure 5c — Contributor tier system in action: mobile gamification drives field contribution (left), admin visibility proves the scale of crowdsourced validation (right).*
+
+---
+
+### 6.6 Tira AI Co-Pilot — From Chatbot to Operator (Live)
+
+Tira began as a donor-facing Q&A chatbot. It is now an **AI co-pilot that does work on the supply side** — the operationally hardest, most defensible place to deploy AI in this market. Onboarding a conservation land (boundaries, species, tree points, legal docs) is the single biggest friction in growing supply; Tira collapses it into a conversation.
+
+**What Tira does today (live on staging):**
+
+| Surface | What Tira does | How |
+|---|---|---|
+| **Create Land** | A merchant describes their land in chat; Tira fills the multi-step form field-by-field, the merchant watching every change live | Client-side tool-calling → `react-hook-form` `setValue`. The form stays the source of truth; nothing is silently submitted |
+| **Geo Import** | Merchant uploads a boundary file (KML/KMZ/GPX/GeoJSON) or a tree-point file (CSV/GeoJSON); Tira reads it, normalizes arbitrary columns to the AdopTree geo standard, fuzzy-matches species, flags points outside the boundary, and bulk-imports (chunked) | Client-side parsers + a server `POST /bot/normalize-geo` LLM endpoint that maps a *sample* (not the whole file) — cheap and fast even for thousands of points |
+| **Create Campaign** | The same co-pilot drives the campaign wizard (name, status, period) | Dedicated `merchant_campaign` audience + tool-set |
+| **Merchant Registration** | A logged-in user applies to become a merchant *by chatting*; Tira fills business info but never touches sensitive fields (bank/tax) — those are structurally excluded from the tool schema | `merchant_register` audience; defense-in-depth allow-list |
+| **Species Autofill** | When a merchant needs a new species, Tira drafts accurate data (scientific name, CO₂ absorption, classification) for the approval queue | `suggest_species` endpoint |
+| **Field Officer (Mobile)** | In the Android field app, Tira answers operational questions and runs officer tools (nearest-trees, app help) | `field_officer` audience, offline-aware |
+
+**Why it's defensible, not a wrapper:**
+- **Multi-provider, runtime-switchable** — OpenAI / Gemini / Claude selectable from settings without a redeploy; no lock-in, and the cheapest capable model wins.
+- **Bilingual to the platform** — Tira always replies in the platform's selected language (id / en / ar), even if the user types another language — consistent brand voice across markets, including the Gulf.
+- **A reusable co-pilot security layer** — every write-capable AI surface clears the same gate: **fail-closed** budget (if the cache is down, the expensive flow is refused, not run uncapped), **per-identity daily caps**, **strict-identity reload** (a deactivated account can't keep using a stale token), and an **anti-spoof client-IP** derivation. AI that writes to the product is treated as a first-class abuse surface — important for an investor assessing AI-cost risk.
+- **Transparent + reversible** — Tira announces every field it fills ("✓ Nama lahan diisi: …"); the merchant can override anything; validation still lives in the form + backend. Tira can be wrong without breaking data integrity.
+
+**Trajectory:** the tool/endpoint architecture is deliberately reusable for mobile — the same `/bot/chat` + `/bot/normalize-geo` contract serves web today and the Flutter field app next, with only the client-side executor differing.
 
 ---
 
@@ -872,13 +905,13 @@ graph TB
         MT["💳 Midtrans<br/>(Payment Gateway)"]
         SOL["🔮 Solana<br/>(SIWS live · NFT mint Q3 2026)"]
         MB["🗺️ Mapbox GL + Static API<br/>(Maps · GIS · watermark)"]
-        BOT["🤖 Bot Tira<br/>(Gemini + function-calling)"]
+        BOT["🤖 Tira AI Co-Pilot<br/>(OpenAI/Gemini/Claude<br/>function-calling + normalize-geo)"]
+        ML["🛰️ ML Tree Service<br/>(Sentinel-2 + DeepForest<br/>canopy & tree-count estimation)"]
         FCM["🔔 Firebase FCM v1<br/>(Push notifications)"]
     end
     subgraph "Infrastructure"
-        CI["🔧 Jenkins CI/CD<br/>(Auto-deploy on push)"]
+        CI["🔧 Jenkins CI/CD<br/>(Auto-build + deploy on push)"]
         CF["🌐 Cloudflare Tunnel + CDN<br/>(Zero-trust ingress + nginx cache)"]
-        WUD["🐳 WUD<br/>(Container updates)"]
     end
 
     FE <-->|REST + WS| BE
@@ -887,7 +920,7 @@ graph TB
     BE <--> R2 & MT & SOL & FCM
     FE <--> MB
     MO <--> MB
-    BE <--> BOT
+    BE <--> BOT & ML
     CI --> FE & BE & MO
 ```
 
@@ -905,6 +938,7 @@ graph TB
 
 ### 10.3 Key Technical Differentiators
 
+- **Tira AI Co-Pilot (multi-provider, abuse-hardened)** — AI that *operates the product*, not just answers questions: client-side tool-calling fills forms live, a `normalize-geo` endpoint turns arbitrary geo files into the AdopTree standard, and a reusable security layer (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) treats every write-capable AI surface as a first-class abuse surface. Provider is runtime-switchable (OpenAI/Gemini/Claude) — no lock-in, cheapest capable model wins. See §6.6
 - **PostGIS** — Geospatial polygon storage and tree-level GPS tracking at sub-meter precision
 - **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates, **and APK distribution** (versioned + `latest.apk` alias)
 - **Mapbox (generous free tier)** — Maps GL JS (web), Static API (mobile watermark), and Mobile SDK run **inside Mapbox's free tier** at AdopTree's current scale: 50,000 web map loads/month, 50,000 Static API requests/month, 25,000 mobile MAU/month, and 100,000 Geocoding calls/month are all complimentary. AdopTree only crosses into paid usage **after** ~25K monthly active app users or ~50K daily web page-views — beyond Year 1 projections (see §14). Strategic cost advantage: zero infrastructure spend on mapping until product-market fit is proven; usage-based pricing thereafter scales linearly with revenue, not ahead of it.
@@ -1057,10 +1091,9 @@ gantt
 
     section Scale
     Carbon Credit Integration (IDX)  :2027-01, 2027-06
-    Arabic Interface Live             :2027-02, 2027-04
     150 Merchant Partners             :milestone, 2027-06, 2027-08
     Corporate Sales Team Hired        :2027-01, 2027-03
-    Bot Tira v2 (multilingual)        :2027-04, 2027-08
+    Tira Co-Pilot on Mobile (Flutter) :2027-02, 2027-06
     Break-even Target                 :milestone, 2027-09, 2027-09
 
     section Expansion
@@ -1077,11 +1110,13 @@ gantt
 | **Staging Live** | ✅ April 2026 | Full platform accessible at staging domain |
 | **End-to-end Flow Validated** | ✅ April 2026 | Demo merchant ("Akademi Buah Nusantara") exercises every flow — land → tree → campaign → checkout → earnings → withdrawal |
 | **First Paying Merchant** | Target Q3 2026 | Move from demo data to first real merchant transacting with real donors — primary objective of this raise |
-| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational |
+| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational (now Build 29) |
 | **Public Contributor System** | ✅ May 2026 | Tier 1 + Tier 2 auto-promotion live, leaderboard operational |
 | **Review Queue (Quality Gate)** | ✅ May 2026 | Admin/merchant approval workflow for all field submissions |
 | **QR Tree Identity Verification** | ✅ May 2026 (Phase 2.23) | Anti-misidentification QR system live |
 | **Realtime Chat** | ✅ May 2026 (Phase 2.26) | WebSocket 1:1 chat with voice notes |
+| **AI Tree Baseline & Tree-Count Estimation** | ✅ June 2026 | Sentinel-2 + DeepForest estimation + public Land-Analyzer tool live (asset quantification before transacting) |
+| **Tira AI Co-Pilot (multi-surface)** | ✅ June 2026 | Create-land / campaign / registration by chat + AI geo-import (KML/GPX/CSV→standard) + reusable co-pilot security layer + bilingual (id/en/ar), live on staging |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
 | **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
@@ -1237,7 +1272,7 @@ Beyond capital, the ideal investor brings:
 
 ### 16.5 Why Now?
 
-1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, mobile Field App is shipping (Build 14), and the codebase has shipped 17 phases in the 5 weeks before this raise
+1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, the mobile Field App is shipping (Build 29), and the codebase has shipped 20+ phases — including the **Tira AI Co-Pilot** and AI tree-count estimation — in the months before this raise, all on a Jenkins push-to-deploy pipeline
 2. **End-to-end flow is proven, not just promised** — a demonstration merchant ("Akademi Buah Nusantara") on staging exercises every step from land registration through donor adoption, payment processing, and merchant payout. The product is ready to onboard a real merchant the day Sales & BD funding is deployed; we are not pre-product or pre-flow, we are pre-revenue
 3. **IDX Carbon launched 2023** — Indonesia's regulated carbon market is forming; early platform players will capture the registry advantage
 4. **Indonesia's NDC commitments** (29% emission reduction by 2030) create immediate regulatory pressure on corporations to invest in verifiable green programs
@@ -1267,7 +1302,7 @@ Beyond capital, the ideal investor brings:
 | Push Notifications | Firebase Cloud Messaging (FCM v1) — web + mobile, deeplink routing |
 | Realtime | WebSocket (chat, presence) |
 | Field Evidence | In-app camera with pixel-burned watermark (GPS + timestamp + mini-map), dual-gate inspection (proximity + heading) |
-| CI/CD | Jenkins + Docker + WUD (auto-deploy on push) |
+| CI/CD | Jenkins + Docker (auto-build + deploy on push to `development` → staging) |
 | CDN & Edge | Cloudflare Tunnel (zero-trust), Cloudflare CDN with per-path Cache Rules, nginx VPS reverse proxy |
 | Languages | Indonesian, English, Arabic (RTL) |
 
@@ -1308,9 +1343,9 @@ All visuals are embedded inline at the sections referenced below.
 | **APK** | Android Package — Field App distribution format |
 | **Contributor Tier** | Trust-tier system gating field submissions (Public → Verified → Field Inspector) |
 
-### D. Delivered Phases (v2.0 → v2.1, April → May 2026)
+### D. Delivered Phases (v2.0 → v2.5, April → June 2026)
 
-Concrete execution log between PRD revisions. Each phase ships through Linear (issue tracker) → development branch → Jenkins auto-deploy.
+Concrete execution log between PRD revisions. Each phase ships through development branch → Jenkins auto-build → auto-deploy to staging.
 
 | Phase | Title | Surface |
 |---|---|---|
@@ -1331,8 +1366,19 @@ Concrete execution log between PRD revisions. Each phase ships through Linear (i
 | 2.26 | Realtime Chat — WebSocket + voice notes + conversation actions | Mobile + BE |
 | — | Brand Identity Refresh — new logo, Manrope, scoped dark mode | Web + Mobile (APK Build 14) |
 | — | Session Resilience — JWT 4h/30d + interceptor mutex queue | BE + Web |
+| — | **AI Tree Baseline + satellite/imagery tree-count estimation + public Land-Analyzer** | BE + Web + ML service |
+| — | Multi-angle inspection v4 (compass axis) + offline-sync integrity | Mobile + BE |
+| — | Instagram → Forum auto cross-post (#adoptreeforum) | BE + Web |
+| — | Land overlap detection · land ownership claim · photo-based polygon verification | BE + Web |
+| — | **Tira AI Co-Pilot** — create-land/campaign/registration by chat + AI geo-import (`normalize-geo`) + species autofill | BE + Web |
+| — | **Co-pilot security layer** — fail-closed budget · per-identity caps · strict-identity reload · anti-spoof IP | BE |
+| — | **Tira bilingual** — AI replies follow the platform locale (id/en/ar) | BE |
+| — | Instant-donation smart defaults — quick chips · recommendation algorithm · "Tira pick for me" | Web |
+| — | Land profile picture · gallery photo-source labeling · approved-inspection photos → public gallery | BE + Web |
+| — | Wizard nav standardization (gated Next + clickable stepper) across create-land/campaign/tree/registration/donate | Web |
+| — | Dedicated land-owner CTA section on the landing page | Web |
 
-**APK releases shipped:** Build 6 (initial beta) → Build 7 (WA distribution) → Build 8 (notification UI) → Build 9 (in-app notifications) → Build 10 (inspection evidence) → Build 12 (QR + spacing) → Build 13 (realtime chat) → **Build 14 (brand rebrand, 29 May 2026 — latest)**.
+**APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → **Build 29 (latest — photo-based land verification, June 2026)**.
 
 ---
 
