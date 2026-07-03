@@ -1,0 +1,5 @@
+{
+  "theme": "base",
+  "themeVariables": { "fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "16px" },
+  "flowchart": { "htmlLabels": true, "curve": "basis", "padding": 20 }
+}

@@ -1,7 +1,7 @@
 # umrohlovers.id — Product Requirements Document
-### Investor Edition · v1.0 · June 2026
+### Investor Edition · v1.1 · July 2026
 
-> **Status** — Full platform live on staging (`staging.umrohlovers.id`) · Amani Bank integration in MoU stage (mock client shipped, technical spec delivered & accepted) · Pilot target Q3 2026 · Full public launch target November 2026 (Munas Syarikat Islam, Surabaya)
+> **Status** — Full platform live on staging (`staging.umrohlovers.id`) · All payment, escrow, and agency-network mechanics finalized in the 1 July 2026 stakeholder meeting are **implemented and deployed to staging (3 July 2026)** · Amani Bank integration in MoU stage (mock client shipped, technical spec delivered & accepted) · Pilot target Q3 2026 · Full public launch target November 2026 (Munas Syarikat Islam, Surabaya)
 >
 > **Branding chain** — **umrohlovers.id** (product) · operated by **PT Arta Cipta Kreasi (ARTASI)** in partnership with **KOPSIMARI** (Koperasi Syarikat Islam Mandiri) — the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905), with a mature ~40-million-person network across Indonesia and the Middle East.
 >
@@ -54,7 +54,7 @@ umrohlovers.id is the **integrated response to all seven** — a member-gated ma
 
 ## 1. Executive Summary
 
-**umrohlovers.id** is a digital hajj & umroh marketplace operated by **PT Arta Cipta Kreasi (ARTASI)** in partnership with the **Koperasi Syarikat Islam Mandiri (KOPSIMARI)** — the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905), with a mature network reaching an estimated **40 million people** across Indonesia and the Middle East. The platform carries the vision of **"Rumah Sinergi"** (House of Synergy) — a multi-stakeholder collaboration space uniting the cooperative, licensed travel agents (PPIU/PIHK), field sales agents, kabupaten-level community branches, Indonesian and Saudi vendors, and an Islamic partner bank into a single trusted ecosystem — under the tagline *"Berhaji & Berumroh dengan Aman dan Nyaman"* (Performing Hajj & Umroh with Safety and Comfort).
+**umrohlovers.id** is a digital hajj & umroh marketplace operated by **PT Arta Cipta Kreasi (ARTASI)** in partnership with the **Koperasi Syarikat Islam Mandiri (KOPSIMARI)** — the economic wing of **Syarikat Islam Indonesia (SII)**, Indonesia's oldest Islamic mass organization (est. 1905), with a mature network reaching an estimated **40 million people** across Indonesia and the Middle East. The platform carries the vision of **"Rumah Sinergi"** (House of Synergy) — a multi-stakeholder collaboration space uniting the cooperative, licensed travel agents (PPIU/PIHK), field sales agents, kecamatan-level community branches, Indonesian and Saudi vendors, and an Islamic partner bank into a single trusted ecosystem — under the tagline *"Berhaji & Berumroh dengan Aman dan Nyaman"* (Performing Hajj & Umroh with Safety and Comfort).
 
 ### Mission
 
@@ -69,9 +69,10 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 | Stakeholder | Who | Role on the Platform |
 |---|---|---|
 | **Pusat (Center)** | KOPSIMARI admin + finance | Platform governance, moderation, escrow orchestration, revenue ledger |
-| **Brand Cabang** | Kabupaten-level branches of the SII/KOPSIMARI network | Manasik (pilgrimage training) owner, jamaah care & silaturahmi, local coverage area, override commission |
-| **Agent Travel** | Licensed PPIU/PIHK travel companies | Assemble & sell group packages; B2B buyers of components from the platform catalog (markup capped) |
-| **Agent Sales** | Field marketers (travel_sales) under branch coverage | Sell packages, memberships, savings accounts, and vendor products; tiered commission (bronze 3% / silver 5% / gold 7%) |
+| **Brand Cabang** | Kecamatan-level coordinators of the SII/KOPSIMARI network (one per kecamatan, coordination-only — cabang do not sell) | Manasik (pilgrimage training) owner, jamaah care & silaturahmi, local coverage territory, 1.5% override commission; per-zone registration fee |
+| **Ranting** | Top-performing field agents auto-promoted at 100 jamaah (one per kelurahan) | Neighborhood-level coordination inside the agency network; 2.5% override commission |
+| **Agent Travel** | Licensed PPIU/PIHK travel companies | Assemble & sell group packages; B2B buyers of components from the platform catalog (markup capped); accept the 10% platform-fee terms electronically at onboarding |
+| **Agent Sales (Agen)** | Field marketers (travel_sales) under branch coverage — Rp 1M auto-activated onboarding | Sell packages, memberships, savings accounts, and vendor products; flat 5% commission + monthly "Rapot Agen" leaderboard rewards |
 | **Mitra Korporasi** | Indonesian vendors — handling, flights, vaccines, insurance | Supply Indonesia-side components via self-service merchant catalog |
 | **Mitra Syariah** | Saudi vendors — visa, hotels, catering, muthawwif | Supply Saudi-side components; direct contracts via the SII Saudi channel |
 | **Mitra Finance** | Amani Bank (partner Islamic bank) | Hosts **individual escrow accounts per jamaah**; platform is monitor-only via API |
@@ -80,11 +81,11 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 ### Features & Use Cases
 
 1. **Dual booking engine** — *Paket Grup* (curated group packages assembled by licensed agents) and *Paket Mandiri* (a date-first à la carte wizard where jamaah assemble flight + hotel + visa + add-ons themselves) — rare in this market, and shipped.
-2. **Individual escrow accounts (PP 38/2021)** — each jamaah's funds sit in their own account at the partner bank; the platform never holds money, only orchestrates milestone releases (visa → ticket → departure → return).
+2. **Individual escrow accounts (PP 38/2021)** — each jamaah's funds sit in their own account at the partner bank; the platform never holds money, only orchestrates milestone releases (visa 30% → ticket 30% → departure 30% → return 10%), with staged payments from a 25% minimum, full-payment discipline at H-30, and releases opening at H-14.
 3. **Tabungan haji/umroh (pilgrimage savings)** — goal-based saving toward a target package, with the same account doubling as the payment source at checkout.
 4. **Vendor marketplace (mitra)** — Indonesian and Saudi vendors self-publish components (flights, hotels, visas, catering, muthawwif, vaccines, insurance) with admin approval, three price tiers (retail / member / B2B), and system-applied markup.
 5. **B2B assembly for travel agents** — licensed agents buy components at wholesale prices from the catalog, bundle, mark up (capped), and publish group packages — the Tokopedia "agent = store, package = product" model.
-6. **Multi-level commission network** — a commission ledger that splits each transaction across sales agent (tiered), handling branch (override), travel agent (markup), and platform (fee) — the digital backbone for a nationwide field salesforce.
+6. **Semi-MLM agency network (Jamaah → Agen → Ranting → Cabang)** — a commission ledger that splits each transaction across the field agent (flat 5%), Ranting (2.5% override), handling Cabang (1.5% override), travel agent (markup), and platform (10% fee), with lifetime 1% rebook attribution and a monthly "Rapot Agen" leaderboard for top-performer rewards — the digital backbone for a nationwide field salesforce.
 7. **Manasik management** — branches run full scheduling, RSVP, attendance, and calendar tooling for pilgrimage training; jamaah pick their handling branch at booking (geo-suggested).
 8. **Compliance-grade data protection** — AES-256-GCM encryption at rest for NIK/passport data, UU PDP audit logs, right-to-be-forgotten with purge worker, HMAC-verified webhooks.
 
@@ -105,10 +106,11 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 ### Current traction (honest)
 
-- **Full platform live on staging** at `staging.umrohlovers.id` — premium landing, public catalogs (`/paket`, `/paket-mandiri`, `/brand`, `/mitra`) with 8+ interactive Mapbox maps, the complete mandiri booking wizard, and **9 role dashboards** with full CRUD.
+- **Full platform live on staging** at `staging.umrohlovers.id` — premium landing, public catalogs (`/paket`, `/paket-mandiri`, `/brand`, `/mitra`, `/daftar-cabang` with a BPS Muslim-population choropleth) with 8+ interactive Mapbox maps, the complete mandiri booking wizard, and **11 role dashboards** with full CRUD.
 - **Escrow lifecycle works end-to-end against a mock bank** — paid → visa → ticket → departed → returned, driven by HMAC webhooks and an admin state machine, including akad PDF generation. **Swapping mock → real Amani API is a single interface implementation.**
+- **Final commercial mechanics are implemented, not just decided** — the model locked in the 1 July 2026 stakeholder meeting (10% platform fee, staged payments from a 25% minimum, H-30 settlement discipline with full-refund auto-cancel, H-14 milestone releases, flat 5% agent commission across the semi-MLM Jamaah → Agen → Ranting → Cabang network, per-zone branch registration) shipped to staging on 3 July 2026, end-to-end against the mock bank.
 - **Amani Bank**: partnership proposal and technical specification delivered and **accepted at the working level**; MoU and directors' meeting in progress (June 2026). Integration is currently **mock**.
-- **Engineering quality**: backend Go usecase test coverage 94–100% across 45 packages (500+ tests), 90 frontend vitest tests, Lighthouse 92+/96/99/100, k6 load-tested at 1,000 VUs, UU PDP compliance audit score 92/100.
+- **Engineering quality**: backend Go usecase test coverage 94–100% across 45 packages (500+ tests), 90 frontend vitest tests, Lighthouse 92+/96/99/100, k6 load-tested at 1,000 VUs, UU PDP compliance audit score 92/100 — and the feature surface has grown significantly since v1.0 (June 2026) while these quality bars were held.
 - **Zero real transactions, zero revenue, pilot not yet started.** The pilot (50 → 200–500 jamaah) and the November 2026 Munas SI launch are the explicit next milestones — this is a "raising to launch and scale, not to build" situation.
 
 ![Market opportunity — TAM/SAM/SOM rings over Masjid al-Haram backdrop](assets/prd/market-opportunity.png)
@@ -146,10 +148,10 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 **Background:** Senior software engineer with deep full-stack expertise. Master Instructor at **Ruangguru CAMP** — Indonesia's largest edtech company — where he engineered automation tooling that graded assignments for hundreds of students per cohort. Earlier, 3+ years at **BrainCode** (Indonesia's specialist in mobile services), mentoring mid-level engineers and modernizing legacy systems at production scale. Concurrently CTO of **AdopTree World**, a greentech platform where he built and shipped the entire stack (Rust backend, Next.js web, Flutter field app, CI/CD) solo — a directly transferable track record of building a full multi-sided platform lean.
 
-**What he has shipped at umrohlovers (May–June 2026, ~5 weeks):**
+**What he has shipped at umrohlovers (May–July 2026, ~2 months):**
 - The complete platform: Go/Echo clean-architecture backend, Next.js 15 frontend, PostgreSQL 16 + Redis, Jenkins CI/CD with gated production deploys
-- Dual booking engine (group + date-first mandiri wizard), multi-level commission ledger, milestone escrow state machine, system-applied markup engine, akad PDF generator
-- 9 role dashboards, 5 admin Kanban moderation surfaces, 8+ public Mapbox map experiences
+- Dual booking engine (group + date-first mandiri wizard), multi-level commission ledger, milestone escrow state machine with staged payments (H-30 auto-cancel + H-14 release workers), semi-MLM agency network, per-zone branch registration with BPS choropleth, system-applied markup engine, akad PDF generator
+- 11 role dashboards, 5 admin Kanban moderation surfaces, 8+ public Mapbox map experiences
 - Compliance layer: AES-256-GCM at-rest encryption, UU PDP audit logging, RTBF purge worker, HMAC webhook verification
 - 500+ backend tests at 94–100% usecase coverage, k6 load validation at 1,000 VUs
 
@@ -282,7 +284,7 @@ flowchart LR
 
 **For Agent Travel (PPIU/PIHK):**
 - 📦 Buy components at wholesale (B2B prices) from a verified catalog — including SII-channel Saudi supply — bundle, mark up (capped), publish
-- 🛡️ Identity anonymized on public surfaces (rating + tenure shown, name revealed post-booking) — no price war between agents on the platform
+- 🛡️ Identity anonymized on public surfaces (rating + tenure shown, name revealed at the jamaah's first payment once escrow opens) — no price war between agents on the platform
 - 📊 Dashboard for packages, manifests, and earnings; onboarding fee designed at ~Rp 1 million vs Rp 5–7 million at incumbent consortium schemes
 
 **For Mitra (Indonesian & Saudi vendors):**
@@ -292,8 +294,8 @@ flowchart LR
 
 **For Brand Cabang & Agent Sales:**
 - 🗓️ Full manasik tooling: scheduling, calendar, RSVP, attendance
-- 💸 Override commission (1.5% default) on every booking the branch handles; tiered direct commission (3/5/7%) for field sales agents — a turnkey "open an umroh office without big capital" product
-- 📍 Coverage-area model per kabupaten with geo-suggestion routing jamaah to the nearest branch
+- 💸 Override commission (Cabang 1.5% / Ranting 2.5%) on every booking the branch handles; flat 5% direct commission for field sales agents plus a monthly "Rapot Agen" leaderboard with periodic top-performer rewards — a turnkey "open an umroh office without big capital" product
+- 📍 Coverage-territory model per kecamatan (cabang) and kelurahan (ranting), with geo-suggestion routing jamaah to the nearest branch
 
 ---
 
@@ -383,7 +385,7 @@ flowchart TB
 
 | Feature | Description | Status |
 |---|---|---|
-| **Premium landing + public catalogs** | `/paket` (group package bursa with grid/list/map views), `/paket-mandiri` (wizard), `/brand` (branch directory), `/mitra` (vendor ecosystem) | ✅ Shipped |
+| **Premium landing + public catalogs** | `/paket` (group package bursa with grid/list/map views), `/paket-mandiri` (wizard), `/brand` (branch directory), `/mitra` (vendor ecosystem), `/daftar-cabang` (branch-claim page with Muslim-population choropleth, per-zone tariff, fullscreen map) | ✅ Shipped |
 | **8+ interactive Mapbox maps** | Native clustering, two-way card↔marker sync, geolocation "nearest branch", Haram/Nabawi landmark spoke-lines, Indonesia/Saudi toggle, per-card Google Maps CTA | ✅ Shipped |
 | **Transparent pricing, gated transaction** | Guests see retail prices (no blur — trust + SEO); booking requires membership. Member prices below retail | ✅ Shipped |
 | **Member tier system** | Guest → Registered (Member Umrohlovers, free) → Anggota Koperasi (auto-upgrade at first confirmed booking + bank account) | ✅ Shipped (tier model) / 📋 (full benefit matrix) |
@@ -392,31 +394,31 @@ flowchart TB
 | **Booking grup 4-step flow** | Review → Akad → Payment → Done, with akad PDF download | ✅ Shipped / 🟡 mock payment |
 | **Paket Mandiri wizard** | Date-first à la carte assembly — see §6.3 | ✅ Shipped |
 | **Manasik RSVP** | Browse branch sessions, RSVP, attendance tracked | ✅ Shipped |
-| **Agent anonymization** | Travel agent names hidden on public surfaces (rating + tenure shown); revealed post-booking — prevents inter-agent price war | ✅ Shipped |
+| **Agent anonymization** | Travel agent names hidden on public surfaces (rating + tenure shown); revealed at the jamaah's first payment, once escrow opens — prevents inter-agent price war | ✅ Shipped |
 | **Cart** | Guest cart (localStorage) with login gate at checkout | ✅ Shipped |
 | **Privacy & RTBF** | `/privacy`, `/terms`, right-to-be-forgotten with 30-day grace + hard-delete purge worker | ✅ Shipped |
 
-#### Role Dashboards (9 — shared shell, dark mode, full CRUD)
+#### Role Dashboards (11 roles — shared shell, dark mode, full CRUD)
 
 | Dashboard | Role | Highlights | Status |
 |---|---|---|---|
-| `/dashboard` | Jamaah | KYC, tabungan, bookings + akad PDFs, manasik RSVP | ✅ / 🟡 bank mock |
-| `/agent-dashboard` | Agent Travel (PPIU/PIHK) | Package CRUD with cover images, B2B component assembly, KPIs | ✅ Shipped |
-| `/brand-dashboard` | Brand Cabang | Manasik full CRUD + Google-Calendar-style month/week views, attendance, jamaah roster | ✅ Shipped |
+| `/dashboard` | Jamaah | KYC, tabungan (free vs escrow-locked balance), bookings + akad PDFs, e-Visa download, manasik RSVP | ✅ / 🟡 bank mock |
+| `/agent-dashboard` | Agent Travel (PPIU/PIHK) | Package CRUD with cover images, B2B component assembly, incoming bookings, per-jamaah e-Visa PDF upload, payout account, "Kasbon Amani" bridge-financing card (Segera), KPIs | ✅ Shipped |
+| `/brand-dashboard` | Brand Cabang | Manasik full CRUD + Google-Calendar-style month/week views, attendance, jamaah roster, coverage territory | ✅ Shipped |
 | `/mitra-dashboard` (merged korporasi + syariah) | Mitra vendors | Item catalog CRUD (4 photos/item), offers (flight/hotel/visa/addon), orders, settlement view | ✅ Shipped |
-| `/sales-dashboard` | Agent Sales | Referral link + click tracking, tiered commission history (bronze/silver/gold) | ✅ Shipped |
+| `/sales-dashboard` | Agent Sales (Agen) | Referral link + click tracking, flat 5% commission history, monthly "Rapot Agen" leaderboard | ✅ Shipped |
 | `/bank-ops` | Bank partner (monitor-only) | Accounts, transactions, escrow timeline — read-only by design | ✅ / 🟡 mock data |
-| `/admin` | Admin koperasi | 5 Kanban moderation pages (KYC, agents, brands, 2× mitra), revenue dashboard, markup config, booking state-machine tool | ✅ Shipped |
+| `/admin` | Admin koperasi · super admin · staff | 5 Kanban moderation pages (KYC, agents, brands, 2× mitra), revenue dashboard, markup + fee settings, per-zone tariffs, branch-claim review (photos + GPS) with audit-logged transfer-ownership tool, booking state-machine tool | ✅ Shipped |
 | `/admin-finance` | Admin finance | Escrow ledger, releases, reconciliation views | ✅ / 🟡 mock bank |
-| `/gabung-mitra` (public) | Prospective partners | Public partnership application → admin review → activation | ✅ Shipped |
+| `/gabung-mitra` (public) | Prospective partners | Public partnership application — 2-step stepper (agent travel / korporasi / syariah); travel partners accept the 10% platform-fee terms electronically (timestamped acceptance + agreed-% snapshot) → admin review → activation | ✅ Shipped |
 
 #### Platform & Compliance
 
 | Feature | Description | Status |
 |---|---|---|
-| **Escrow milestone state machine** | paid → visa → ticket → departed → returned; webhook-driven + admin transition tool with escrow timeline | 🟡 Mock bank, logic shipped |
+| **Escrow milestone state machine** | paid → visa → ticket → departed → returned (tranches 30/30/30/10); H-30 auto-cancel worker (full refund) + H-14 release hold; webhook-driven + admin transition tool with escrow timeline | 🟡 Mock bank, logic shipped |
 | **Akad PDF generator** | Server-side Shariah contract PDF (gopdf, embedded fonts) per booking | ✅ Shipped |
-| **Commission ledger (multi-level)** | One booking → multiple entries: agent sales tier %, cabang override, agent travel markup, platform fee; unit + E2E tested | ✅ Shipped (rates configurable) |
+| **Commission ledger (multi-level)** | One booking → multiple entries: agent flat 5%, ranting 2.5% + cabang 1.5% overrides, agent travel markup, platform fee (10%); unit + E2E tested | ✅ Shipped (rates configurable) |
 | **System markup engine** | Admin-configurable markup % per product type (seeded: flight 10%, hotel 8%, visa 5%, addon 12%) applied at response time; vendors see clean base prices; supersede history + audit log | ✅ Shipped |
 | **Encryption at rest** | AES-256-GCM for NIK/passport fields | ✅ Shipped |
 | **UU PDP audit trail** | Audit logs on sensitive writes + data-access logs when staff view jamaah documents; export tooling; compliance audit score 92/100 | ✅ Shipped |
@@ -425,6 +427,28 @@ flowchart TB
 
 ![Four-grid product montage — /paket map view, mandiri wizard, brand dashboard calendar, admin revenue ledger](assets/prd/web/product-montage.png)
 *Figure 3 — Product surface montage: (1) /paket Traveloka-style toolbar with grid/list/map, (2) Paket Mandiri stepper with auto-visa card, (3) brand-dashboard manasik calendar, (4) admin KYC Kanban. All live on staging.*
+
+#### Payments, Escrow & Agency Network — Final Mechanics (locked 1 July 2026 · shipped to staging 3 July 2026)
+
+The commercial mechanics below were finalized with the business stakeholders on 1 July 2026 and are **implemented end-to-end** (money movement against the mock bank pending Amani):
+
+| Feature | Description | Status |
+|---|---|---|
+| **Staged payments** | First payment ≥ **25%** of package price (admin-configurable) opens escrow; further installments free-form — via transfer or paid directly from the savings balance | 🟡 Mock bank (full flow shipped) |
+| **Travel identity reveal at first payment** | The travel partner stays anonymous until escrow opens — anti-price-war by design | ✅ Shipped |
+| **H-30 settlement discipline** | Full payment due 30 days before departure; unpaid bookings are auto-cancelled by a worker with a **full refund** to the jamaah's own account (cancel ≠ forfeit) — rebooking allowed | ✅ Shipped (worker live) |
+| **H-14 milestone releases** | A standing instruction releases funds to the travel partner starting 14 days before departure, once all e-Visas are ready and the booking is fully paid — tranches: visa 30% / ticket 30% / departure 30% / return 10%; each release is mirrored as a credit on the travel partner's (mock) account | 🟡 Mock bank (logic shipped) |
+| **Two-pot balance model** | The jamaah account separates free balance vs escrow-locked balance | ✅ Shipped |
+| **Voluntary cancellation** | 10% penalty on package price; remainder refunded to saldo | ✅ Shipped |
+| **Withdrawals** | 10% admin fee; a minimum Rp 100k must remain on the account | 🟡 Mock bank |
+| **e-Visa PDF module** | Saudi umroh visas are PDF e-Visas: the travel partner uploads one per jamaah → notification → jamaah download **gated until fully paid**; every access logged (UU PDP) | ✅ Shipped |
+| **Bank accounts for every role** | An account auto-opens on activation for all roles — jamaah at KYC approval, agen at activation, cabang at approval, mitra travel at first release | 🟡 Mock bank |
+| **Semi-MLM agency network (4 tiers)** | Jamaah → Agen → Ranting → Cabang. Agen: Rp 1M registration with **auto-activation** (KTP + phone → pay → live, no admin review); Ranting: auto-promotion at 100 jamaah (one per kelurahan); Cabang: one coordinator per kecamatan, coordination-only (holds one linked field-agent account) | ✅ Shipped (mock payment) |
+| **Per-zone branch registration** | Zone 1–4 tariffs derived from the Muslim-population ratio per kecamatan (BPS data; 94.4% of Indonesian kecamatan mapped, incl. the 2022 Papua province splits); claim flow: premises photos + GPS coordinates → payment → admin review (photos + Google Maps) → active; claims are permanent and inheritable via an audit-logged admin transfer-ownership tool | ✅ Shipped (mock payment) |
+| **Agen pendamping (companion agent)** | Assigned only **after** escrow opens, balanced by load — anti-fraud by sequencing; jamaah who arrive without an agent are still served | ✅ Shipped |
+| **Paid package promotion** | Platinum Rp 15M / Gold Rp 10M / Silver Rp 5M per month (100% platform revenue); opt-in jamaah notifications (UU PDP-compliant) | ✅ Shipped |
+| **Kasbon Amani (bridge financing)** | Pre-H-14 working-capital facility for travel partners (2–3%/month margin, ≤30% of package value; contracted travel ↔ Amani, off-platform) | 📋 "Segera — awaiting Amani live" card shipped |
+| **Hajj gated** | Hajj bookings disabled ("Segera Hadir", `haji_booking_enabled=false`) — the pilot focuses on umroh; hajj is far more heavily regulated | ✅ Shipped (gate) |
 
 ### 6.3 Paket Mandiri — the Date-First À La Carte Wizard (Unique)
 
@@ -452,12 +476,15 @@ Key properties:
 ```mermaid
 stateDiagram-v2
     [*] --> Booked: akad signed (PDF generated)
-    Booked --> Paid: deposit confirmed (bank webhook, HMAC)
-    Paid --> VisaIssued: release tranche → visa provider
-    VisaIssued --> TicketIssued: release tranche → airline/mitra
-    TicketIssued --> Departed: release tranche → land services
-    Departed --> Returned: final tranche after dispute window
+    Booked --> Paid: first payment ≥25% confirmed (bank webhook, HMAC) — escrow opens, travel identity revealed
+    Paid --> Paid: installments (transfer / from saldo) until fully paid
+    Paid --> Cancelled: unpaid balance at H-30 → worker auto-cancel, FULL refund to jamaah account
+    Paid --> VisaIssued: release tranche 30% → travel partner (window opens H-14, fully paid + all e-Visas ready)
+    VisaIssued --> TicketIssued: release tranche 30%
+    TicketIssued --> Departed: release tranche 30%
+    Departed --> Returned: final tranche 10% after dispute window
     Returned --> [*]: account reverts to free savings (Wadiah)
+    Cancelled --> [*]: balance stays on the jamaah's account — rebooking allowed
 
     note right of Paid
         Funds remain in the jamaah's
@@ -467,7 +494,15 @@ stateDiagram-v2
     end note
 ```
 
-- The full lifecycle **works today** end-to-end on staging via the mock bank client + HMAC webhook receiver + admin transition tool, with every movement recorded in the escrow ledger and revenue ledger.
+**Final payment mechanics (stakeholder meeting, 1 July 2026 — all shipped against the mock bank):**
+
+- **Staged payments** — first payment ≥ 25% (configurable) opens escrow and reveals the travel partner's identity; further installments are free-form, payable by transfer or directly from the savings balance.
+- **H-30 discipline** — full payment is due 30 days before departure; a worker auto-cancels unpaid bookings with a **full refund** to the jamaah's account (cancel ≠ forfeit) and rebooking stays open.
+- **H-14 releases** — a standing instruction releases funds to the travel partner from 14 days before departure, once all e-Visas are uploaded and the booking is fully paid; tranches visa 30% / ticket 30% / departure 30% / return 10%, each mirrored as a credit on the travel partner's (mock) account.
+- **Voluntary cancellation** carries a 10% penalty (remainder refunded to saldo); **withdrawals** carry a 10% admin fee with a Rp 100k minimum remaining balance.
+- The jamaah account displays **free vs escrow-locked balance** (two-pot model); e-Visa PDFs are downloadable only after full payment, with UU PDP access logging.
+
+- The full lifecycle **works today** end-to-end on staging via the mock bank client + HMAC webhook receiver + admin transition tool and the H-30/H-14 workers, with every movement recorded in the escrow ledger and revenue ledger.
 - Akad layers follow DSN-MUI fatwa structure (Wadiah Yad Dhamanah for savings → Mudharabah Muqayyadah for booked escrow → Ijarah for platform service fees), pending DPS (Shariah Supervisory Board) sign-off — disclosed as a launch dependency in §15.
 
 ### 6.5 Bank Integration — Honest Status Disclosure
@@ -483,6 +518,10 @@ stateDiagram-v2
 | Escrow ledger (multi-payee per booking) + revenue ledger | ✅ | Every milestone release recorded and visible in /admin-finance |
 | Bank-ops monitor dashboard (read-only by design) | ✅ | Mirrors the agreed "platform is monitor-only" principle |
 | Savings UX (tabungan dashboard, target picker, payment-from-saldo at checkout) | ✅ | Fully functional against mock |
+| Two-pot balance model (free vs escrow-locked), withdrawals (10% admin fee, Rp 100k floor), installments payable from saldo | ✅ | Jamaah dashboard + checkout, against mock |
+| Account auto-open for **every** role (jamaah at KYC, agen at activation, cabang at approval, mitra travel at first release) | ✅ | All role dashboards show balances |
+| H-30 auto-cancel worker (full refund) + H-14 standing-instruction release hold; releases mirrored as credits to the travel partner's account | ✅ | Booking/escrow lifecycle on staging |
+| Kasbon Amani bridge financing (pre-H-14 working capital for travel partners; 2–3%/month, ≤30% of package value; contracted travel ↔ Amani off-platform) | 📋 | "Segera — awaiting Amani live" card shipped in /agent-dashboard |
 
 #### What is real on the business side
 
@@ -509,17 +548,21 @@ stateDiagram-v2
 
 ### 7.1 Revenue Streams
 
-All percentages below are **shipped as admin-configurable parameters** (defaults from the business-parameter working assumptions, doc 37) — final rates are a config change, not a code change.
+All percentages below are **shipped as admin-configurable parameters**. Headline rates were **finalized in the 1 July 2026 stakeholder meeting** (platform fee 10%, flat 5% agent commission); the remainder default from the business-parameter working assumptions (doc 37). Rate changes are a config change, not a code change.
 
-| # | Stream | Mechanic | Default Parameter | Status |
+| # | Stream | Mechanic | Parameter | Status |
 |---|---|---|---|---|
-| 1 | **Platform fee per booking** | % of booking value on every grup/mandiri transaction, recorded to the revenue ledger | **5%** (configurable) | ✅ Shipped (mock payments) |
+| 1 | **Platform fee per booking** | % of the travel partner's base price on every grup/mandiri transaction, recorded to the revenue ledger; travel partners accept the fee terms electronically at application (timestamped acceptance + agreed-% snapshot: `fee_terms_accepted_at`, `fee_pct_agreed`) | **10%** (final — 1 Jul 2026 decision; configurable) | ✅ Shipped (mock payments) |
 | 2 | **Mandiri component markup** | System-applied markup on vendor base prices; vendors see clean prices; supersede history + audit | flight 10% · hotel 8% · **visa 5%** · addon 12% | ✅ Shipped |
 | 3 | **Visa margin via SII Saudi channel** | Exclusive distribution of platform visas at base-price access; margin on top of wholesale | 10–15% or fixed fee (working assumption) | 📋 Pending Saudi contracting |
 | 4 | **B2B wholesale spread** | Agent Travel buys components at B2B price (≈10% below retail); platform fee on the B2B transaction; agent markup capped at 20% | configurable | ✅ Engine shipped |
-| 5 | **Branch (cabang) registration fee** | One-time fee for opening a kabupaten branch — confirmed as a revenue stream by the business owner | Rp 5–10 jt one-time (TBD final) | 📋 Commercial launch item |
-| 6 | **Acquisition micro-fees** | Fixed commission on member signup (Rp 25k) and savings-account opening (Rp 10k) — funds the field salesforce flywheel | flat fees, configurable | ✅ Ledger support shipped |
-| 7 | **Financial services (future)** | Referral/nisbah share on savings & deposito products with the partner bank; hajj khusus & multi-year savings plans | post-MoU | 📋 Planned |
+| 5 | **Agent (agen) registration fee** | Rp 1M one-time with auto-activation (KTP + phone → pay → live); split: Rp 500k agent kit + platform profit, with a **70:30 revenue share with Syarikat Islam** on profit for SI-channel signups — ledger sources `agent_registration`, `agent_kit_allocation`, `si_partner_share` | Rp 1,000,000 | ✅ Shipped (mock payment) |
+| 6 | **Branch (cabang) registration fee** | One-time fee for claiming a kecamatan — **per-zone tariff (zones 1–4)** by Muslim-population ratio from BPS data (94.4% of kecamatan mapped), sold via the public `/daftar-cabang` choropleth page; claims permanent & inheritable via audit-logged admin transfer | zone-based (replaces the earlier flat Rp 5–10 jt TBD) | ✅ Shipped (mock payment) |
+| 7 | **Paid package promotion** | Monthly promoted placement for travel partners, 100% platform revenue; opt-in jamaah notifications (UU PDP-compliant) | Platinum Rp 15 jt · Gold Rp 10 jt · Silver Rp 5 jt /month | ✅ Shipped |
+| 8 | **Withdrawal fee** | 10% admin fee on jamaah balance withdrawals (min Rp 100k must remain) | 10% | ✅ Shipped (mock bank) |
+| 9 | **Cancellation penalty** | 10% of package price on voluntary cancellation (remainder refunded to saldo); H-30 auto-cancel refunds in full — no penalty | 10% | ✅ Shipped |
+| 10 | **Acquisition micro-fees** | Fixed commission on member signup (Rp 25k) and savings-account opening (Rp 10k) — funds the field salesforce flywheel | flat fees, configurable | ✅ Ledger support shipped |
+| 11 | **Financial services (future)** | Referral/nisbah share on savings & deposito products with the partner bank; hajj khusus & multi-year savings plans | post-MoU | 📋 Planned |
 
 > **Jamaah membership itself is free** (confirmed decision) — monetization is transactional, keeping the acquisition funnel friction-free. Koperasi membership cost equivalence is settled at first booking, when the legal cooperative relationship begins.
 
@@ -527,14 +570,16 @@ All percentages below are **shipped as admin-configurable parameters** (defaults
 
 One transaction generates multiple ledger entries — this is the engine that pays a nationwide field network without the platform losing control of unit economics:
 
-| Beneficiary | Default Rate | Trigger |
+| Beneficiary | Rate | Trigger |
 |---|---|---|
-| Agent Sales (field) | bronze 3% / silver 5% / gold 7% by tier | Attributed bookings (referral link / recruitment) |
-| Brand Cabang (handler) | 1.5% override | Every booking the branch handles (incl. direct bookings with no sales agent) |
+| Agent Sales / Agen (field) | **flat 5%** for every agent — the earlier bronze/silver/gold tier model is deprecated (Jul 2026); top performers earn periodic rewards via the monthly "Rapot Agen" leaderboard | Attributed bookings (referral link / recruitment) |
+| Agen (recruiter, lifetime) | 1% rebook | Repeat bookings by jamaah the agent recruited — lifetime attribution |
+| Ranting (kelurahan) | 2.5% override | Bookings under the ranting's territory (agents auto-promoted at 100 jamaah) |
+| Brand Cabang (handler/coordinator) | 1.5% override | Every booking the branch handles (incl. direct bookings with no sales agent) — cabang coordinate, they do not sell |
 | Agent Travel | own markup (≤20% cap) inside package price | Group packages they assemble |
-| Platform | residual of streams 1–6 above | Every transaction |
+| Platform | residual of streams 1–10 above | Every transaction |
 
-Commissions are funded from the full margin stack (fee + markup + visa margin + B2B spread), not from the 5% fee alone. The ledger is shipped and tested (unit + 11/11 E2E).
+Commissions are funded from the full margin stack (fee + markup + visa margin + B2B spread), not from the 10% fee alone. The ledger is shipped and tested (unit + 11/11 E2E).
 
 ### 7.3 Unit Economics (illustrative)
 
@@ -542,11 +587,13 @@ Commissions are funded from the full margin stack (fee + markup + visa margin + 
 |---|---|---|
 | AOV — group package | Rp 30,000,000 | Market average Rp 25–35M |
 | AOV — mandiri assembly | Rp 25,000,000 | Component sum from staging catalog examples |
-| Gross platform take (fee + blended markup/margin) | ≈ 7–9% of GMV | Streams 1–4 stacked, before commissions |
-| Commission payout (blended) | ≈ 3–4% of GMV | Assumes ~60–70% of bookings carry sales attribution |
-| **Net platform take** | **≈ 4–5% of GMV** | Gross take − commissions |
-| Net revenue per booking | ≈ Rp 1.2–1.5 million | At Rp 30M AOV |
+| Gross platform take (fee + blended markup/margin) | ≈ 12–14% of GMV | Streams 1–4 stacked at the final 10% fee, before commissions |
+| Commission payout (blended) | ≈ 3–4% of GMV | Flat 5% agent + ranting/cabang overrides; assumes ~60–70% of bookings carry sales attribution |
+| **Net platform take** | **≈ 9–10% of GMV** | Gross take − commissions |
+| Net revenue per booking | ≈ Rp 2.7–3.0 million | At Rp 30M AOV |
 | CAC through SII channel | Near-zero marginal (community/media-led) | Branch network + Salam Radio + Munas launch |
+
+> *Fee assumption updated to the final 10% (July 2026 stakeholder decision) — a straight +5pp shift over the v1.0 basis. One-time and recurring streams added in July 2026 (agent registration, per-zone branch fees, paid promotion, withdrawal/cancellation fees) are excluded from per-booking unit economics.*
 
 ---
 
@@ -565,21 +612,21 @@ Commissions are funded from the full margin stack (fee + markup + visa margin + 
 
 - **Company:** Mid-size PPIU, ~300 jamaah/year, West Java
 - **Pain:** No base-price access; buys land services through brokers; spreadsheet operations
-- **Journey:** Onboards (≈Rp 1M fee) → browses B2B catalog (SII-channel visas, direct-contract hotels) → assembles a group package with 12% markup → publishes; platform anonymizes his brand publicly (no price war) → manages manifest and milestone payouts in /agent-dashboard
+- **Journey:** Onboards via /gabung-mitra, accepting the 10% platform-fee terms electronically (timestamped, agreed-% snapshot) → browses B2B catalog (SII-channel visas, direct-contract hotels) → assembles a group package with 12% markup → publishes; platform anonymizes his brand publicly until a jamaah's first payment (no price war) → manages manifest, incoming bookings, per-jamaah e-Visa uploads, and milestone payouts in /agent-dashboard
 - **Value to platform:** Supply quality + B2B transaction fees on every component
 
 ### Persona 3 — Ustadz Rahmat, the Cabang Coordinator
 > *"Kami yang membina jamaah dari nol — manasik, silaturahmi — tapi selama ini kami tidak dapat apa-apa."*
 
-- **Role:** Coordinator, KOPSIMARI branch, an East Java kabupaten
-- **Journey:** Branch registers (one-time fee) → runs manasik schedule in /brand-dashboard with calendar + attendance → gets geo-suggested as handler for nearby bookings → earns 1.5% override on every handled booking, funding free manasik
+- **Role:** Coordinator, KOPSIMARI branch, an East Java kecamatan (coordination-only — cabang do not sell)
+- **Journey:** Claims his kecamatan on /daftar-cabang (per-zone fee from BPS Muslim-population data; premises photos + GPS → payment → admin review) → runs manasik schedule in /brand-dashboard with calendar + attendance → gets geo-suggested as handler for nearby bookings → earns 1.5% override on every handled booking, funding free manasik; the claim is permanent and inheritable
 - **Value to platform:** Trust distribution + last-mile jamaah care that no OTA can replicate
 
 ### Persona 4 — Mbak Lina, the Agent Sales
 > *"Saya sudah jualan produk koperasi door-to-door. Sekarang saya bisa jualan umroh, keanggotaan, dan tabungan dengan link referral."*
 
-- **Role:** Field marketer under a cabang, silver tier
-- **Journey:** Shares referral link → tracks clicks and conversions in /sales-dashboard → earns 5% on attributed bookings + Rp 25k/member + Rp 10k/savings account
+- **Role:** Field marketer (Agen) under a cabang — Rp 1M registration, auto-activated (KTP + phone → pay → live)
+- **Journey:** Shares referral link → tracks clicks and conversions in /sales-dashboard → earns a flat 5% on attributed bookings + Rp 25k/member + Rp 10k/savings account → climbs the monthly "Rapot Agen" leaderboard toward Ranting promotion (auto at 100 jamaah, 2.5% override)
 - **Value to platform:** Feet-on-the-ground acquisition across 500+ kabupaten at variable cost only
 
 ### Persona 5 — Abdullah, the Saudi Vendor (Mitra Syariah)
@@ -642,11 +689,11 @@ flowchart TD
     subgraph Bank["🏦 Amani Bank — jamaah-named account"]
         E[Escrow lock at booking<br/>akad: Mudharabah Muqayyadah]
     end
-    subgraph Out["Milestone Releases"]
-        M1[Visa issued → visa provider]
-        M2[Ticket issued → airline/mitra]
-        M3[Departure → land services]
-        M4[Return + dispute window → final settle]
+    subgraph Out["Milestone Releases — window opens H-14 (fully paid + all e-Visas ready)"]
+        M1[Visa ready → 30% to travel partner]
+        M2[Ticket issued → 30%]
+        M3[Departure → 30%]
+        M4[Return + dispute window → final 10%]
     end
     P[umrohlovers platform<br/><i>orchestrates · never holds funds</i>]
 
@@ -711,8 +758,8 @@ graph TB
 ### 10.3 Key Technical Differentiators (investor-relevant)
 
 - **Dual booking engine** — two distinct booking domains (grup / mandiri) sharing one escrow, commission, and membership substrate; competitors typically hard-code one model.
-- **Multi-level commission ledger** — one transaction fans out to N beneficiary entries (sales tier %, cabang override, agent markup, platform fee) with milestone-gated release status. This is MLM-grade distribution accounting with marketplace-grade auditability.
-- **Milestone escrow state machine** — booking states driven by HMAC-verified bank webhooks with an admin transition tool and full escrow timeline; designed for PP 38/2021's milestone-release expectations.
+- **Multi-level commission ledger** — one transaction fans out to N beneficiary entries (flat agent %, ranting/cabang overrides, agent markup, platform fee) with milestone-gated release status. This is MLM-grade distribution accounting with marketplace-grade auditability.
+- **Milestone escrow state machine** — booking states driven by HMAC-verified bank webhooks with an admin transition tool, full escrow timeline, and scheduled workers (H-30 full-refund auto-cancel, H-14 standing-instruction releases); designed for PP 38/2021's milestone-release expectations.
 - **System markup engine** — per-product-type markup applied at the API response layer with supersede history and audit logging; vendors see clean base prices (with vendor-agreement disclosure planned — see §15).
 - **Compliance by construction** — AES-256-GCM at rest for NIK/passport, UU PDP audit + data-access logs, RTBF purge worker, retention policies. Audit score 92/100 with findings remediated.
 - **Map-first discovery UX** — 8+ Mapbox surfaces (clustering, geolocation, Haram/Nabawi landmarks, Indonesia↔Saudi toggle) tuned for the ~70% mobile audience (44×44 tap targets, mobile-first reflow — audited and fixed).
@@ -761,8 +808,8 @@ graph TB
 
 | Pillar | Mechanic | Segment |
 |---|---|---|
-| **SII institutional network** | Branch-by-branch rollout (kabupaten cabang as franchise-like nodes), Munas SI Surabaya national launch (Nov 2026), Muharram roadshow | Jamaah + branches |
-| **Field salesforce** | Agent Sales tiers (3/5/7%) selling four products: packages, membership, savings, vendor add-ons — paid on the shipped commission ledger | Mass-market jamaah |
+| **SII institutional network** | Branch-by-branch rollout (kecamatan cabang as franchise-like nodes, claimed via per-zone tariffs), Munas SI Surabaya national launch (Nov 2026), Muharram roadshow | Jamaah + branches |
+| **Field salesforce** | Agents on a flat 5% commission (+ monthly "Rapot Agen" leaderboard rewards) selling four products: packages, membership, savings, vendor add-ons — paid on the shipped commission ledger; Rp 1M auto-activated onboarding | Mass-market jamaah |
 | **Salam Radio & SI media** | Video promo, podcast series, WhatsApp distribution to branch leadership | Community awareness |
 | **Direct B2B outreach** | Five-angle presentation program (jamaah / travel agents / Indonesian vendors / Saudi vendors / branches, Arabic versions for Saudi); Zoom critique sessions with major travel agents pre-launch | Supply side |
 | **Direct supply contracting** | Jeddah hotel-onboarding event; direct airline meetings (Garuda, Lion, Saudia); deliberately skipping Trip.com/Traveloka integrations in year one to protect margin | Saudi + airline supply |
@@ -770,7 +817,7 @@ graph TB
 ### 12.2 Launch Sequence (2026)
 
 1. **June** — Amani directors' meeting; platform UX hardening from stakeholder feedback (shipped); agent-critique Zoom sessions.
-2. **July** — Amani technical workshop + joint DPS akad design; Arabic materials; Muharram internal SI roadshow.
+2. **July** — payment/escrow/agency mechanics finalized (1 July stakeholder meeting) and shipped to staging (3 July); Amani technical workshop + joint DPS akad design; Arabic materials; Muharram internal SI roadshow.
 3. **August** — MoU signing target; Amani sandbox; Jeddah hotel contracting; airline meetings.
 4. **September** — 4-week Amani integration sprint; **pilot wave 1: 50 jamaah, 1 branch**.
 5. **October** — pilot expansion to **200 jamaah, 3 branches**; pre-Munas campaign; onboard major travel agents.
@@ -795,6 +842,7 @@ gantt
     dateFormat  YYYY-MM
     section Built (done)
     Platform foundation → full staging    :done, 2026-05, 2026-06
+    Final payment & agency mechanics      :done, 2026-06, 2026-07
     section Launch
     Amani MoU + sandbox                   :2026-07, 2026-09
     Integration sprint (real bank)        :2026-09, 2026-10
@@ -814,10 +862,11 @@ gantt
 
 | Milestone | Target / Date | Status |
 |---|---|---|
-| Full platform on staging (dual engine, 9 dashboards, escrow mock E2E) | May–June 2026 | ✅ Done |
+| Full platform on staging (dual engine, role dashboards, escrow mock E2E) | May–June 2026 | ✅ Done |
 | Compliance layer (encryption, audit, RTBF, HMAC) — audit 92/100 | May–June 2026 | ✅ Done |
 | Production domain & CI/CD (umrohlovers.id, gated deploys) | June 2026 | ✅ Infrastructure live |
 | Amani Bank proposal + technical spec delivered | June 2026 | ✅ Done |
+| **Final payment/escrow/agency mechanics** (per 1 Jul 2026 stakeholder meeting) implemented — 10% fee, staged payments, H-30/H-14 workers, semi-MLM network, per-zone branch registration, e-Visa module — deployed to staging | July 2026 | ✅ Done (3 Jul 2026, mock bank) |
 | Amani MoU signed | Target Aug 2026 | 🚧 In progress |
 | Real bank integration live (swap mock) | Target Sep–Oct 2026 | 📋 Scoped (~4 weeks) |
 | **First real transaction** (pilot wave 1, 50 jamaah) | Target Sep–Oct 2026 | 📋 The milestone this raise accelerates |
@@ -840,12 +889,14 @@ gantt
 | Assumption | Value | Source |
 |---|---|---|
 | AOV per booking | Rp 30,000,000 | Market average Rp 25–35M |
-| Platform fee | 5% of booking value | Shipped default (configurable) |
+| Platform fee | **10%** of the travel base price (final — 1 Jul 2026 stakeholder decision) | Shipped, configurable; *scenarios below still model the earlier 5% basis — see note* |
 | Blended additional margin (markup + visa + B2B spread) | +2.5% of GMV effective | Streams 2–4, conservatively blended |
-| Commission payout (sales + cabang override, blended) | −3.5% of GMV | 3–7% tiers + 1.5% override, ~65% attribution |
-| **Net platform take** | **≈ 4.0% of GMV** | (5% + 2.5%) − 3.5% |
+| Commission payout (agents + overrides, blended) | −3.5% of GMV | Flat 5% agent + 2.5% ranting / 1.5% cabang overrides, ~65% attribution |
+| **Net platform take (modeling basis)** | **≈ 4.0% of GMV** | (5% + 2.5%) − 3.5% — v1.0 conservative basis; ≈ 9% at the final 10% fee |
 | Micro-fees (membership/savings acquisition) | Rp 35k per new funded account | Rp 25k + Rp 10k flat fees |
 | Bookings as % of active savings accounts | ~25–30% per year | Working assumption — savers convert over multi-year horizons |
+
+> **Note (v1.1)** — the platform fee was finalized at **10%** in the 1 July 2026 stakeholder meeting, after these scenarios had been modeled at 5%. Rather than restating projections pre-pilot, the tables below deliberately retain the original ≈4% net-take basis as a **conservative floor** — at the final fee, the same volumes imply over 2× the net-take rate shown. Revenue streams added in July 2026 (Rp 1M agent registration fees, per-zone branch tariffs, paid package promotion, withdrawal/cancellation fees) are likewise excluded. On the branch-fee line, the Rp 7.5M/cabang figure is retained as an average placeholder for the new per-zone (1–4) tariff.
 
 ### 14.2 Scenario Table (booked jamaah → revenue)
 
@@ -934,7 +985,7 @@ The round size, instrument, and valuation are **under discussion within the foun
 
 ### 16.4 Why Now?
 
-1. **The platform is built and verifiable today** — staging is live with the full dual-engine marketplace, 9 dashboards, and a working (mock-banked) escrow lifecycle. We are raising to launch and scale, not to build.
+1. **The platform is built and verifiable today** — staging is live with the full dual-engine marketplace, 11 role dashboards, and a working (mock-banked) escrow lifecycle running the final July-2026 payment mechanics. We are raising to launch and scale, not to build.
 2. **A dated, named launch window exists** — Munas SI Surabaya, November 2026: a once-in-years national gathering of the distribution network, with the pilot and bank integration sequenced to land just before it.
 3. **The trust vacuum is unfilled** — post-fraud-era demand for protected umroh payments has no incumbent answer; the first credible heritage + escrow + tech player sets the standard.
 4. **Supply-side lock is available now** — Saudi Vision 2030 capacity expansion means hotels and visa channels are actively seeking direct Indonesian demand; the Jeddah contracting window is open.
@@ -985,7 +1036,11 @@ All figures referenced inline; assets to be exported from staging screenshots an
 | **Jamaah** | Pilgrim(s) — the platform's end customer |
 | **Koperasi** | Indonesian legal cooperative (UU 25/1992); KOPSIMARI is the platform's parent cooperative |
 | **Manasik** | Pilgrimage rites training, traditionally run by local communities — owned by cabang on the platform |
-| **Cabang / Brand Cabang** | Kabupaten (regency)-level branch — manasik owner, jamaah care, commission override beneficiary |
+| **Cabang / Brand Cabang** | Kecamatan (district)-level coordinator branch — one per kecamatan, coordination-only (does not sell; holds one linked field-agent account); manasik owner, jamaah care, 1.5% override, per-zone registration fee |
+| **Ranting** | Kelurahan-level tier of the agency network — a top-performing agent auto-promoted at 100 jamaah (one per kelurahan); earns a 2.5% override |
+| **Agen** | Field sales agent (travel_sales) — Rp 1M auto-activated registration, flat 5% commission, lifetime 1% rebook attribution |
+| **Rapot Agen** | Monthly agent performance leaderboard ("report card") — the basis for periodic top-performer rewards, replacing commission tiers |
+| **Kasbon** | Bridge-financing facility (via Amani) for travel partners needing working capital before the H-14 release window |
 | **PPIU / PIHK** | Government licenses for umroh (PPIU) and special hajj (PIHK) travel organizers |
 | **SISKOPATUH** | Kemenag's monitoring system & registry for licensed umroh operators |
 | **Muthawwif** | Pilgrimage guide accompanying jamaah in Saudi Arabia |
@@ -999,9 +1054,9 @@ All figures referenced inline; assets to be exported from staging screenshots an
 | **Munas** | Musyawarah Nasional — Syarikat Islam's national congress (Surabaya, Nov 2026 = launch venue) |
 | **Rumah Sinergi** | "House of Synergy" — the platform's multi-stakeholder collaboration vision |
 
-### D. Delivered Phases (May → June 2026)
+### D. Delivered Phases (May → July 2026)
 
-Concrete execution log — the entire platform below was designed, built, and E2E-verified in roughly five weeks by a one-engineer team:
+Concrete execution log — the entire platform below was designed, built, and E2E-verified in roughly two months by a one-engineer team:
 
 | Phase | Delivered | Surface |
 |---|---|---|
@@ -1014,16 +1069,21 @@ Concrete execution log — the entire platform below was designed, built, and E2
 | Sprints 6–8 | Brand-owner self-service portal, manasik full CRUD + calendar views, admin Kanban suite (KYC/agents/brands/2× mitra) + document preview with UU PDP access logging | Full stack |
 | Maps program | 8+ Mapbox surfaces: admin + public maps, clustering, geolocation, landmarks, navigation pattern; mobile UX audit + fixes | FE + BE geocoding |
 | Savings | Tabungan mechanism (doc 28) E2E with mock Amani: auto-open on KYC, top-up, target picker, history | Full stack (🟡 mock bank) |
-| Role dashboards | agent / sales / bank-ops / mitra / admin-finance dashboards — 9 total | Full stack |
+| Role dashboards | agent / sales / bank-ops / mitra / admin-finance dashboards — 9 at the time (grown to 11 roles by v1.1) | Full stack |
 | Booking grup | 4-step flow + akad PDF + escrow ledger + bank webhook receiver + admin state-machine tool | Full stack (🟡 mock pay) |
 | Paket Mandiri | Date-first stepper (Flight PP → Hotels → Addons → Review) with auto-visa matching, anti-TKI PP rule, handler geo-suggest, savings payment | Full stack |
-| Commission ledger | Multi-level entries (sales tier / cabang override / agent markup / platform fee), configurable rates | Full stack |
+| Commission ledger | Multi-level entries (sales / cabang override / agent markup / platform fee), configurable rates | Full stack |
 | Markup engine | `pricing_markup_config` + response transformer + admin endpoints + audit (12 tests, 92% cov) | BE (FE admin UI follow-up) |
 | Post-meeting UX batch (Jun) | Logo composition, travel-agent anonymization, travel_sales-only public maps, stepper redesign, membership-tier model | FE + BE |
 | Quality program | 500+ BE tests (94–100% usecase cov), 90 FE tests, Lighthouse remediation, k6 1,000 VUs, gzip + Redis caching, UU PDP audit 92/100 | All |
+| Semi-MLM network F1–F4 (Jun) | 4-tier agency model (Jamaah → Agen → Ranting → Cabang): flat 5% commission + overrides + lifetime rebook, Rp 1M auto-activated agent onboarding with kit split + SI 70:30 revenue share, cabang/ranting territories, post-escrow agen pendamping auto-assign (by-load), notifications, landing CTA | Full stack |
+| Zonasi program (Jun–Jul) | BPS Muslim-population mapping (94.4% of kecamatan, incl. 2022 Papua splits) → per-zone branch tariffs; /daftar-cabang choropleth with fullscreen; branch claim (photos + GPS) + admin review + audit-logged transfer-ownership | Full stack |
+| Staged payment mechanics (doc 62, Jun) | Min-25% first payment → escrow opens + travel identity reveal, free-form installments, full-payment-before-visa rule, departure dates + reminders | Full stack (🟡 mock bank) |
+| e-Visa module (Jun–Jul) | Per-jamaah Saudi e-Visa PDF upload → notification → jamaah download gated after full payment, UU PDP access logging | Full stack |
+| Final mechanics Waves 1–3 (Jul, post 1-Jul stakeholder meeting) | 10% platform fee + electronic fee-terms acceptance (`fee_terms_accepted_at`, `fee_pct_agreed`), H-30 auto-cancel worker (full refund), H-14 release hold + mirrored travel credits, withdraw (10% fee) / voluntary cancel (10% penalty) / pay-from-saldo / two-pot locked-balance display, Kasbon Amani card, cabang photos + inheritance, Rapot Agen leaderboard, accounts for all roles, paid package promotion tiers, hajj gate | Full stack (🟡 mock bank) |
 
 ---
 
 *© 2026 umrohlovers.id — PT Arta Cipta Kreasi (ARTASI) · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
 
-*Document version 1.0 · June 2026 · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*
+*Document version 1.1 · July 2026 (v1.0 June 2026) · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*

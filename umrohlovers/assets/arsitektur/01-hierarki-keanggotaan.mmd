@@ -1,0 +1,34 @@
+flowchart TD
+    PUSAT["🏛️ PUSAT — Kopsimari Admin<br/>(koordinasi nasional)"]
+
+    KAB["🗺️ Grup Pembina<br/>= Kabupaten/Kota<br/><i>(pengembangan lanjutan)</i>"]
+
+    CABANG["🏢 CABANG<br/>= 1 per KECAMATAN (eksklusif)<br/>Biaya daftar per ZONASI · diverifikasi admin<br/><b>Tidak berjualan — punya 1 akun Agen kaki-tangan</b>"]
+
+    RANTING["⭐ RANTING<br/>= 1 per KELURAHAN<br/>Agen berprestasi (otomatis naik di 100 jamaah)<br/><b>Boleh berjualan + koordinasi kelurahan</b>"]
+
+    AGEN["🤝 AGEN<br/>Sales perorangan (daftar Rp 1 juta)<br/>Semua agen setara · merekrut & membina jamaah<br/>Afiliasi <b>seumur hidup</b>"]
+
+    JAMAAH["👤 JAMAAH<br/>Anggota koperasi / calon jamaah<br/>Memesan paket umroh & haji"]
+
+    PUSAT --> KAB
+    KAB --> CABANG
+    CABANG -. menaungi .-> RANTING
+    CABANG -. menaungi .-> AGEN
+    RANTING -. membina .-> AGEN
+    AGEN -- merekrut --> JAMAAH
+    RANTING -- merekrut --> JAMAAH
+
+    classDef pusat fill:#1e293b,stroke:#0f172a,color:#fff;
+    classDef kab fill:#475569,stroke:#334155,color:#fff;
+    classDef cabang fill:#b45309,stroke:#92400e,color:#fff;
+    classDef ranting fill:#15803d,stroke:#166534,color:#fff;
+    classDef agen fill:#0e7490,stroke:#155e75,color:#fff;
+    classDef jamaah fill:#fef3c7,stroke:#d97706,color:#78350f;
+
+    class PUSAT pusat;
+    class KAB kab;
+    class CABANG cabang;
+    class RANTING ranting;
+    class AGEN agen;
+    class JAMAAH jamaah;

@@ -1,0 +1,38 @@
+flowchart TD
+    JAMAAH["👤 Jamaah bayar BERTAHAP<br/>pertama min <b>25%</b> → escrow terbuka<br/>cicil bebas · bisa bayar dari saldo tabungan"] --> ESCROW["🔒 ESCROW — Bank Syariah Amani<br/>dana ditahan di rekening individu jamaah<br/><b>belum jadi milik siapa pun</b>"]
+
+    ESCROW --> LUNAS["⏰ Wajib LUNAS di <b>H-30</b> sebelum berangkat<br/>belum lunas → batal otomatis,<br/><b>saldo kembali penuh</b> (batal ≠ hangus)"]
+    LUNAS --> M2["🛂 Visa terbit (PDF e-Visa)<br/>rilis <b>30%</b> — mulai <b>H-14</b>, otomatis"]
+    M2 --> M3["🎫 Tiket terbit — rilis <b>30%</b>"]
+    M3 --> M4["🛫 Berangkat — rilis <b>30%</b>"]
+    M4 --> M5["🏠 Pulang / selesai — rilis <b>10%</b>"]
+
+    M5 ==> BAGI["💸 Setiap rilis dibagi"]
+
+    BAGI --> TRAVEL["✈️ Mitra Travel<br/>(harga paket − fee)<br/>dana rilis tercatat di rekening mitra"]
+    BAGI --> KOMISI["🤝 Komisi jaringan keagenan"]
+    BAGI --> PLATFORM["🏛️ Platform / Kopsimari<br/><b>10%</b> dari harga travel<br/>(disetujui mitra via S&K elektronik)"]
+
+    KOMISI --> AGEN["🤝 Agen perekrut<br/><b>flat 5%</b><br/>semua agen setara"]
+    KOMISI --> RANTING["⭐ Ranting kelurahan<br/><b>+2.5%</b>"]
+    KOMISI --> CABANG["🏢 Cabang kecamatan<br/><b>+1.5%</b>"]
+
+    NOTE["💡 Pemesanan ULANG jamaah lama →<br/>Agen tetap dapat <b>1%</b> seumur hidup (afiliasi lifetime)"]
+    AGEN -.-> NOTE
+
+    NOTE2["⚖️ Batal sukarela → denda <b>10% harga paket</b>, sisa kembali ke saldo<br/>Tarik dana keluar rekening → biaya admin <b>10%</b>, saldo min Rp 100rb"]
+    ESCROW -.-> NOTE2
+
+    classDef pay fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef escrow fill:#1e293b,stroke:#0f172a,color:#fff;
+    classDef milestone fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e;
+    classDef split fill:#dcfce7,stroke:#15803d,color:#14532d;
+    classDef komisi fill:#0e7490,stroke:#155e75,color:#fff;
+    classDef note fill:#fef9c3,stroke:#ca8a04,color:#713f12;
+
+    class JAMAAH pay;
+    class ESCROW escrow;
+    class LUNAS,M2,M3,M4,M5 milestone;
+    class BAGI,TRAVEL,PLATFORM split;
+    class KOMISI,AGEN,RANTING,CABANG komisi;
+    class NOTE,NOTE2 note;

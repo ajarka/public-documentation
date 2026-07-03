@@ -1,0 +1,34 @@
+flowchart TD
+    START(["👤 Calon jamaah buka umrohlovers"]) --> DAFTAR["📝 Daftar akun<br/>(nama, email, No.HP wajib + pilih cabang opsional)"]
+    DAFTAR --> VERIF["✉️ Verifikasi email"]
+    VERIF --> KYC["🪪 Upload dokumen identitas (KYC)<br/>KTP · KK · Paspor"]
+    KYC --> REVIEW{"👨‍💼 Admin review<br/>KYC?"}
+    REVIEW -->|ditolak| KYC
+    REVIEW -->|disetujui| AKTIF["✅ Anggota terverifikasi<br/>+ rekening tabungan Amani terbuka"]
+
+    AKTIF --> NABUNG["💰 Menabung rutin (opsional)<br/>menuju target paket"]
+    AKTIF --> PILIH{"🛍️ Pilih cara pesan"}
+
+    PILIH -->|"Paket Grup<br/>(sudah jadi)"| GRUP["✈️ Pilih paket grup dari Mitra Travel"]
+    PILIH -->|"Paket Mandiri<br/>(rakit sendiri)"| MANDIRI["🧩 Rakit: tanggal → penerbangan → hotel → visa → add-on"]
+
+    GRUP --> AKAD["📜 Akad syariah"]
+    MANDIRI --> AKAD
+    AKAD --> BAYAR["💳 Bayar pertama min 25% → ESCROW terbuka<br/>identitas Mitra Travel terbuka<br/>cicil bebas (transfer / dari saldo tabungan)"]
+    BAYAR --> PELUNASAN["⏰ LUNAS wajib di H-30<br/>belum lunas → batal otomatis,<br/>saldo kembali penuh (bisa pesan ulang)"]
+    PELUNASAN --> MILESTONE["🔄 Dana rilis BERTAHAP mulai H-14:<br/>visa (PDF, unduh setelah lunas) → tiket → berangkat"]
+    MILESTONE --> MANASIK["🕌 Ikut manasik<br/>(diselenggarakan Cabang)"]
+    MANASIK --> BERANGKAT["🛫 Berangkat ke Tanah Suci"]
+    BERANGKAT --> PULANG["🏠 Pulang → booking selesai"]
+
+    classDef start fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef step fill:#f8fafc,stroke:#64748b,color:#1e293b;
+    classDef decision fill:#fde68a,stroke:#b45309,color:#78350f;
+    classDef money fill:#dcfce7,stroke:#15803d,color:#14532d;
+    classDef done fill:#15803d,stroke:#166534,color:#fff;
+
+    class START start;
+    class DAFTAR,VERIF,KYC,GRUP,MANDIRI,AKAD,MANASIK,BERANGKAT step;
+    class REVIEW,PILIH decision;
+    class AKTIF,NABUNG,BAYAR,PELUNASAN,MILESTONE money;
+    class PULANG done;

@@ -1,0 +1,42 @@
+flowchart LR
+    subgraph LAPANGAN["🌍 LAPANGAN (jaringan keanggotaan)"]
+        direction TB
+        JAMAAH["👤 Jamaah"]
+        AGEN["🤝 Agen<br/>(sales)"]
+        RANTING["⭐ Ranting<br/>(kelurahan)"]
+        CABANG["🏢 Cabang<br/>(kecamatan)"]
+        JAMAAH -.-> AGEN -.-> RANTING -.-> CABANG
+    end
+
+    subgraph PLATFORM["🏛️ PLATFORM umrohlovers (Kopsimari)"]
+        direction TB
+        ADMIN["👨‍💼 Admin Kopsimari<br/>verifikasi · moderasi · komisi"]
+        ESCROW["🔒 Escrow Engine<br/>dana ditahan, rilis per milestone"]
+    end
+
+    subgraph VENDOR["🏭 VENDOR / SUPPLIER"]
+        direction TB
+        TRAVEL["✈️ Mitra Travel (PPIU/PIHK)<br/>pembuat PAKET GRUP<br/><i>anonim di publik</i>"]
+        KORP["🚚 Mitra Korporasi<br/>handling · pesawat · vaksin"]
+        SYAR["🕋 Mitra Syariah Saudi<br/>hotel · visa · catering · muthawwif"]
+    end
+
+    BANK["🏦 Bank Syariah Amani<br/>rekening individu jamaah"]
+
+    JAMAAH ==>|pesan paket| PLATFORM
+    TRAVEL ==>|pasok paket grup| PLATFORM
+    KORP ==>|pasok komponen| PLATFORM
+    SYAR ==>|pasok komponen| PLATFORM
+    PLATFORM <==>|tahan & rilis dana| BANK
+    JAMAAH ==>|setor & bayar| BANK
+    CABANG -->|kelola manasik| JAMAAH
+
+    classDef field fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef plat fill:#1e293b,stroke:#0f172a,color:#fff;
+    classDef vend fill:#0e7490,stroke:#155e75,color:#fff;
+    classDef bank fill:#15803d,stroke:#166534,color:#fff;
+
+    class JAMAAH,AGEN,RANTING,CABANG field;
+    class ADMIN,ESCROW plat;
+    class TRAVEL,KORP,SYAR vend;
+    class BANK bank;
