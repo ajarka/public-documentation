@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.5 · June 2026
+### Investor Edition · v2.6 · July 2026
 
-> **Status** — Staging platform live · Android Field App live (Build 29) · Public Launch target H2 2026
+> **Status** — Staging platform live · Android Field App live (Build 30) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.6 highlights** — **Trust Protocol shipped in code, not just claimed.** The two biggest additions turn AdopTree's anti-fraud thesis (§0 problems #3/#4/#7) into working product: (1) **Milestone Escrow Fund Disbursement** — donor money is no longer settled straight to the merchant; it is held in escrow and released in verified stages (default 40/30/30: *planted → verified alive → thriving*), each stage double-gated (field evidence → admin approval), recorded on an append-only financial ledger, and surfaced to all three personas — the donor sees a "Perjalanan Danamu" journey stepper, the merchant sees a cash-pipeline funnel with actionable to-dos, the admin runs a dedicated **Keuangan** console (approval queue with evidence deeplinks, batch payouts with bank-transfer references, configurable percentages). (2) **KTP-verified Land Manager (Pengelola Lahan)** — every new land must register its accountable field PIC with national-ID evidence. Also shipped: **Tira-First Support 24/7** (AI answers with live data first; unresolved cases become structured tickets with AI triage summaries + transcript, feeding an admin inbox that spawns direct user↔admin chat), **Two-Factor Authentication** (TOTP + single-use backup codes, AES-256-GCM-encrypted secrets, admin recovery), a **full-coverage notification system** (every review-queue submission, sale, milestone, and verification outcome now reaches the right inbox — web + mobile), and **live contributor GPS tracking made real** (Field App Build 30 fixes the ping pipeline; movement now renders live on the flat activity map with history replay). See new §6.8 Milestone Escrow & §6.9 Support + Platform Hardening.
 >
 > **v2.5 highlights** — **Tira AI Co-Pilot** release: the assistant graduated from a donor Q&A chatbot into a multi-surface, multi-audience operator. Merchants now *create lands, campaigns, and their own merchant registration by chatting* — Tira fills the form live (client-side tool-calling → `react-hook-form`), normalizes uploaded geo files (KML/KMZ/GPX/GeoJSON boundaries + CSV/GeoJSON tree points) into the AdopTree geo standard via an AI `normalize-geo` endpoint, proposes species data, and stays bilingual to the platform locale (id/en/ar). A reusable **co-pilot security layer** (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) gates every write-capable AI surface. Plus: **AI Tree Baseline + satellite/imagery tree-count estimation**; a public **Tools Hub** (`/tools`) with the **Carbon Calculator**, **3D Tree Tracker** (cinematic globe→ground), and **Land Analyzer**; **instant-donation smart defaults** (1-tap presets, recommendation algorithm, "Tira pilihkan untukku"); **land profile pictures**, **gallery photo-source labeling**, and **approved field-inspection photos publishable to the public land gallery**; **Instagram→Forum auto cross-post**; and a dedicated **land-owner CTA section** on the landing page. See updated §6.2 Feature Matrix, §6.6 Tira AI Co-Pilot, §6.7 Public Tools Hub, §10.3 Differentiators.
 >
@@ -27,6 +29,7 @@
 6. [Product Overview](#6-product-overview)
    - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Service Class Structure
    - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)* · 6.6 Tira AI Co-Pilot *(new in v2.5)* · 6.7 Public Tools Hub *(new in v2.5)*
+   - 6.8 Milestone Escrow — Trust-Engineered Fund Disbursement *(new in v2.6)* · 6.9 Tira-First Support & Platform Hardening *(new in v2.6)*
 7. [Business Model & Revenue Streams](#7-business-model--revenue-streams)
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
@@ -108,10 +111,11 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 ### Current traction
 
 - Web platform fully operational at `staging.adoptreeworld.com`
-- **Android Field App live** — APK Build 29 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, and crowdsourced contributor tier system
+- **Android Field App live** — APK Build 30 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, crowdsourced contributor tier system, live GPS session tracking, and 2FA-aware login
+- **Milestone Escrow live (v2.6)** — donor funds held in escrow and released to merchants only per field-verified + admin-approved milestone (40/30/30), on an append-only financial ledger — the anti-fraud thesis (§0 #3/#4/#7) is now enforced by the payment rail itself, not by policy documents
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
 - **Payment infrastructure**: Midtrans live for production (bank transfer, QRIS, e-wallet, credit card). Solana (SOL) payment UI built — backend wire-up scheduled Q3 2026 alongside on-chain NFT minting
-- 20+ product phases delivered between v2.0 and v2.5 (Apr → Jun 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, and the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual)
+- 30+ product phases delivered between v2.0 and v2.6 (Apr → Jul 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual), **Milestone Escrow disbursement**, **Tira-First Support**, **2FA**, and **KTP-verified land managers**
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
@@ -442,7 +446,10 @@ flowchart TB
 | **Multi-language** | English, Indonesian, Arabic (RTL) — UI + AI replies both follow the platform locale | ✅ Built |
 | **Notifications** | In-app, email, and Firebase Cloud Messaging push (Phase 2.9) with deeplink routing | ✅ Built |
 | **Realtime Chat** *(new)* | WebSocket-based 1:1 chat — voice notes, WhatsApp-style optimistic send, conversation actions (Phase 2.26) | ✅ Built |
-| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 29 latest) | ✅ Built |
+| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 30 latest) | ✅ Built |
+| **"Perjalanan Danamu" Fund Journey** *(new v2.6)* | Per-adoption escrow journey stepper in My Forest: Paid → Planted (✓40%) → Verified Alive (✓30%) → Thriving — % disbursed shown, milestone dates linked to field evidence. See §6.8 | ✅ Built |
+| **Support Center (Tira-first)** *(new v2.6)* | `/support` — ask Tira 24/7 first (answers from live data); unresolved → structured ticket with status tracking + direct chat with the support team. See §6.9 | ✅ Built |
+| **Two-Factor Authentication** *(new v2.6)* | TOTP (Google Authenticator) + one-time backup codes; encrypted secrets; challenge-based login on web & mobile. See §6.9 | ✅ Built |
 
 <table>
   <tr>
@@ -480,6 +487,9 @@ flowchart TB
 | **QR Code Management** *(new)* | Tree QR identity verification — anti-misidentification (Phase 2.23) | ✅ Built |
 | **Species Request Workflow** *(new)* | Request new species → admin approval, with AI "fill for me" data autofill | ✅ Built |
 | **Dark Mode Dashboard** *(new)* | Scoped dark mode for merchant/admin/land-owner dashboards (public stays light) | ✅ Built |
+| **Escrow & Pencairan** *(new v2.6)* | Cash-pipeline funnel (Held → Awaiting Admin → Ready → Paid) + actionable "what unlocks your money" insights + per-adoption milestone table + payout history with bank references. Passive by design — no withdrawal requests. See §6.8 | ✅ Built |
+| **Pengelola Lahan (KTP-verified Land Manager)** *(new v2.6)* | Every new land registers its accountable field PIC — full name, 16-digit national ID + ID-card photo, contact — required at creation, editable on a dedicated tab; Tira co-pilot fills it conversationally (ID number privacy-masked in chat) | ✅ Built |
+| **Full-coverage Notifications** *(new v2.6)* | Every inspection/observation/planting submission, new sale, milestone event, and verification outcome lands in the merchant's inbox — no more polling the dashboard to discover work | ✅ Built |
 
 <table>
   <tr>
@@ -508,6 +518,9 @@ flowchart TB
 | **Land Owners Management** *(new)* | Dedicated dashboard for land owner accounts + invitation flow | ✅ Built |
 | **Contributor Management** *(new)* | Manage public/verified contributors, tier promotions, leaderboard | ✅ Built |
 | **Session Resilience** *(new)* | 4-hour access + 30-day refresh token, axios interceptor mutex queue — eliminates spurious logouts | ✅ Built |
+| **Keuangan Console (Milestone Escrow)** *(new v2.6)* | 5-KPI money picture (held / awaiting / eligible / paid / clawback exposure) + milestone approval queue with field-evidence deeplinks & bulk approve + payout batching with live IDR preview & bank-transfer references + configurable stage percentages (Σ=100 enforced) + one-click historical backfill. See §6.8 | ✅ Built |
+| **Support Inbox** *(new v2.6)* | Ticket queue with status/priority filters, AI triage summary + full Tira transcript per ticket, claim → spawns direct user↔admin chat, mandatory resolution notes. See §6.9 | ✅ Built |
+| **2FA Recovery** *(new v2.6)* | Admin reset path for users locked out of two-factor (lost device + exhausted backup codes) | ✅ Built |
 
 <table>
   <tr>
@@ -559,7 +572,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 > The web platform handles **online** adoption & monitoring. The mobile app handles **on-the-ground fulfillment** — without it, "GPS-verified tree ownership" is a promise; with it, it's evidence.
 
-**Status:** Live · APK Build 29 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
+**Status:** Live · APK Build 30 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
 
 <table>
   <tr>
@@ -620,7 +633,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 
 **Distribution:** Android APK via Cloudflare R2 (versioned releases + `latest` alias for auto-update). iOS distribution via TestFlight.
 
-**Build cadence:** 29 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 29 (June 2026, photo-based land verification).
+**Build cadence:** 30 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 30 (July 2026 — live GPS tracking pipeline fix + Two-Factor Authentication login).
 
 ---
 
@@ -643,7 +656,7 @@ AdopTree uses a **6-class service tier model**: two adoption categories (Donasi 
 - +100 points for completing an inspection
 - Leaderboard (monthly + alltime) with PostgreSQL `RANK()` window
 - Levels calculated from cumulative points (Pemula → Aktivis → Penjaga Hutan → Inspektur Hijau)
-- Redemption roadmap: 2027 (rewards marketplace)
+- Redemption live — points redeemable for Pulsa/Kuota (Tukar Poin v1); rewards marketplace expansion 2027
 
 **Why this works for investors:**
 1. **Lower operational cost** — surveillance crowdsourced, not staffed. Margin expansion as adoption scales.
@@ -703,6 +716,61 @@ A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acqu
 </table>
 
 *Figure 5d — Public Tools Hub. Each tool is a value-first acquisition surface: the Carbon Calculator quantifies impact for prospective donors, the 3D Tree Tracker showcases the digital-twin experience, and the Land Analyzer converts curious land owners into supply-side leads.*
+
+---
+
+### 6.8 Milestone Escrow — Trust-Engineered Fund Disbursement (Live, v2.6)
+
+> **The thesis, enforced by the payment rail.** §0 names fraud in fund delivery (#3), weak supervision (#4), and low trust (#7) as the root causes AdopTree exists to solve. Until v2.6, the platform *documented* impact after money had already settled to the merchant. Now the money itself follows the tree: **donor funds are held in escrow and released to the merchant only as each real-world milestone is field-verified and admin-approved.** No competitor in §11 does this.
+
+**How a dollar flows now:**
+
+| Stage | Default share | Achieved by | Released by |
+|---|---|---|---|
+| 🌱 **M1 — Planted** | 40% | Planting job approved (or tree pre-planted at settlement) | Admin approval → payout batch |
+| 🌿 **M2 — Verified Alive** | 30% | First approved field inspection after planting | Admin approval → payout batch |
+| 🌳 **M3 — Thriving** | 30% | Follow-up approved inspection ≥ 180 days after M2 (or adoption period completed) | Admin approval → payout batch |
+
+**Design properties that survive due diligence:**
+
+- **Double-gate** — field evidence marks a milestone *achieved*; only an **admin** can approve release. Merchants approve their own planting/inspection submissions operationally, but can never self-release money.
+- **Append-only ledger** — every fund/achieve/approve/payout/refund/clawback event is a permanent `escrow_ledger` row; the money picture is auditable by construction.
+- **Deterministic math** — percentages are configurable platform-wide (Σ=100 enforced) and snapshotted per adoption; rounding is remainder-based so the three stages always sum exactly to the merchant's net.
+- **Refund-aware** — payment refunds cancel unreleased milestones automatically and flag already-paid ones as clawback exposure on the admin console.
+- **Dead-tree handling** — a dead tree freezes its remaining milestone for admin decision instead of silently paying out.
+- **Historical backfill** — all pre-escrow successful payments were migrated through the same engine (flagged for admin review), so the ledger covers 100% of platform history.
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/admin-finance-dark.png" alt="Admin Keuangan console — 5 KPI cards and milestone approval queue with evidence links"/><br/><sub><b>1. Admin Keuangan Console</b> — the money picture in one screen: Held / Awaiting Approval / Ready / Paid / Clawback Exposure, plus the milestone approval queue — each row shows the adoption, stage, amount, and a deeplink to the field evidence behind it. Bulk-approve for backfill review.</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-escrow-dark.png" alt="Merchant Escrow & Pencairan tab — funnel cards, actionable insights, milestone table, payout history"/><br/><sub><b>2. Merchant "Escrow & Pencairan"</b> — the cash pipeline as a funnel (🔒 Held → ⏳ Awaiting Admin → ✅ Ready → 💸 Paid) plus <i>actionable insights</i>: "N trees awaiting first inspection ≈ $X" turns held funds into a motivating field to-do list. Payout history shows bank references. Passive by design — merchants never file withdrawal requests.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/donor-fund-journey.png" alt="Donor Perjalanan Danamu stepper in My Forest — Paid, Planted 40%, Verified Alive 30%, Thriving pending"/><br/><sub><b>3. Donor "Perjalanan Danamu"</b> — inside My Forest, each adoption shows its fund journey: Paid ✓ → Planted ✓40% → Verified Alive ✓30% → Thriving (pending), with "% disbursed" and milestone dates. Crowdfunding-grade transparency — donors see percentages, never the merchant's private fee economics.</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-land-wizard.png" alt="Land creation wizard with Pengelola step — KTP-verified land manager"/><br/><sub><b>4. KTP-Verified Land Manager</b> — the create-land wizard now requires a <i>Pengelola</i> (field PIC): full name, 16-digit national ID + ID-card photo, email, phone. Every land on the platform has an accountable, identity-verified human attached — the supply-side half of the trust protocol.</sub></td>
+  </tr>
+</table>
+
+*Figure 5e — Milestone Escrow across all three personas. The same ledger drives the admin console, the merchant funnel, and the donor journey stepper — one source of truth, three lenses. For an investor, this section is the answer to "how is this different from a donation button": AdopTree is becoming **impact-conditional payment infrastructure**.*
+
+---
+
+### 6.9 Tira-First Support 24/7 & Platform Hardening (Live, v2.6)
+
+**Support that deflects before it escalates.** Tira is the first line of support on every surface: it answers "where is my money?" with live escrow data, "what's my tree's status?" with live inspection data — and only when a case genuinely needs a human does it create a **structured ticket** (category, priority, AI triage summary, full conversation transcript attached). Admins work from an inbox where every ticket arrives pre-triaged; claiming a ticket spawns a direct user↔admin chat on the existing realtime-chat infrastructure. The result: human support time is spent on the residue AI cannot solve — the operating-cost profile of a much larger support team.
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/support-page.png" alt="Support center page — Ask Tira hero, my tickets list, manual fallback form"/><br/><sub><b>User Support Center</b> (<code>/support</code>) — "Ask Tira first, available 24/7" hero, personal ticket list with live status (Waiting · In Progress · Resolved), direct chat with the support team once claimed, and a manual fallback form.</sub></td>
+    <td width="50%"><img src="assets/prd/web/admin-support-dark.png" alt="Admin support inbox — status tabs, priority chips, AI summary per ticket"/><br/><sub><b>Admin Support Inbox</b> — status tabs with counts, urgency-first ordering, and per-ticket AI triage summary + collapsible Tira transcript, so a human picks up every case already knowing what was tried.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/settings-2fa.png" alt="Two-Factor Authentication setup dialog — QR code, manual secret, verification code"/><br/><sub><b>Two-Factor Authentication</b> — TOTP enrolment with QR + manual secret, one-time backup codes (download-gated), password+code required to disable, admin recovery path. Secrets stored AES-256-GCM-encrypted. A platform that holds escrowed funds treats account security as financial infrastructure.</sub></td>
+    <td width="50%"><img src="assets/prd/web/merchant-contributor-map-live.png" alt="Merchant field activity map — flat Indonesia-wide view with live contributor sessions"/><br/><sub><b>Live Field Activity Map</b> — flat Indonesia-wide view of contributor sessions with live GPS trails, heatmap, land overlays scoped to the merchant, and 30-day history replay. Field App Build 30 fixed the GPS ping pipeline end-to-end — movement on this map is real telemetry, not decoration.</sub></td>
+  </tr>
+</table>
+
+*Figure 5f — v2.6 hardening set: AI-deflected support, financial-grade account security, and real field telemetry. Together with §6.8 these close the loop between "money in", "work done on the ground", and "who to call when something's off".*
 
 ---
 
@@ -868,9 +936,9 @@ flowchart LR
     E -->|No| G[List Available<br/>Trees on Platform]
     F --> G
     G --> H[Donors Browse<br/>& Adopt]
-    H --> I[Platform Fee<br/>Deducted 5–15%]
-    I --> J[Merchant Earnings<br/>Dashboard Updated]
-    J --> K[Withdrawal Request<br/>Bank Transfer]
+    H --> I[Platform Fee Deducted<br/>Net held in Milestone Escrow]
+    I --> J[M1 Planted 40% → M2 Alive 30% → M3 Thriving 30%<br/>each field-verified + admin-approved]
+    J --> K[Payout Batch<br/>Bank Transfer + Reference]
 
     style A fill:#f0fdf4,stroke:#22c55e
     style J fill:#dcfce7,stroke:#16a34a
@@ -962,6 +1030,8 @@ graph TB
 ### 10.3 Key Technical Differentiators
 
 - **Tira AI Co-Pilot (multi-provider, abuse-hardened)** — AI that *operates the product*, not just answers questions: client-side tool-calling fills forms live, a `normalize-geo` endpoint turns arbitrary geo files into the AdopTree standard, and a reusable security layer (fail-closed budget, per-identity caps, strict-identity reload, anti-spoof IP) treats every write-capable AI surface as a first-class abuse surface. Provider is runtime-switchable (OpenAI/Gemini/Claude) — no lock-in, cheapest capable model wins. See §6.6
+- **Milestone Escrow ledger (v2.6)** — donor funds disbursed per verified milestone on an append-only financial ledger with double-gate release (field evidence → admin approval), refund/clawback awareness, and deterministic remainder-based splits. Payment infrastructure competitors would need quarters to replicate — the trust thesis made executable. See §6.8
+- **Financial-grade account security (v2.6)** — TOTP two-factor authentication with AES-256-GCM-encrypted secrets, single-use hashed backup codes, rate-limited challenges, and an admin recovery path — a platform holding escrowed funds is financial infrastructure
 - **PostGIS** — Geospatial polygon storage and tree-level GPS tracking at sub-meter precision
 - **Cloudflare R2** — Zero-egress-fee media storage for tree photos, 360° content, certificates, **and APK distribution** (versioned + `latest.apk` alias)
 - **Mapbox (generous free tier)** — Maps GL JS (web), Static API (mobile watermark), and Mobile SDK run **inside Mapbox's free tier** at AdopTree's current scale: 50,000 web map loads/month, 50,000 Static API requests/month, 25,000 mobile MAU/month, and 100,000 Geocoding calls/month are all complimentary. AdopTree only crosses into paid usage **after** ~25K monthly active app users or ~50K daily web page-views — beyond Year 1 projections (see §14). Strategic cost advantage: zero infrastructure spend on mapping until product-market fit is proven; usage-based pricing thereafter scales linearly with revenue, not ahead of it.
@@ -1034,7 +1104,7 @@ graph TB
 
 ### 11.2 AdopTree's Moats
 
-1. **Transparent & Trusted** — GPS tracking + watermarked anti-tamper field evidence (mobile in-app camera burns coordinates/timestamp/mini-map into pixel data) eliminates greenwashing doubt; *"A monitoring platform for your donation that ensures it goes to a proper place"*. Blockchain audit trail layered in as Q3 2026 reinforcement.
+1. **Transparent & Trusted** — GPS tracking + watermarked anti-tamper field evidence (mobile in-app camera burns coordinates/timestamp/mini-map into pixel data) eliminates greenwashing doubt — and since v2.6, **the payment rail itself enforces it**: donor funds sit in milestone escrow and release only against field-verified, admin-approved stages on an append-only ledger (§6.8). *"A monitoring platform for your donation that ensures it goes to a proper place"* is now a mechanism, not a slogan. Blockchain audit trail layered in as Q3 2026 reinforcement.
 2. **Multiverse Platform** — Not just a donation button; a full ecosystem with Social Media, Marketplace, and Green Forum connecting every stakeholder (donor, NGO, corporate, government, cooperative)
 3. **Legal-First** — Crowd funding umbrella for all **legal entities** (GO/NGO/individual/corporate/coop) with **legal standing soil** — rare in this space
 4. **Wakaf Tier** — Only tree adoption platform with Shariah-compliant perpetual endowment; opens Gulf + Indonesian Islamic market
@@ -1133,13 +1203,18 @@ gantt
 | **Staging Live** | ✅ April 2026 | Full platform accessible at staging domain |
 | **End-to-end Flow Validated** | ✅ April 2026 | Demo merchant ("Akademi Buah Nusantara") exercises every flow — land → tree → campaign → checkout → earnings → withdrawal |
 | **First Paying Merchant** | Target Q3 2026 | Move from demo data to first real merchant transacting with real donors — primary objective of this raise |
-| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational (now Build 29) |
+| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational (now Build 30) |
 | **Public Contributor System** | ✅ May 2026 | Tier 1 + Tier 2 auto-promotion live, leaderboard operational |
 | **Review Queue (Quality Gate)** | ✅ May 2026 | Admin/merchant approval workflow for all field submissions |
 | **QR Tree Identity Verification** | ✅ May 2026 (Phase 2.23) | Anti-misidentification QR system live |
 | **Realtime Chat** | ✅ May 2026 (Phase 2.26) | WebSocket 1:1 chat with voice notes |
 | **AI Tree Baseline & Tree-Count Estimation** | ✅ June 2026 | Sentinel-2 + DeepForest estimation + public Land-Analyzer tool live (asset quantification before transacting) |
 | **Tira AI Co-Pilot (multi-surface)** | ✅ June 2026 | Create-land / campaign / registration by chat + AI geo-import (KML/GPX/CSV→standard) + reusable co-pilot security layer + bilingual (id/en/ar), live on staging |
+| **Milestone Escrow Disbursement** | ✅ July 2026 | Donor funds held + released per verified milestone (40/30/30) on an append-only ledger; admin Keuangan console, merchant funnel, donor journey stepper — all live incl. historical backfill |
+| **Tira-First Support 24/7** | ✅ July 2026 | AI deflection with live data → structured tickets w/ AI triage + transcript → admin inbox spawning direct chat |
+| **Two-Factor Authentication** | ✅ July 2026 | TOTP + backup codes, encrypted secrets, web + mobile login challenge, admin recovery |
+| **KTP-Verified Land Manager** | ✅ July 2026 | Every new land requires an identity-verified field PIC (Pengelola Lahan) — supply-side trust layer |
+| **Live Contributor GPS Tracking** | ✅ July 2026 | Field App Build 30 ping pipeline fix — real telemetry on the flat activity map with history replay |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
 | **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
@@ -1295,7 +1370,7 @@ Beyond capital, the ideal investor brings:
 
 ### 16.5 Why Now?
 
-1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, the mobile Field App is shipping (Build 29), and the codebase has shipped 20+ phases — including the **Tira AI Co-Pilot** and AI tree-count estimation — in the months before this raise, all on a Jenkins push-to-deploy pipeline
+1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, the mobile Field App is shipping (Build 30), and the codebase has shipped 30+ phases — including the **Tira AI Co-Pilot** and AI tree-count estimation — in the months before this raise, all on a Jenkins push-to-deploy pipeline
 2. **End-to-end flow is proven, not just promised** — a demonstration merchant ("Akademi Buah Nusantara") on staging exercises every step from land registration through donor adoption, payment processing, and merchant payout. The product is ready to onboard a real merchant the day Sales & BD funding is deployed; we are not pre-product or pre-flow, we are pre-revenue
 3. **IDX Carbon launched 2023** — Indonesia's regulated carbon market is forming; early platform players will capture the registry advantage
 4. **Indonesia's NDC commitments** (29% emission reduction by 2030) create immediate regulatory pressure on corporations to invest in verifiable green programs
@@ -1319,9 +1394,10 @@ Beyond capital, the ideal investor brings:
 | Maps | Mapbox GL JS (web) + Mapbox Static API (mobile watermark) + flutter_map |
 | Storage | Cloudflare R2 (media + APK distribution, zero-egress) |
 | Payment | Midtrans Snap (IDR) live in production · Solana (SOL) UI built, backend wire-up Q3 2026 |
+| Fund Disbursement | **Milestone Escrow** — per-adoption 3-stage release (40/30/30), append-only ledger, admin-gated payout batches |
 | Blockchain | Solana (SPL NFT) — minting Q3 2026 |
 | AI | Bot Tira — Gemini + function-calling against live platform data |
-| Auth | JWT (4h access + 30d refresh, mutex queue), Google OAuth, Solana SIWS |
+| Auth | JWT (4h access + 30d refresh, mutex queue), Google OAuth, Solana SIWS, **2FA TOTP (AES-256-GCM-encrypted secrets + backup codes)** |
 | Push Notifications | Firebase Cloud Messaging (FCM v1) — web + mobile, deeplink routing |
 | Realtime | WebSocket (chat, presence) |
 | Field Evidence | In-app camera with pixel-burned watermark (GPS + timestamp + mini-map), dual-gate inspection (proximity + heading) |
@@ -1346,6 +1422,8 @@ All visuals are embedded inline at the sections referenced below.
 | Mobile Anti-Tamper Evidence | §6.4 Mobile Field App | Dual-gate inspection · GPS-watermarked capture |
 | Mobile Contributor Rewards + Admin Map | §6.5 Contributor Tier System | Adopoin balance + reward catalog · platform-wide contributor heatmap |
 | APK Release History | §10 Technology Architecture | Live release page proving 9-build/5-week shipping cadence |
+| Milestone Escrow (4-grid) | §6.8 Milestone Escrow | Admin Keuangan console · Merchant Escrow & Pencairan funnel · Donor Perjalanan Danamu stepper · KTP-verified land manager wizard |
+| Support & Hardening (4-grid) | §6.9 Support & Hardening | User support center · Admin support inbox w/ AI triage · 2FA enrolment dialog · Live field-activity map |
 
 ### C. Glossary
 
@@ -1401,10 +1479,17 @@ Concrete execution log between PRD revisions. Each phase ships through developme
 | — | Wizard nav standardization (gated Next + clickable stepper) across create-land/campaign/tree/registration/donate | Web |
 | — | Dedicated land-owner CTA section on the landing page | Web |
 
-**APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → **Build 29 (latest — photo-based land verification, June 2026)**.
+| — | **Milestone Escrow Fund Disbursement** — escrow + 3-stage release + append-only ledger + admin Keuangan console + merchant funnel + donor journey stepper + historical backfill | BE + Web |
+| — | **Tira-First Support 24/7** — AI deflection tools + structured tickets (AI triage + transcript) + admin inbox → direct chat | BE + Web |
+| — | **Two-Factor Authentication** — TOTP + backup codes, encrypted secrets, login challenge web + mobile, admin recovery | BE + Web + Mobile |
+| — | **Pengelola Lahan** — KTP-verified land manager required at land creation; 6-step wizard (Legal merged into Identity); merchant-side rename | BE + Web |
+| — | **Notification overhaul** — enum sync fix (list-vs-badge bug), snake_case serialization, bridge-trigger repair + backfill, merchant review-queue/sale/verification hooks | BE + Web |
+| — | **Contributor tracking fixed end-to-end** — mobile session-id parse bug (0 pings ever → live telemetry), flat mercator map, merchant-scoped lands, 30-day history | BE + Web + Mobile |
+
+**APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → Build 29 (photo-based land verification, June 2026) → **Build 30 (latest — live GPS tracking pipeline fix + 2FA login, July 2026)**.
 
 ---
 
 *© 2026 AdopTree World. All projections are forward-looking estimates based on comparable greentech platforms in Southeast Asia. Actual results may differ.*
 
-*Document version 2.4 · June 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
+*Document version 2.6 · July 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
