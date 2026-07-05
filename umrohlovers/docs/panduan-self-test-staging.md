@@ -215,6 +215,7 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 ![Panduan sambutan 4 langkah](../assets/selftest/b-welcome-tour.png)
 
 > 📌 No. HP wajib (bagian dari model keagenan baru) **dan harus unik** — kalau No. HP sudah dipakai akun lain, sistem menolak dengan pesan "email atau phone number sudah terdaftar". Pilih Cabang **opsional** — hanya preferensi, bisa diubah kapan saja.
+> 📌 **Catatan versi lama:** pop-up **"Bagaimana Anda ingin dilayani?"** (pilih dilayani sendiri / oleh agen) yang ada di versi sebelumnya **sudah dihapus — memang disengaja**. Sesuai keputusan final (anti-fraud), jamaah **tidak memilih agen di awal**: Agen pendamping ditetapkan otomatis **setelah dana masuk escrow** (lihat skenario D). Kalau Bapak masih menemukan pop-up itu di dokumen/screenshot lama, abaikan.
 > ✅ **Status: Berfungsi penuh.**
 >
 > **Masukan Bapak:** [ ✅ / ⚠️ / ❌ ] — Catatan: ___________________________
