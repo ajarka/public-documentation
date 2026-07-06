@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.6 · July 2026
+### Investor Edition · v2.7 · July 2026
 
 > **Status** — Staging platform live · Android Field App live (Build 30) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.7 highlights** — **Final product restructuring (founder decision, 5–6 Jul 2026) — shipped in code.** The customer-facing lineup is now **two categories × three products**: **Donasi** *(charitable giving to a land — free amount, no asset reservation)* · **AdopTree** *(exclusive reservation of a tree/coordinate, annual — B2C)* · **Adop Lahan** *(full stewardship of an entire land parcel with MRV/surveillance/ESG periodic reporting — CSR/B2B)*, mirrored on the Shariah side as **Wakaf · Wakaf Eksklusif · Wakaf Lahan**. This opens **three revenue streams per land steward** and radically **simplifies occupancy management** (a whole-land adoption does not lock individual trees — overlapping occupancy by design). Supporting engine shipped with it: scope-aware milestone escrow (donations/land run a single 100% settlement milestone under the same admin double-gate), **percentage platform fees for variable-amount products** (donation 5% · land 3% capped, admin-tunable), server-enforced **price-consent guard** (409 on any price drift between page-load and checkout), merchant **per-tier pricing finally consumed by checkout** with a single price source exposed to every surface, and proportional **partial-refund** handling. New §6.3 Product Structure; ADOP3's nine platform benefits added to §4. See also §7.1 (restructured Stream 1).
 >
 > **v2.6 highlights** — **Trust Protocol shipped in code, not just claimed.** The two biggest additions turn AdopTree's anti-fraud thesis (§0 problems #3/#4/#7) into working product: (1) **Milestone Escrow Fund Disbursement** — donor money is no longer settled straight to the merchant; it is held in escrow and released in verified stages (default 40/30/30: *planted → verified alive → thriving*), each stage double-gated (field evidence → admin approval), recorded on an append-only financial ledger, and surfaced to all three personas — the donor sees a "Perjalanan Danamu" journey stepper, the merchant sees a cash-pipeline funnel with actionable to-dos, the admin runs a dedicated **Keuangan** console (approval queue with evidence deeplinks, batch payouts with bank-transfer references, configurable percentages). (2) **KTP-verified Land Manager (Pengelola Lahan)** — every new land must register its accountable field PIC with national-ID evidence. Also shipped: **Tira-First Support 24/7** (AI answers with live data first; unresolved cases become structured tickets with AI triage summaries + transcript, feeding an admin inbox that spawns direct user↔admin chat), **Two-Factor Authentication** (TOTP + single-use backup codes, AES-256-GCM-encrypted secrets, admin recovery), a **full-coverage notification system** (every review-queue submission, sale, milestone, and verification outcome now reaches the right inbox — web + mobile), and **live contributor GPS tracking made real** (Field App Build 30 fixes the ping pipeline; movement now renders live on the flat activity map with history replay). See new §6.8 Milestone Escrow & §6.9 Support + Platform Hardening.
 >
@@ -27,7 +29,7 @@
 4. [Solution](#4-solution)
 5. [Market Opportunity](#5-market-opportunity)
 6. [Product Overview](#6-product-overview)
-   - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Service Class Structure
+   - 6.1 Platform Architecture · 6.2 Feature Matrix · 6.3 Product Structure *(restructured in v2.7)*
    - 6.4 Mobile Field App *(new in v2.1)* · 6.5 Contributor Tier System *(new in v2.1)* · 6.6 Tira AI Co-Pilot *(new in v2.5)* · 6.7 Public Tools Hub *(new in v2.5)*
    - 6.8 Milestone Escrow — Trust-Engineered Fund Disbursement *(new in v2.6)* · 6.9 Tira-First Support & Platform Hardening *(new in v2.6)*
 7. [Business Model & Revenue Streams](#7-business-model--revenue-streams)
@@ -267,7 +269,7 @@ AdopTree World solves all three sides of this problem through a **multi-sided ma
 flowchart LR
     subgraph Demand["💚 Demand Side"]
         D1[🙋 Individual Donor<br/><i>retail adoption</i>]
-        D2[🏢 Corporate CSR<br/><i>bulk Platinum</i>]
+        D2[🏢 Corporate CSR<br/><i>Adop Lahan B2B</i>]
         D3[☪️ Wakaf / Donasi<br/><i>perpetual giving</i>]
     end
 
@@ -318,7 +320,7 @@ flowchart LR
 - 🌱 Adopt a specific tree with GPS coordinates — *it's yours*
 - 📍 Track it live on an interactive GIS map
 - 📜 Receive a legally-meaningful digital certificate (PDF + QR verification)
-- 📊 Receive carbon credit allocation for Green Society & AdopTree tiers
+- 📊 Real-time CO₂ absorption data on every adoption; land-level carbon claim for Adop Lahan adopters
 - 🔮 **AdopTree tier roadmap:** transferable Solana NFT certificate scheduled Q3 2026 — wallet authentication (SIWS) and NFT metadata schema already live; on-chain minting is the Q3 2026 milestone
 
 **For Merchants / NGOs (Supply Side):**
@@ -330,10 +332,24 @@ flowchart LR
 - 📈 Analytics and earnings reporting
 
 **For Corporates (B2B):**
-- 📦 Bulk tree adoption packages
-- 📊 ESG-grade reporting with GIS-verified data
-- 🌍 Public impact page for brand visibility
+- 🏢 **Adop Lahan / Wakaf Lahan** — full stewardship of an entire land parcel under one contract
+- 📊 MRV / surveillance / ESG periodic reporting with GIS-verified data
+- 🌍 Public recognition on the land page ("Diadopsi oleh …") + brand visibility
 - 📋 Certificate bundles for annual sustainability reports
+
+### ADOP3 — Nine Platform Benefits *(founder framing, CKsan)*
+
+What the ADOP3 ecosystem delivers, in the founder's own framing:
+
+1. **Etalase dunia** untuk ruang hijau & pelestarian alam — *a world showcase for green spaces and nature conservation*
+2. **Validasi, verifikasi, reporting, dan surveillance/monitoring** — the trust protocol at the heart of the platform
+3. **Social media engineering, forum edukasi & pengembangan** — community rails that keep donors engaged beyond the transaction
+4. **Dompet financing / crowdfunding** — milestone-escrowed funding pipes from donor to land steward
+5. **Marketing** — every land, tree, and campaign is a marketable, shareable asset
+6. **Ecosystem stakeholders pelestarian alam** — connecting stewards, donors, corporates, government, and certifiers in one loop
+7. **Land utility** — turning idle green assets into productive, fundable inventory
+8. **Mengembangkan lahan non-produktif** — activating non-productive land into managed reforestation
+9. **Meningkatkan ekonomi daerah** — field contributors, land managers, and local stewards earn from verified green work
 
 ---
 
@@ -457,12 +473,12 @@ flowchart TB
     <td width="50%"><img src="assets/prd/web/land-detail.png" alt="Land detail page with hero, KPIs, Mapbox polygon, species, gallery"/><br/><sub><b>2. Land Detail</b> — hero header with land name + merchant, adoption KPIs (Lahan/Pohon/Adopsi), Mapbox polygon with tree markers, species list, gallery, and adoption tier picker.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="assets/prd/web/my-forest.png" alt="My Forest dashboard — adopted trees, CO2 tracking, tier distribution"/><br/><sub><b>3. My Forest</b> — donor's personal forest dashboard: 15 trees adopted across 5 lands, 305g CO₂ sequestered live, tier distribution chart (Silver/Gold/Donasi), tabs for Pohon/Lahan/Adopsi/Sertifikat.</sub></td>
+    <td width="50%"><img src="assets/prd/web/my-forest.png" alt="My Forest dashboard — adopted trees, CO2 tracking, tier distribution"/><br/><sub><b>3. My Forest</b> — donor's personal forest dashboard: 15 trees adopted across 5 lands, 305g CO₂ sequestered live, product distribution chart (Donasi/AdopTree/Wakaf), tabs for Pohon/Lahan/Adopsi/Sertifikat.</sub></td>
     <td width="50%"><img src="assets/prd/web/certificate-portfolio.png" alt="Sertifikat Portfolio Hutan modal — branded certificate with donor name and statistics"/><br/><sub><b>4. Sertifikat Portfolio Hutan</b> — branded certificate modal with donor name (Aditira Jamhuri), aggregate impact statistics, and downloadable PDF rendering. Acts as the legally-meaningful proof for tax filings and ESG reports.</sub></td>
   </tr>
 </table>
 
-*Figure 3a — Donor experience flow: discovery → land deep-dive → personal forest → certificate. Same flow works across all four adoption tiers (Donation $8 · Wakaf $10 · Green Society $12 · AdopTree $75 — NFT certificate activates Q3 2026, see §10.5).*
+*Figure 3a — Donor experience flow: discovery → land deep-dive → personal forest → certificate. Same flow works across the full product lineup (Donasi free-amount · AdopTree per-tree · Adop Lahan whole-parcel, plus the Wakaf mirrors — NFT certificate activates Q3 2026, see §10.5).*
 
 #### Merchant-Facing Features
 
@@ -535,36 +551,64 @@ flowchart TB
 
 *Figure 3c — Admin console (dark mode). Platform-wide operational visibility: revenue, contributor activity, moderation backlog, merchant performance — all live on staging.*
 
-### 6.3 Service Class Structure
+### 6.3 Product Structure — Two Categories × Three Products *(final, live in staging)*
 
-![AdopTree Service Class — pricing matrix per tier × category](assets/prd/html/tier-pricing.png)
-*Figure 4 — Platform fee per tree per year. Two adoption categories (Wakaf · Donasi) × three service tiers (Silver · Gold · Platinum). Regular vs. Campaign pricing distinguishes evergreen adoption from time-bound fundraising campaigns.*
-
-AdopTree uses a **6-class service tier model**: two adoption categories (Donasi & Wakaf), each with three service levels (Silver, Gold, Platinum). Platform fee is charged per tree per year on top of the base adoption price.
+> **Founder decision (5–6 Jul 2026, CKsan):** the customer-facing lineup is simplified into
+> three products per category. **Positive-sum by design: it opens three revenue streams for
+> every land steward, and occupancy management becomes radically simpler.**
 
 #### Donasi Category
 
-| Class | Platform Fee / yr | Campaign Fee | Features | Target | Duration |
-|-------|-------------------|--------------|----------|--------|----------|
-| 🥈 **Silver** | $1.00/tree | $1.50/tree | Certificate, My Forest Dashboard | Individual | 1 year · web2 |
-| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT *(Q3 2026)*, Surveillance, Social & Marketplace | Individual | 1 year · web2 → web3 |
-| 💎 **Platinum** | $3.00/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web2 → web3 |
+| Product | What it is | Pricing | Platform Fee | Target | Duration |
+|---------|-----------|---------|--------------|--------|----------|
+| 💚 **Donasi** | Charitable giving *(sedekah)* toward a land's reforestation — **no asset reservation**; funds are disbursed to the land steward through milestone escrow | **Free amount**, donor decides (min. $1 ≈ Rp 15K; steward can raise the minimum per land) | **5% of gross** *(admin-tunable)* | Individual (B2C) | One-off |
+| ⭐ **AdopTree** | **Exclusive reservation of a tree asset/coordinate** — the donor owns a specific, GPS-locked tree for the contract period | Per tree — merchant per-tier price → land price → platform default | Flat per service class ($1–3/tree/yr) | Individual (B2C) | Annual, renewable |
+| 🏢 **Adop Lahan** | **Full stewardship of an entire land parcel** — MRV, surveillance, and ESG **periodic reporting**; the land-level carbon claim attaches to the adopter | **One merchant-set price per land**, qty always 1 — one active adopter per land (race-safe at the database level) | **3% of gross, capped $500** *(admin-tunable)* | **CSR / B2B** | Annual per land contract |
 
-#### Wakaf Category *(Shariah-compliant perpetual endowment)*
+#### Wakaf Category *(Shariah-compliant endowment — full mirror)*
 
-| Class | Platform Fee / yr | Campaign Fee | Features | Target | Duration |
-|-------|-------------------|--------------|----------|--------|----------|
-| 🥈 **Silver** | $1.00/tree | $1.50/tree | Certificate, My Forest Dashboard | Individual | 1 year · web2 |
-| 🥇 **Gold** | $2.00/tree | $2.50/tree | + Dashboard PM, NFT *(Q3 2026)*, Monitoring, Social & Marketplace | Individual | 1 year · web2 → web3 |
-| 💎 **Platinum** | $2.50/tree | $3.00/tree | + Periodic Surveillance (2x/yr), CSR Marketing, Full Platform | Corporate | Min. 3 years · web2 → web3 |
+| Product | Mirrors | Distinction |
+|---------|---------|-------------|
+| ☪️ **Wakaf** | Donasi | Same mechanics — charitable endowment toward a land, **no tree/plot claim**; perpetual (no expiry) |
+| 🕌 **Wakaf Eksklusif** | AdopTree | Exclusive tree/coordinate reservation under a wakaf akad — perpetual |
+| 🏢 **Wakaf Lahan** | Adop Lahan | Full-land stewardship under a wakaf akad — perpetual · CSR/B2B · MRV/surveillance/ESG reporting |
 
-> **Key distinctions:**
-> - **Silver** = entry-level, web2 experience (certificate + dashboard) — fully live today
-> - **Gold** = full platform access (forum, marketplace) today, NFT-backed asset added Q3 2026 when on-chain minting activates
-> - **Platinum** = corporate-grade, includes periodic physical surveillance & reports, minimum 3-year commitment
-> - **Wakaf** tiers are Shariah-compliant — opens Islamic philanthropic market (Indonesia + Gulf)
+Wakaf products open the Islamic philanthropic market (Indonesia + Gulf); compliance pathway via MUI / BWI (nazhir engagement in progress — see §12).
 
-**Carbon credit tracking:** All adoptions generate CO₂ absorption data in real-time based on species-level absorption rate (kg CO₂/year). Redemption & trading roadmap: 2027 (targeting VCS certification).
+#### Benefits — AdopTree · Wakaf Eksklusif *(exclusive-reservation products)*
+
+- 📍 **A specific tree is yours**: GPS coordinate reserved exclusively for the contract period — visible on the live GIS map
+- 📜 Digital certificate (PDF + QR public verification); NFT-backed certificate activates Q3 2026 (§10.5)
+- 🌱 **"Perjalanan Danamu"** — escrow journey stepper: *planted → verified alive → thriving* (40/30/30 milestone disbursement, field-evidence + admin double-gate)
+- 📊 My Forest dashboard: real-time CO₂ tracking, planting status, inspection photo trail
+- 🔔 Full notification coverage: planting, inspection results, milestone releases
+
+#### Benefits — Adop Lahan · Wakaf Lahan *(full-land stewardship, CSR/B2B)*
+
+- 🗺️ **Whole-parcel stewardship**: one contract covers the entire land, publicly recognized on the land page & marketplace card (*"Diadopsi oleh {company}"*)
+- 📈 **MRV / surveillance / ESG periodic reports** — GIS-verified data fit for auditors and annual sustainability reports
+- 🌍 **Land-level carbon claim attaches to the adopter** (display-based v1 → registry-ready via SRN-PPI/IDXCarbon roadmap)
+- 💰 Funds released through the same trust-engineered milestone escrow
+- 🏢 Priced by the land steward per parcel — the platform "does not retail CSR by the piece"
+
+> **Occupancy is overlapping by design** *(the simplification)*: an Adop Lahan contract does
+> **not** lock individual trees — the same land keeps selling Donasi and AdopTree
+> concurrently. Exclusivity boundaries: one whole-land adopter per land (DB-enforced), and
+> the land-level carbon claim is exclusive to the corporate adopter while individual
+> adopters keep tree-level exclusivity without the carbon claim. Three products, one land,
+> zero inventory conflicts — **three revenue streams per land steward**.
+
+**Implementation note:** beneath the product lineup, the platform's 6-class fee engine
+(Donasi/Wakaf × entry/exclusive/land classes) remains as the internal pricing machinery —
+per-class flat fees for tree reservations, percentage fees for variable-amount products,
+campaign pricing for time-bound fundraising. All of the above is **live in staging** as of
+6 Jul 2026, including the scope-aware escrow and the marketplace filters (*"Adop Lahan ·
+masih terbuka"*).
+
+![AdopTree internal fee engine — pricing matrix per service class × category](assets/prd/html/tier-pricing.png)
+*Figure 4 — The internal 6-class fee engine beneath the product lineup (per-class platform fees, regular vs. campaign). Customer-facing naming is the product taxonomy above; class labels in this asset predate the v2.7 rename.*
+
+**Carbon credit tracking:** All adoptions generate CO₂ absorption data in real-time based on species-level absorption rate (kg CO₂/year). Redemption & trading roadmap: 2027 — **carbon-ready, not carbon-trader**: claims are prepared for official registries (SRN-PPI / IDXCarbon partnership route) rather than self-issued tokens.
 
 ---
 
@@ -791,16 +835,16 @@ pie showData
     "Carbon Credits" : 2.0
 ```
 
-#### Stream 1: Tree Adoption Fees (B2C)
-- Platform takes **5–15%** of each adoption transaction
-- Remainder goes to merchant for tree stewardship
+#### Stream 1: Donation & Adoption Fees (B2C)
+- **Three products per land steward** (v2.7 restructuring): **Donasi** (free-amount, platform fee 5% of gross), **AdopTree** (per-tree reservation, flat fee $1–3/tree/yr per service class), and the Wakaf mirrors — all flowing through milestone escrow
+- Price integrity enforced server-side: single price source (merchant per-tier → land → platform default) + 409 price-consent guard
 - Payment via Midtrans (IDR) live in production; Solana (SOL) payment activating Q3 2026
 - **Year 3 projection: $900K**
 
-#### Stream 2: Corporate CSR Packages (B2B)
-- Bundled adoption packages for companies (min. 100 trees)
-- ESG data dashboard + certificate bundles
-- Dedicated account management
+#### Stream 2: Adop Lahan — Corporate CSR (B2B)
+- **One contract = one whole land parcel** (Adop Lahan / Wakaf Lahan) at a steward-set price; platform fee 3% capped $500
+- MRV/surveillance/ESG periodic reporting + certificate bundles; land-level carbon claim attaches to the adopter
+- Does not cannibalize B2C: overlapping occupancy keeps Donasi & AdopTree selling on the same land
 - **Year 3 projection: $750K**
 
 #### Stream 3: Campaign Platform Fee
@@ -815,7 +859,7 @@ pie showData
 - **Year 3 projection: $270K**
 
 #### Stream 5: Carbon Credit Trading (Future)
-- Green Society & AdopTree tiers generate tradeable carbon credits
+- Species-level CO₂ data across all adoptions; land-level claims from Adop Lahan contracts feed registry-ready carbon documentation
 - Future integration with IDX Carbon exchange (Indonesia)
 - **Year 3 projection: $50K** (nascent)
 
@@ -835,24 +879,24 @@ pie showData
 
 ## 8. User Personas
 
-### Persona 1 — Rina, The Conscious Consumer (Donasi Silver → Gold)
+### Persona 1 — Rina, The Conscious Consumer (Donasi → AdopTree)
 > *"I want to do something real for the environment, not just share a hashtag."*
 
 - **Age:** 28 | **Location:** Jakarta | **Income:** Rp 8M/month
 - **Behavior:** Active on Instagram, shops online, donates to charity 1–2x/year
 - **Pain:** Doesn't trust generic "plant a tree" programs — no proof of impact
 - **Goal:** Adopt a tree she can literally point to on a map and show friends
-- **Entry:** Social media ad → landing page → Donasi Silver ($1/tree/yr) → upgrades to Gold on renewal
-- **LTV:** $2–$5/tree/year, renewals + referrals (Gold tier unlocks NFT-backed certificate after Q3 2026 mint activation)
+- **Entry:** Social media ad → landing page → free-amount Donasi (from ≈Rp 15K, one tap) → upgrades to AdopTree (her own GPS-locked tree) once she trusts the platform
+- **LTV:** $2–$5/tree/year on AdopTree renewals + referrals (NFT-backed certificate after Q3 2026 mint activation)
 
-### Persona 2 — Pak Budi, The CSR Manager (Donasi/Wakaf Platinum)
+### Persona 2 — Pak Budi, The CSR Manager (Adop Lahan / Wakaf Lahan)
 > *"My CEO wants our annual report to show measurable environmental impact."*
 
 - **Age:** 42 | **Location:** Surabaya | **Company:** Mid-size manufacturer
 - **Budget:** Rp 500M/year CSR budget, 20% environmental
 - **Pain:** Last year's tree event was a photo op — no data for the auditors
 - **Goal:** 500 trees with GIS coordinates, periodic surveillance reports, ESG certificates for auditors
-- **Entry:** Google search "program CSR pohon terverifikasi" → Demo call → Platinum Corporate Package (min. 3 yr)
+- **Entry:** Google search "program CSR pohon terverifikasi" → Demo call → Adop Lahan contract (whole-parcel stewardship, steward-set price, MRV/ESG periodic reports)
 - **LTV:** $1,500–$15,000/year (recurring, scales with tree volume)
 
 ### Persona 3 — Kang Ucup, The NGO Field Partner (Supply Side)
@@ -865,14 +909,14 @@ pie showData
 - **Entry:** AdopTree merchant onboarding → Lists lands → Runs campaigns → Uses Bot Tira
 - **Revenue:** Receives 85–95% of each adoption fee
 
-### Persona 4 — Hasan, The Gulf Donor (Wakaf Silver → Gold)
+### Persona 4 — Hasan, The Gulf Donor (Wakaf → Wakaf Eksklusif)
 > *"I want a Shariah-compliant perpetual endowment that also helps the environment."*
 
 - **Age:** 55 | **Location:** Riyadh (or diaspora in Jakarta)
 - **Behavior:** Active in Islamic philanthropy, familiar with Wakaf (Islamic endowment)
 - **Pain:** Most green investment options are not Shariah-compliant
 - **Goal:** Perpetual tree adoption as waqf — leaves a lasting legacy, halal, with verifiable digital proof (PDF certificate today, transferable NFT certificate post-Q3 2026)
-- **Entry:** Arabic language interface → Wakaf Silver ($1/tree/yr) → upgrades to Wakaf Gold for family legacy and forthcoming NFT-backed certificate
+- **Entry:** Arabic language interface → free-amount Wakaf (perpetual endowment) → upgrades to Wakaf Eksklusif (his own reserved tree) for family legacy and the forthcoming NFT-backed certificate
 - **LTV:** $500–$5,000+ depending on tree volume and tier
 
 ---
@@ -1083,7 +1127,7 @@ graph TB
 #### What this means for the raise
 
 - **No claim in this PRD assumes NFT minting is live today.** Every NFT-related phrase is qualified with "(Q3 2026)" or scoped to the SIWS/metadata layer that is genuinely shipped.
-- **Core product works without Web3.** The Silver and Platinum tiers — and all merchant/admin/mobile flows — are entirely web2 today and remain functional regardless of NFT mint timing.
+- **Core product works without Web3.** Donasi, AdopTree, and Adop Lahan — and all merchant/admin/mobile flows — are entirely web2 today and remain functional regardless of NFT mint timing.
 - **NFT minting is a Q3 2026 engineering milestone**, included in the **Product & Technology** allocation of the seed round (§16.2 — 25% / $125K covers Solana mint + surveillance system + mobile app). Estimated 6–8 engineering weeks for mint pipeline + treasury hardening.
 - **Roadmap honesty is itself a moat.** Greentech buyers and Indonesian regulators (BAPPENAS, KLHK, BWI) consistently penalize over-claimed blockchain narratives. A platform that ships SIWS today and discloses the mint gap is more durable to due diligence than one that paints over the gap.
 
@@ -1123,8 +1167,8 @@ AdopTree's go-to-market is built on three mutually reinforcing pillars confirmed
 | Pillar | Mechanic | Primary Segment |
 |--------|----------|-----------------|
 | **Networks** | Leverage existing NGO, community, and Islamic philanthropic networks for organic supply & demand | Merchant partners, Wakaf donors |
-| **Donations** | B2C digital campaigns — social media, influencer, and community-driven donor acquisition | Individual donors (Donasi Silver/Gold) |
-| **CSR** | Direct outreach to corporate CSR departments; proven ROI via GIS data + ESG certificates | Corporate Platinum packages |
+| **Donations** | B2C digital campaigns — social media, influencer, and community-driven donor acquisition | Individual donors (Donasi & AdopTree) |
+| **CSR** | Direct outreach to corporate CSR departments; proven ROI via GIS data + ESG certificates | Adop Lahan / Wakaf Lahan contracts |
 
 ### 12.2 Phase 1 — Foundation (H2 2026)
 
@@ -1132,7 +1176,7 @@ AdopTree's go-to-market is built on three mutually reinforcing pillars confirmed
 
 - Move from demonstration merchant (**"Akademi Buah Nusantara"** — staging-only seed data used to validate end-to-end flows) → first paying merchant cohort → 30 active merchant/NGO partners (Java, Kalimantan, Papua)
 - Activate B2C campaigns via Instagram/TikTok targeting eco-conscious millennials 25–35
-- Close 2–3 pilot corporate CSR packages (Donasi/Wakaf Platinum)
+- Close 2–3 pilot corporate CSR contracts (Adop Lahan / Wakaf Lahan)
 - Activate Bot Tira subscription for early merchants
 - PR positioning: *"Indonesia's first GIS-verified tree adoption platform with anti-tamper field evidence and Solana blockchain foundation"* — leads with what is verifiably shipped (GIS + field evidence + SIWS) rather than over-claiming mint
 
@@ -1218,7 +1262,7 @@ gantt
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
 | **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
-| **First Corporate CSR Deal** | Q4 2026 | Donasi/Wakaf Platinum package signed |
+| **First Corporate CSR Deal** | Q4 2026 | Adop Lahan / Wakaf Lahan contract signed |
 | **30 Active Merchants** | Q4 2026 | Supply-side diversity established |
 | **VCS Carbon Certification** | 2027 | Enables carbon credit trading layer |
 | **$498K Annual Revenue** | EOY 2027 | Unit economics proven |
@@ -1293,7 +1337,7 @@ gantt
 | **Slow merchant onboarding velocity** | Medium | High | Three parallel acquisition channels — existing NGO/Islamic networks (CEO-led), B2C donor pull (creating bottom-up demand for supply), and outbound corporate-CSR sales |
 | **Carbon credit regulation uncertainty** | Medium | Medium | Build feature but don't depend on it for core revenue |
 | **Payment gateway friction (IDR)** | Low | Medium | Midtrans + QRIS covers 95% of Indonesian payment methods |
-| **NFT mint delivery risk (Q3 2026)** | Medium | Medium | Foundation already shipped (SIWS auth + metadata schema + REST API live). Remaining work is well-scoped Metaplex integration. Core product (Silver, Platinum, all merchant/admin/mobile flows) is fully web2 and works independent of mint timing — see §10.5 |
+| **NFT mint delivery risk (Q3 2026)** | Medium | Medium | Foundation already shipped (SIWS auth + metadata schema + REST API live). Remaining work is well-scoped Metaplex integration. Core product (Donasi, AdopTree, Adop Lahan, all merchant/admin/mobile flows) is fully web2 and works independent of mint timing — see §10.5 |
 | **Blockchain (Solana) price volatility** | Low | Low | SOL payment is an optional tier; IDR (Midtrans) is the primary production payment path; AdopTree-tier USD pricing buffered via stablecoin fallback (architecture pending mint sprint) |
 | **Greenwashing accusations** | Low | High | GIS tracking + watermarked anti-tamper field evidence (mobile in-app camera burns GPS + timestamp + mini-map into pixel data) + dual-gate proximity inspection provides today's audit trail. Blockchain audit layer activates Q3 2026 |
 | **Competition from large platforms** | Low | Medium | Indonesia-native + Wakaf + supply-side moat (contributor tier system) hard to replicate quickly |
@@ -1412,7 +1456,7 @@ All visuals are embedded inline at the sections referenced below.
 | Visual | Section | Purpose |
 |---|---|---|
 | Market Opportunity (TAM / SAM / SOM rings) | §1 Executive Summary · §5 Market Opportunity | Multi-billion dollar green impact market funnel — global potential → regional reach → realistic Year-3 capture |
-| Service Class Pricing Matrix | §6.3 Service Class Structure | Platform fee per tree per year across Silver/Gold/Platinum tiers × Wakaf/Donasi categories |
+| Service Class Pricing Matrix | §6.3 Product Structure | Internal fee engine beneath the Donasi/AdopTree/Adop Lahan (× Wakaf mirror) product lineup |
 | Revenue Growth Forecast 2026–2028 | §13 Roadmap & Milestones | Conservative scenario bar chart + KPI cards, break-even Q3 2027 |
 | Platform Ecosystem Map | §7 Business Model | 8-actor multi-sided platform: donors · merchants · land owners · contributors · mobile · NFT · bot · impact |
 | Web Donor Experience (4-grid) | §6 Product Overview | Explore → Land detail → My Forest → Sertifikat Portfolio Hutan |
