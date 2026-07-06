@@ -44,6 +44,8 @@ Buka salah satu alamat berikut di browser (Chrome/Safari di HP atau laptop):
 2. Masukkan **Email** dan **Password** dari tabel di bawah.
 3. Klik **Masuk** — sistem otomatis membawa Bapak ke halaman yang sesuai dengan peran akun tersebut.
 
+> 📌 **BARU (masukan 6 Juli):** akun **Jamaah** kini mendarat langsung di **etalase Paket Perjalanan** setelah masuk — "langsung disuguhi hidangan", bukan dashboard. Dashboard anggota diakses dari **menu profil** (avatar di pojok kanan atas → Dashboard Anggota / Booking Saya / Keluar). Kekurangan verifikasi (email/KYC) muncul sebagai **alert kuning tipis** di bawah header dengan tombol aksi. Peran kerja (Mitra Travel, Cabang, Agen, Admin, dll.) tetap mendarat di dashboard kerjanya.
+
 ![Halaman login](../assets/selftest/login-page.png)
 
 **Password semua akun di bawah sama:** `TestQA2026!`
@@ -127,12 +129,18 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 >
 > **Masukan Bapak:** [ ✅ / ⚠️ / ❌ ] — Catatan: ___________________________
 
-#### A.2 — Bursa Paket Grup
+#### A.2 — Bursa Paket Grup — DIPERBARUI (ala Traveloka)
 1. Klik menu **Paket Grup** di atas.
-2. Lihat daftar kartu paket: foto, judul, harga, tanggal berangkat, dan sisa kuota (badge warna). **Data ini nyata.**
-3. Ketik di kotak pencarian (misal nama kota berangkat) → hasil langsung tersaring.
-4. Klik tombol **Filter** → coba saring berdasar: jenis paket (Umroh Reguler/Plus/Haji Khusus), kota berangkat, periode keberangkatan, dan urutan (harga/tanggal/kuota).
-5. Coba ganti tampilan: **Grid** (kartu) → **Daftar** (baris) → **Peta**. Di mode Peta, ada marker per bandara, tombol **Reset** dan **Terdekat** (cari bandara terdekat dari lokasi Bapak), serta pilihan gaya peta.
+2. **BARU — kotak pencarian pembuka** (masukan 6 Juli, gaya Traveloka/Agoda) di bagian atas halaman: pilih **Bulan keberangkatan**, **Jumlah jamaah**, dan **Kota keberangkatan**, lalu:
+   - **"Cari Paket Perjalanan"** → halaman meluncur turun ke hasil yang sudah tersaring (paket dengan kuota cukup untuk semua jamaah).
+   - **"Perjalanan Mandiri"** → langsung dialihkan ke halaman Paket Mandiri.
+3. Lihat daftar paket: foto, judul, harga, tanggal berangkat, dan sisa kuota (badge warna). **Data ini nyata.** Tampilan bawaan kini **Daftar** (bukan Grid) — bisa diganti kapan saja.
+4. Ketik di kotak pencarian (misal nama kota berangkat) → hasil langsung tersaring.
+5. Klik tombol **Filter** → saringan lanjutan: jenis paket (Umroh Reguler/Plus/Haji Khusus), kota berangkat, periode, urutan (harga/tanggal/kuota).
+6. Coba ganti tampilan: **Daftar** (baris) → **Grid** (kartu) → **Peta**. Di mode Peta, ada marker per bandara, tombol **Reset** dan **Terdekat**, serta pilihan gaya peta.
+
+**BARU — kotak pencarian pembuka (bulan + jumlah jamaah + kota + 2 tombol):**
+![Hero filter Paket Perjalanan](../assets/selftest/a2-hero-filter.png)
 
 ![Bursa Paket Grup](../assets/selftest/a2-bursa-paket-grup.png)
 
@@ -199,8 +207,8 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 2. **Langkah 1 (Data Akun):** isi Nama Lengkap, Email, **No. HP/WhatsApp (wajib)**, Password (min 8 karakter), dan Konfirmasi Password. Klik **Lanjut: Pilih Cabang.**
 3. **Langkah 2 (Pilih Cabang):** muncul daftar cabang dengan kotak pencarian. Ada tulisan jelas *"Ini preferensi, bukan ikatan"* dan opsi **"Lewati untuk sekarang."**
 4. Pilih satu cabang **atau** lewati → klik tombol daftar.
-5. Sistem otomatis mendaftar **dan langsung login** → Bapak masuk ke dashboard jamaah.
-6. Di login pertama, muncul **panduan sambutan singkat** ("Empat langkah menuju Tanah Suci") yang menjelaskan fitur utama: verifikasi → tabungan/escrow → pilih paket → jadi agen. Tombol **"Lihat Paket Umroh"** membawa ke etalase paket. Panduan ini hanya muncul **sekali** (login berikutnya langsung ke dashboard).
+5. Sistem otomatis mendaftar **dan langsung login** → Bapak langsung mendarat di **etalase Paket Perjalanan** (masukan 6 Juli — tujuan closing, tidak bertele-tele). Kekurangan verifikasi tampil sebagai **alert kuning** di bawah header.
+6. **Dashboard anggota** tetap ada — diakses dari **menu profil** (avatar kanan atas). Saat pertama kali membukanya, muncul **panduan sambutan singkat** ("Empat langkah menuju Tanah Suci") yang menjelaskan fitur utama: verifikasi → tabungan/escrow → pilih paket → jadi agen. Panduan ini hanya muncul **sekali**.
 
 **Langkah 1 — Data Akun:**
 ![Register langkah 1 — data akun](../assets/selftest/b1-register-step1.png)
@@ -208,8 +216,8 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 **Langkah 2 — Pilih Cabang (opsional):**
 ![Register langkah 2 — pilih cabang](../assets/selftest/b1-register-step2-pilih-cabang.png)
 
-**Setelah daftar — langsung masuk dashboard jamaah:**
-![Dashboard jamaah setelah daftar](../assets/selftest/b1-register-success-dashboard.png)
+**Dashboard anggota (diakses dari menu profil — avatar kanan atas):**
+![Dashboard jamaah](../assets/selftest/b1-register-success-dashboard.png)
 
 **Panduan sambutan singkat (muncul sekali di login pertama):**
 ![Panduan sambutan 4 langkah](../assets/selftest/b-welcome-tour.png)
@@ -486,6 +494,8 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 
 7. **BARU — dana rilis tercatat di rekening mitra:** setiap kali escrow dirilis per milestone (visa/tiket/berangkat/pulang, mulai **H-14**), jumlahnya otomatis **dikredit ke rekening mock mitra** — mitra bisa melihat dananya masuk, bukan hanya angka di buku escrow.
 8. **BARU — Kasbon Amani (talangan):** di dashboard ada kartu **"Kasbon Amani (Bridging)"** — untuk travel yang butuh dana lebih awal dari H-14, bisa mengajukan talangan ke Bank Amani (margin 2-3%/bulan, hingga ±30% nilai paket; **urusan travel dengan bank, di luar platform**). Tombolnya masih nonaktif berbadge **"Segera — menunggu Amani live."**
+9. **BARU — Itinerary di Rakit Paket (masukan 6 Juli):** di menu **Rakit Paket** (rakit dari komponen B2B: visa+tiket+hotel+markup) kini ada bagian **"Itinerary (Rundown Harian)"** — klik **Generate N hari** sesuai durasi (misal 26 hari → 26 baris), isi judul + kegiatan per hari, dan rundown ini tampil di halaman detail paket yang dilihat jamaah. Opsional — boleh diisi sebagian. (Perbaikan tampilan juga: dropdown di halaman ini kini **terbaca jelas di mode gelap**.)
+10. **BARU — Jelajahi Etalase:** di sidebar dashboard ada tombol **"Jelajahi Etalase Paket"** — Mitra Travel (dan semua peran) bisa membuka halaman publik Paket Grup/Mandiri kapan saja untuk melihat tampilan dari sisi jamaah.
 
 **BARU — kartu Kasbon Amani di dashboard mitra:**
 ![Kasbon Amani display card](../assets/selftest/g1-kasbon-card.png)
@@ -610,6 +620,9 @@ Bagian **Kemitraan** dengan 2 kartu ajakan (Jadi Agen + Buka Cabang):
 | Fitur | Status | Keterangan singkat |
 |---|---|---|
 | Beranda & etalase (landing) | ✅ Berfungsi | Lengkap & rapi, ada 2 ajakan: Jadi Agen + Buka Cabang. |
+| **Login jamaah → langsung etalase** | ✅ Berfungsi | Masukan 6 Juli: jamaah mendarat di Paket Perjalanan; dashboard via menu profil; alert verifikasi di header. |
+| **Kotak pencarian pembuka (bulan+jamaah+kota)** | ✅ Berfungsi | 2 tombol: Cari Paket Perjalanan (turun ke hasil) / Perjalanan Mandiri. Default tampilan Daftar. |
+| **Itinerary rundown harian di Rakit Paket B2B** | ✅ Berfungsi | Generate N hari sesuai durasi; tampil di detail paket publik. |
 | Bursa Paket Grup (filter, peta) | ✅ Berfungsi | Data nyata; nama Mitra Travel disembunyikan. |
 | Detail paket → keranjang | ✅ Berfungsi | "Booking Sekarang" masuk keranjang, belum minta login. |
 | Jelajah Cabang + peta | ✅ Berfungsi | Profil cabang lengkap (kalender manasik, paket). |
