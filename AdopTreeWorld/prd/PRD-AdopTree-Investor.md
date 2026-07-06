@@ -441,8 +441,12 @@ flowchart TB
 |---|---|---|
 | **Browse & Search** | Explore lands by region, type, availability, campaign | ✅ Built |
 | **GIS Map** | Interactive map with polygon boundaries + tree dot tracking | ✅ Built |
-| **Multi-tier Adoption** | 4 tiers from $8 donation to $75 AdopTree | ✅ Built |
+| **Product Lineup (2×3)** *(new v2.7)* | Donasi (free amount, no reservation) · AdopTree (exclusive tree/coordinate) · Adop Lahan (whole parcel, CSR/B2B) — mirrored as Wakaf · Wakaf Eksklusif · Wakaf Lahan. See §6.3 | ✅ Built |
+| **Free-amount Donation** *(new v2.7)* | Kitabisa-style: donor types any amount (min. per land, default ≈Rp 15K), quick Rupiah chips, anonymous option, guest-friendly instant flow — reserves nothing, funds flow through escrow | ✅ Built |
+| **Adop Lahan Corporate Card** *(new v2.7)* | Whole-land adoption CTA on the land page: steward-set price, carbon-claim note, race-safe one-adopter-per-land, public "Diadopsi oleh" badge + marketplace ribbon | ✅ Built |
+| **Product & Price Filters** *(new v2.7)* | Explore filter pills ([AdopTree] [Adop Lahan · masih terbuka]) + contextual price-range presets; honest per-card product chips (availability-aware) | ✅ Built |
 | **Cart & Checkout** | Multi-item cart with batch checkout, race-condition safe, Midtrans (IDR) live in production | ✅ Built |
+| **Price-Consent Guard** *(new v2.7)* | Server rejects checkout (409) if any price drifted since page-load; per-item recovery dialog updates only the affected items — the displayed price is always the charged price | ✅ Built |
 | **Solana SOL Checkout** | Wallet connect UI, Phantom adapter, payment flow scaffolding | 🟡 UI built · backend wire-up Q3 2026 |
 | **Digital Certificate** | Auto-generated PDF certificate with QR verification | ✅ Built |
 | **My Forest Dashboard** | Personal adoption tracker, carbon credits, certificates | ✅ Built |
@@ -458,7 +462,7 @@ flowchart TB
 | **Wishlist** | Save lands and trees for future adoption — with adoption slot progress | ✅ Built |
 | **Forum / Community** | Posts (rich text + image editor + markdown), comments, follows, likes | ✅ Built |
 | **Tira AI Assistant** | Multi-provider AI (OpenAI/Gemini/Claude, runtime-switchable) with function-calling against live data; bilingual to the platform locale (id/en/ar); abuse-protected (rate limits + budget). See §6.6 | ✅ Built |
-| **Instant Donation** *(new)* | One-tap donation modal with smart defaults — quick-amount chips (1/5/10), a trust-weighted land recommendation algorithm, a logged-in "1-click" path, and a "Tira pick for me" deterministic auto-fill | ✅ Built |
+| **Instant Donation** *(updated v2.7)* | One-tap free-amount donation modal — Rupiah quick chips, a trust-weighted land recommendation algorithm, a logged-in "1-click" path, and a "Tira pick for me" auto-fill; no land selected → platform allocates a public land | ✅ Built |
 | **Multi-language** | English, Indonesian, Arabic (RTL) — UI + AI replies both follow the platform locale | ✅ Built |
 | **Notifications** | In-app, email, and Firebase Cloud Messaging push (Phase 2.9) with deeplink routing | ✅ Built |
 | **Realtime Chat** *(new)* | WebSocket-based 1:1 chat — voice notes, WhatsApp-style optimistic send, conversation actions (Phase 2.26) | ✅ Built |
@@ -493,6 +497,8 @@ flowchart TB
 | **Campaign System** | Fundraising campaigns with custom pricing & tree allocation, 4-step create wizard | ✅ Built |
 | **Land Partnerships & Ownership Claim** | Two-tier invite system for land-owner collaboration + land ownership claim flow | ✅ Built |
 | **Earnings Dashboard** | Revenue tracking (real service-tier fee math), withdrawal management | ✅ Built |
+| **Per-land Product Config** *(new v2.7)* | "Produk Lahan" card: set the minimum free-amount donation and the whole-land Adop Lahan price per land (empty = not offered); opens three revenue streams per land | ✅ Built |
+| **Per-tier Pricing → Checkout** *(new v2.7)* | Merchant per-tier prices are now consumed by the actual checkout waterfall (per-tier → land price → platform default) and exposed to every purchase surface — display always equals charge | ✅ Built |
 | **Tira AI Subscription** | Merchant-configurable donor-facing AI chat; multi-provider; abuse-protected | ✅ Built |
 | **Analytics** | Bot interactions, adoption stats, campaign performance | ✅ Built |
 | **Posts & Updates** | Merchant feed for sharing land progress; Instagram auto cross-post to the forum | ✅ Built |
@@ -535,8 +541,11 @@ flowchart TB
 | **Contributor Management** *(new)* | Manage public/verified contributors, tier promotions, leaderboard | ✅ Built |
 | **Session Resilience** *(new)* | 4-hour access + 30-day refresh token, axios interceptor mutex queue — eliminates spurious logouts | ✅ Built |
 | **Keuangan Console (Milestone Escrow)** *(new v2.6)* | 5-KPI money picture (held / awaiting / eligible / paid / clawback exposure) + milestone approval queue with field-evidence deeplinks & bulk approve + payout batching with live IDR preview & bank-transfer references + configurable stage percentages (Σ=100 enforced) + one-click historical backfill. See §6.8 | ✅ Built |
+| **Scope Fee Configuration** *(new v2.7)* | Admin-tunable percentage fees for variable-amount products (Donasi % · Adop Lahan % · USD cap) with live impact preview — snapshot semantics, only new escrows affected | ✅ Built |
+| **Partial-Refund Handling** *(new v2.7)* | `partial_refund` webhooks keep the contract alive: escrow shrinks proportionally from the last unapproved stage backwards, everything flagged for admin review; approved/paid stages never mutate | ✅ Built |
 | **Support Inbox** *(new v2.6)* | Ticket queue with status/priority filters, AI triage summary + full Tira transcript per ticket, claim → spawns direct user↔admin chat, mandatory resolution notes. See §6.9 | ✅ Built |
 | **2FA Recovery** *(new v2.6)* | Admin reset path for users locked out of two-factor (lost device + exhausted backup codes) | ✅ Built |
+| **Super Admin Role** *(new v2.6)* | Elevated capabilities behind an append-only audit log: user↔user & Tira chat monitoring (read-only) and guarded hard-delete (money-linked entities always refused) | ✅ Built |
 
 <table>
   <tr>
@@ -780,7 +789,9 @@ A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acqu
 - **Double-gate** — field evidence marks a milestone *achieved*; only an **admin** can approve release. Merchants approve their own planting/inspection submissions operationally, but can never self-release money.
 - **Append-only ledger** — every fund/achieve/approve/payout/refund/clawback event is a permanent `escrow_ledger` row; the money picture is auditable by construction.
 - **Deterministic math** — percentages are configurable platform-wide (Σ=100 enforced) and snapshotted per adoption; rounding is remainder-based so the three stages always sum exactly to the merchant's net.
-- **Refund-aware** — payment refunds cancel unreleased milestones automatically and flag already-paid ones as clawback exposure on the admin console.
+- **Scope-aware** *(v2.7)* — the 3-stage journey above applies to tree reservations; **Donasi and Adop Lahan run a single 100% milestone auto-achieved at settlement** (there is no tree-planting evidence to wait for) — still admin-gated before any payout, so funds never freeze and the double-gate never weakens.
+- **Percentage fees for variable amounts** *(v2.7)* — donation 5% of gross, Adop Lahan 3% capped $500 (admin-tunable, snapshotted per escrow); flat per-class fees remain for tree reservations.
+- **Refund-aware** — full refunds cancel unreleased milestones automatically and flag already-paid ones as clawback exposure; **partial refunds** *(v2.7)* keep the contract alive — the escrow shrinks proportionally from the last unapproved stage backwards, approved/paid stages are never mutated, and every case is flagged for admin review.
 - **Dead-tree handling** — a dead tree freezes its remaining milestone for admin decision instead of silently paying out.
 - **Historical backfill** — all pre-escrow successful payments were migrated through the same engine (flagged for admin review), so the ledger covers 100% of platform history.
 
