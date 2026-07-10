@@ -777,18 +777,18 @@ graph TB
 
 ### 10.5 Infrastructure Sizing & Capacity Plan (high-level)
 
-> Full calculation — measured baseline, load model with explicit assumptions, per-tier container sizing, storage/bandwidth math, and the production go-live checklist — lives in the companion document **[Kapasitas Sistem & Kebutuhan Infrastruktur](../docs/kapasitas-sistem.md)**.
+> Full calculation — measured baseline, load model with explicit assumptions, per-tier container sizing, storage/bandwidth math, market-price anchors, and the provisioning/go-live checklists — lives in the companion proposal **[Kapasitas Sistem & Kebutuhan Infrastruktur](../proposal/kapasitas-sistem-staging-production.md)**.
 
-The platform is deliberately lightweight: the measured staging footprint is **~150 MB RAM total** (Go backend ~46 MB, Next.js frontend ~101 MB) with a 21 MB database, and it has already passed a **k6 load test at 1,000 virtual users** on a shared 2-vCPU box. Infrastructure is therefore a small, predictable cost line that scales in three planned tiers:
+The platform is deliberately lightweight: the measured application footprint is **~150 MB RAM total** (Go backend ~46 MB, Next.js frontend ~101 MB) with a 21 MB database, and it has already passed a **k6 load test at 1,000 virtual users** on a 2-vCPU test machine. Neither environment currently runs on dedicated infrastructure — the capacity proposal requests both a dedicated staging server (internal review & UAT) and production, scaling in planned tiers:
 
 | Environment | When | Spec (summary) | Est. cost / month | Status |
 |---|---|---|---|---|
-| **Staging** | today | Shared 2 vCPU / 8 GB VPS (existing, co-hosted) | ~Rp 0 marginal | ✅ Live, sufficient |
-| **Production — Pilot** (≤2,000 accounts) | provision Aug 2026, ahead of the Sep pilot | Dedicated Indonesian VPS 4 vCPU / 8 GB / 160 GB NVMe — own Postgres + Redis, daily backups to R2, isolated from other workloads | **Rp 0.4–0.8 M** (~$25–50) | 📋 Not yet provisioned |
+| **Staging (dedicated)** — internal review & UAT | provision Aug 2026 | VPS 2 vCPU / 4 GB / 80 GB NVMe — full stack, auto-deployed from the `development` branch | **Rp 0.15–0.35 M** (~$10–22) | 📋 Proposed |
+| **Production — Pilot** (≤2,000 accounts) | provision Aug 2026, ahead of the Sep pilot | Dedicated Indonesian VPS 4 vCPU / 8 GB / 160 GB NVMe — own Postgres + Redis, daily backups to R2, fully isolated from the test environment | **Rp 0.4–0.8 M** (~$25–50) | 📋 Proposed |
 | **Production — Launch Y1** (20–50k accounts, Munas spike) | Oct–Nov 2026 | App node 8 vCPU / 16 GB + **separate DB node** 4 vCPU / 8 GB NVMe, PgBouncer, Cloudflare CDN/WAF, external uptime monitoring | **Rp 1.5–3.5 M** (~$95–220) | 📋 |
 | **Production — Scale Y3** (100–150k accounts) | 2028 | 2× app nodes + load balancer, managed HA PostgreSQL + read replica, dedicated Redis, full observability, ≥99.9% SLO | **Rp 8–15 M** (~$500–950) | 📋 |
 
-Key facts for due diligence: sizing is driven by **availability, not throughput** (Go handles thousands of RPS/core; the k6-identified bottleneck is the DB connection pool, with a staged mitigation plan); tier upgrades are **metric-triggered, not calendar-driven** (CPU/latency/pool thresholds), so spend follows real load; each tier carries defined RTO/RPO commitments (≤15 min data loss / ≤4 h recovery at pilot, tightening to near-zero/15 min at scale); object storage (Cloudflare R2, zero egress fees) stays under ~$20/month even at Year-3 volumes (~1.2 TB of KYC documents and e-Visas); and the **entire first 12 months of infrastructure costs ≈ Rp 35–40 M** (roughly one umroh booking's AOV), with full Year-3 spend (~Rp 110–190 M/year) sitting comfortably inside the §14.3 budget line (Rp 0.8 B for 2028).
+Key facts for due diligence: sizing is driven by **availability, not throughput** (Go handles thousands of RPS/core; the k6-identified bottleneck is the DB connection pool, with a staged mitigation plan); tier upgrades are **metric-triggered, not calendar-driven** (CPU/latency/pool thresholds), so spend follows real load; each tier carries defined RTO/RPO commitments (≤15 min data loss / ≤4 h recovery at pilot, tightening to near-zero/15 min at scale); object storage (Cloudflare R2, zero egress fees) stays under ~$20/month even at Year-3 volumes (~1.2 TB of KYC documents and e-Visas); and the **entire first 12 months of infrastructure — staging and production combined — costs ≈ Rp 38–42 M** (roughly one umroh booking's AOV), with full Year-3 spend (~Rp 110–190 M/year) sitting comfortably inside the §14.3 budget line (Rp 0.8 B for 2028).
 
 ---
 
