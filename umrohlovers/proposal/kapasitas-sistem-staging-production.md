@@ -2,7 +2,7 @@
 
 > **Status**: Proposal untuk diajukan & disetujui stakeholder
 > **Tujuan dokumen**: menjawab *"berapa sebenarnya kebutuhan sistem umrohlovers untuk staging & production, dan berapa biayanya"* — dengan perhitungan yang dapat diaudit baris per baris. Setiap angka punya sumber: **terukur dari aplikasi**, **hasil uji beban**, atau **asumsi yang dinyatakan eksplisit** (dan bisa diganti tanpa merusak formula).
-> **Prinsip sizing**: *right-sizing* — tidak kekurangan (headroom ≥ 5× beban puncak proyeksi + jalur scale-up < 1 hari), tidak berlebihan (utilisasi steady target 15–40%; upgrade dipicu **metrik**, bukan kalender).
+> **Prinsip sizing**: *right-sizing* — tidak kekurangan (headroom (ruang cadangan kapasitas) ≥ 5× beban puncak proyeksi + jalur scale-up < 1 hari), tidak berlebihan (utilisasi steady target 15–40%; upgrade dipicu **metrik**, bukan kalender).
 
 ---
 
@@ -26,9 +26,38 @@ Platform umrohlovers saat ini **belum memiliki server dedicated** — baik untuk
 | **Launch Y1** | Nov 2026–2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + seluruh software langganan | **Rp 2,7–6,8 jt** (realistis ~Rp 3,6 jt) |
 | **Scale Y3**  | 2028           | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica + software | **Rp 9,5–19 jt** (realistis ~Rp 13 jt) |
 
-**Sanity check**: total tahun ketiga (≈ Rp 115–230 jt/tahun, realistis ~Rp 160 jt) tetap jauh di bawah alokasi budget PRD §14.3 (Rp 300 jt di 2027, Rp 800 jt di 2028) — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung.
+**Uji kewajaran anggaran**: total tahun ketiga (≈ Rp 115–230 jt/tahun, realistis ~Rp 160 jt) tetap jauh di bawah alokasi budget PRD §14.3 (Rp 300 jt di 2027, Rp 800 jt di 2028) — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung.
 
 **Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, monitoring, email, peta). Sengaja **di luar cakupan**: (a) SDM ops/engineering — sudah ada di pos tersendiri PRD §14.3; (b) kanal notifikasi berbayar masa depan seperti WhatsApp Business API — diajukan terpisah saat kanalnya diputuskan; (c) backend mobile app — headroom biayanya sudah tersedia di ruang budget yang tersisa, diajukan saat track-nya dimulai. Server fisik (on-premise/colocation) dievaluasi dan **tidak diperlukan** — lihat §5.2 dan catatan backup §4.1.
+
+---
+
+## Rekapitulasi Kebutuhan — Tabel Satu Pandang
+
+Seluruh kebutuhan yang diajukan, dalam satu tabel. Kolom fase menunjukkan biaya per bulan; rincian dan dasar perhitungan setiap baris ada di bagian yang dirujuk.
+
+| Kategori | # | Kebutuhan | Spesifikasi / Paket | Pilot (Agu–Okt 2026) | Launch Y1 (Nov 2026–2027) | Scale Y3 (2028) | Rincian |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Server** | 1 | VPS Staging dedicated — review internal & UAT | 2 vCPU / 4 GB / 80 GB NVMe | Rp 150–350 rb | Rp 150–350 rb | Rp 250–500 rb | §5.1 |
+| **Server** | 2 | VPS Production | Pilot: 4 vCPU / 8 GB / 160 GB NVMe (Indonesia) → Y1: app 8 vCPU/16 GB + DB node 4 vCPU/8 GB → Y3: HA (2× app + LB + managed Postgres + replica) | Rp 400–800 rb | Rp 1,3–2,6 jt | Rp 5–10 jt | §5.2–5.4 |
+| **Software** | 3 | Cloudflare — CDN, WAF, Tunnel, DNS | Free → Pro ($20/bln) | Rp 0 | ~Rp 330 rb | Rp 330 rb–1 jt | §8.1 |
+| **Software** | 4 | Cloudflare R2 — storage dokumen + backup DB | $0,015/GB/bln, egress gratis | < Rp 10 rb | ~Rp 100 rb | ~Rp 300 rb | §4.1, §8.1 |
+| **Software** | 5 | Mapbox — 8+ peta interaktif + geocoding | 50 rb map-load gratis/bln → ~$5/1.000 | Rp 0 | Rp 0–800 rb | Rp 1–3 jt | §8.1 |
+| **Software** | 6 | Email transaksional — Resend → AWS SES saat volume tinggi | Free → Pro $20 → Scale $90 → SES $0,10/1.000 | Rp 0–330 rb | Rp 330 rb–1,5 jt | Rp 0,8–2 jt | §8.1 |
+| **Software** | 7 | Sentry — error monitoring FE + BE | Free → Team ~$26 → Business ~$80 | Rp 0 | ~Rp 420 rb | ~Rp 1,3 jt | §8.1 |
+| **Software** | 8 | Uptime monitor (+ APM di Y3) | Free → ~$25 | Rp 0 | Rp 0–400 rb | Rp 400 rb–1 jt | §8.1 |
+| **Software** | 9 | Container registry — image Docker privat | GHCR (gratis) / Docker Hub Pro ~$11 | Rp 0–180 rb | Rp 0–180 rb | Rp 0–180 rb | §8.1 |
+| **Software** | 10 | Domain `umrohlovers.id` | ~Rp 500 rb/tahun | ~Rp 40 rb | ~Rp 40 rb | ~Rp 40 rb | §8.1 |
+| **Software** | 11 | Jenkins (CI/CD) · GitHub · Google OAuth · data BPS · seluruh library open-source | Self-host / free plan | Rp 0 | Rp 0 | Rp 0 | §8.1 |
+| **TOTAL** | | **Per bulan (rentang penuh)** | | **Rp 0,6–1,7 jt** | **Rp 2,7–6,8 jt** | **Rp 9,5–19 jt** | §8.2 |
+| **TOTAL** | | **Per bulan (titik tengah realistis)** | | **~Rp 1,0 jt** | **~Rp 3,6 jt** | **~Rp 13 jt** | §8.2 |
+
+| Ringkasan akhir | Nilai |
+| --- | --- |
+| Biaya one-time (setup, hardening, uji restore, uji beban) | **Rp 0** — jam kerja internal, tanpa lisensi |
+| **Anggaran 12 bulan pertama** (Agu 2026 – Jul 2027, termasuk buffer 10%) | **≈ Rp 40–45 juta** |
+| Proyeksi tahun ketiga (2028, skala penuh) | ≈ Rp 115–230 jt/tahun (realistis ~Rp 160 jt) |
+| Perbandingan terhadap alokasi budget PRD §14.3 | ≈ 15% dari alokasi 2027 (Rp 300 jt); < 30% dari alokasi 2028 (Rp 800 jt) |
 
 ---
 
@@ -40,7 +69,7 @@ Empat langkah, masing-masing bisa diverifikasi:
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | 1. Ukur baseline              | Footprint riil aplikasi (RAM/CPU/DB) dari environment uji — bukan estimasi                                                            | §2    |
 | 2. Modelkan beban             | Formula eksplisit dari target bisnis PRD §13–14; setiap asumsi dinyatakan                                                            | §3    |
-| 3. Petakan kapasitas komponen | Rule-of-thumb industri yang konservatif +**divalidasi silang dengan uji k6 milik sendiri**                                       | §3.3  |
+| 3. Petakan kapasitas komponen | Acuan praktik industri yang konservatif +**divalidasi silang dengan uji k6 milik sendiri**                                       | §3.3  |
 | 4. Sizing + headroom          | Spesifikasi = beban proyeksi × faktor aman; ditolak jika utilisasi proyeksi < 10% (kapasitas berlebih) atau > 50% steady (kekurangan headroom) | §5    |
 
 **Dua penjaga kewajaran** yang dipakai di seluruh dokumen:
@@ -72,7 +101,7 @@ Angka dari environment uji internal (`docker stats`, `psql`):
 | **Staging**    | Review internal stakeholder, UAT fitur sebelum rilis, tempat uji beban — auto-deploy setiap push ke branch`development` | 📋**Diajukan** — belum ada server dedicated |
 | **Production** | Melayani jamaah & mitra sungguhan di`umrohlovers.id`                                                                     | 📋**Diajukan** — belum pernah di-provision  |
 
-Yang **sudah siap** dan tinggal diarahkan (tanpa biaya tambahan): pipeline CI/CD Jenkins (staging auto-deploy; production dengan approval gate), domain `umrohlovers.id` + `api.umrohlovers.id` + `staging.umrohlovers.id` (Cloudflare Tunnel), dan image Docker FE/BE yang sudah teruji.
+Yang **sudah siap** dan hanya perlu diarahkan (tanpa biaya tambahan): pipeline CI/CD Jenkins (staging auto-deploy; production dengan approval gate), domain `umrohlovers.id` + `api.umrohlovers.id` + `staging.umrohlovers.id` (Cloudflare Tunnel), dan image Docker FE/BE yang sudah teruji.
 
 ### 2.3 Bukti kapasitas dari uji nyata (bukan teori)
 
@@ -93,10 +122,10 @@ DAU               = 10% × akun terdaftar           (asumsi engagement platform 
 Concurrent peak   = 10% × DAU                      (jam sibuk malam/akhir pekan)
 Request/user      = ~6 request/menit saat aktif    (SPA: navigasi + API) = 0,1 RPS/user
 RPS nominal       = concurrent × 0,1
-RPS target sizing = RPS nominal × spike 10×        (broadcast WA/radio, campaign, Munas)
+RPS target sizing = RPS nominal × faktor lonjakan 10×        (broadcast WA/radio, campaign, Munas)
 ```
 
-> Setiap koefisien bisa diperdebatkan — yang penting **dinyatakan**. Bila realita pilot menunjukkan engagement 2× lebih tinggi, formula tinggal dijalankan ulang; §7.1 menunjukkan bahkan meleset 2× pun tidak mengubah spesifikasi tier.
+> Setiap koefisien bisa diperdebatkan — yang penting **dinyatakan**. Bila realita pilot menunjukkan engagement 2× lebih tinggi, formula cukup dijalankan ulang; §7.1 menunjukkan bahkan meleset 2× pun tidak mengubah spesifikasi tier.
 
 ### 3.2 Hasil per tahap (anchor volume = target bisnis PRD §13–14)
 
@@ -106,7 +135,7 @@ RPS target sizing = RPS nominal × spike 10×        (broadcast WA/radio, campai
 | **Launch Y1** (Nov 2026–2027) | 20–50 rb   | 2–5 rb   | 200–500        | 20–50      | **250–500**                 |
 | **Scale Y3** (2028)            | 100–150 rb | 10–15 rb | 1.000–1.500    | 100–150    | **1.000–1.500**             |
 
-### 3.3 Kapasitas komponen (rule-of-thumb konservatif, tervalidasi k6)
+### 3.3 Kapasitas komponen (acuan praktik industri — konservatif, tervalidasi k6)
 
 | Komponen                              | Kapasitas aman per unit                    | Yang membatasi                                                                                                       |
 | ------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
@@ -132,7 +161,7 @@ RPS target sizing = RPS nominal × spike 10×        (broadcast WA/radio, campai
 | **Total**                      |                          | **~17 GB**         | **~390 GB**        | **~1,2 TB**        |
 | **Biaya** ($0,015/GB/bln)      |                          | **< Rp 10 rb/bln** | **~Rp 100 rb/bln** | **~Rp 300 rb/bln** |
 
-R2 bukan faktor biaya di skala manapun — dan egress gratis berarti lonjakan trafik unduhan tidak menimbulkan tagihan kejutan.
+R2 bukan faktor biaya di skala manapun — dan egress gratis berarti lonjakan trafik unduhan tidak menimbulkan biaya tak terduga.
 
 > **Catatan backup**: R2 sekaligus menjadi tujuan backup database (WAL + basebackup, §7.2) — object storage yang *off-site* dan tergeoreplikasi secara bawaan. **Server fisik khusus backup tidak diperlukan** dan justru lebih buruk: satu lokasi (risiko bencana lokal), perlu perawatan hardware, tanpa jaminan durability setara object storage.
 
@@ -163,7 +192,7 @@ R2 bukan faktor biaya di skala manapun — dan egress gratis berarti lonjakan tr
 
 **Diajukan: 1× VPS 2 vCPU / 4 GB / 80 GB NVMe** menjalankan stack lengkap milik sendiri (FE + BE + PostgreSQL + Redis + nginx/tunnel).
 
-**Kenapa staging dedicated dibutuhkan (bukan kemewahan):**
+**Kenapa staging dedicated dibutuhkan (kebutuhan operasional, bukan fasilitas tambahan):**
 
 | Fungsi                                  | Nilai bisnisnya                                                                                                                                     |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -172,7 +201,7 @@ R2 bukan faktor biaya di skala manapun — dan egress gratis berarti lonjakan tr
 | **Tempat uji beban & eksperimen** | k6/uji destruktif dijalankan di staging**tanpa risiko menyentuh data jamaah**                                                                 |
 | **Isolasi data**                  | Data uji dan data pribadi jamaah tidak pernah berada di mesin yang sama — kebersihan audit UU PDP/PP 38                                            |
 
-**Bukti tidak berlebihan**: footprint aplikasi hanya ~150 MB (§2.1); box 2 vCPU/4 GB memuat stack lengkap + Postgres + ruang build dengan nyaman. Opsi lebih murah (1 vCPU/1–2 GB, Rp 50–100 rb) **ditolak** karena tidak memuat Postgres + Redis + stack dengan topologi yang sama seperti production — dan staging yang topologinya berbeda membuat hasil review/UAT tidak valid. Opsi lebih mahal tidak diperlukan: staging tidak butuh headroom spike (penggunanya internal, belasan orang).
+**Bukti tidak berlebihan**: footprint aplikasi hanya ~150 MB (§2.1); server 2 vCPU/4 GB memuat stack lengkap + Postgres + ruang build dengan margin aman. Opsi spesifikasi lebih rendah (1 vCPU/1–2 GB, Rp 50–100 rb) **ditolak** karena tidak memuat Postgres + Redis + stack dengan topologi yang sama seperti production — dan staging yang topologinya berbeda membuat hasil review/UAT tidak valid. Spesifikasi lebih tinggi belum diperlukan: staging tidak memerlukan headroom lonjakan trafik (penggunanya internal, belasan orang).
 
 ### 5.2 Production Tier 1 — Pilot (Agustus 2026)
 
@@ -185,18 +214,18 @@ R2 bukan faktor biaya di skala manapun — dan egress gratis berarti lonjakan tr
 | PostgreSQL 16 dedicated    | 2 GB      | `shared_buffers` 512 MB; **WAL archiving ke R2 tiap 15 menit + basebackup harian** |
 | Redis 7 dedicated          | 256 MB    | `maxmemory` + `allkeys-lru`                                                            |
 | nginx + cloudflared        | 128 MB    | Pola yang sudah terbukti di pipeline CI/CD                                                 |
-| Headroom OS + spike        | ~4 GB     |                                                                                            |
+| Headroom OS + lonjakan trafik        | ~4 GB     |                                                                                            |
 
 **Bukti tidak kekurangan** — proyeksi utilisasi terhadap beban pilot:
 
-| Metrik             | Beban pilot (puncak, spike ×10) | Kapasitas box                                                | Utilisasi proyeksi  |
+| Metrik             | Beban pilot (puncak, lonjakan ×10) | Kapasitas server                                                | Utilisasi proyeksi  |
 | ------------------ | -------------------------------- | ------------------------------------------------------------ | ------------------- |
 | RPS total          | ~50                              | ribuan (BE) / ratusan pasca-CDN (FE)                         | **< 15% CPU** |
 | RAM                | ~2,5 GB teralokasi               | 8 GB                                                         | ~50% (dengan limit) |
 | DB tx/s            | < 5 tulis/s                      | ratusan                                                      | **< 5%**      |
 | Pembanding empiris | —                               | k6 1.000 VUs lulus pada mesin uji 2 vCPU (setengah spec ini) | margin sangat besar |
 
-Box ini bahkan sanggup menampung beban **awal Y1** — upgrade ke Tier 2 dipicu metrik, bukan tanggal.
+Server ini bahkan mampu menampung beban **awal Y1** — upgrade ke Tier 2 dipicu metrik, bukan tanggal.
 
 **Bukti tidak berlebihan** — opsi yang dipertimbangkan dan alasannya:
 
@@ -206,18 +235,18 @@ Box ini bahkan sanggup menampung beban **awal Y1** — upgrade ke Tier 2 dipicu 
 | VPS production 2 vCPU / 4 GB (Rp 250–350 rb) | −Rp 300 rb              | ❌ Ditolak           | Postgres dedicated 2 GB + stack + OS menyisakan RAM sangat terbatas tanpa headroom lonjakan; gagal syarat jaminan kecukupan (a)                                                                                     |
 | **VPS 4 vCPU / 8 GB**                   | **Rp 400–800 rb** | ✅**Diajukan** | Titik seimbang: isolasi penuh + headroom ≥ 5× + biaya tetap efisien                                                                                                                               |
 | VPS 8 vCPU / 16 GB (Rp 0,9–1,3 jt)           | +Rp 500 rb               | ❌ Belum             | Utilisasi proyeksi < 8% = membayar kapasitas yang tidak terpakai; resize vertical < 1 jam tersedia kapan pun trigger terpicu                                                                              |
-| Cloud managed penuh / Kubernetes              | ≥ Rp 3–5 jt            | ❌ Belum             | Kompleksitas + biaya tidak sepadan untuk 1 box; dipertimbangkan lagi di Tier 3                                                                                                              |
+| Cloud managed penuh / Kubernetes              | ≥ Rp 3–5 jt            | ❌ Belum             | Kompleksitas + biaya tidak sepadan untuk satu server; dipertimbangkan lagi di Tier 3                                                                                                              |
 | Server fisik (colocation / on-premise) — termasuk untuk backup | CapEx Rp 30–80 jt + rak DC Rp 1–2 jt/bln | ❌ Ditolak | CapEx besar di muka tidak cocok untuk fase pre-revenue; pengadaan hardware berminggu-minggu bertentangan dengan prinsip upgrade-by-trigger (resize VPS < 1 jam); maintenance hardware jadi tanggungan sendiri; UU PDP data residency sudah terpenuhi via DC Indonesia bersertifikat (ISO 27001) — dan kebutuhan backup sudah terjawab lebih baik oleh R2 off-site (§4.1, §7.2). Dana jamaah dipegang bank partner, bukan platform — tidak ada tuntutan regulasi kontrol fisik di sisi kita |
 
 ### 5.3 Production Tier 2 — Launch Y1
 
 Perubahan tunggal paling berdampak: **pisahkan database ke node sendiri** (menjawab bottleneck k6) — app node naik ke 8 vCPU/16 GB, DB node 4 vCPU/8 GB NVMe. Tambahan wajib tier ini: PgBouncer, Cloudflare Pro (~Rp 330 rb — WAF + cache analytics), uptime monitor eksternal, dan **drill restore backup bulanan** (backup yang tidak pernah diuji = tidak ada backup). Staging dedicated tetap berjalan apa adanya.
 
-Kapasitas hasil: spike Munas 250–500 RPS tertampung dengan cache hangat pada utilisasi ~30–40% — lolos syarat headroom.
+Kapasitas hasil: lonjakan Munas 250–500 RPS tertampung dengan cache hangat pada utilisasi ~30–40% — lolos syarat headroom.
 
 ### 5.4 Production Tier 3 — Scale Y3
 
-Pendorongnya **availability**, bukan throughput: 2× app node + load balancer, **managed PostgreSQL HA + 1 read replica** (leaderboard/laporan pindah ke replica), Redis node sendiri, observability penuh (APM + log terpusat), SLO 99,9%. Mulai tier ini managed DB dibayar karena failover otomatis + PITR yang dikelola vendor lebih murah daripada 1 SRE.
+Pendorongnya **availability**, bukan throughput: 2× app node + load balancer, **managed PostgreSQL HA + 1 read replica** (leaderboard/laporan pindah ke replica), Redis node sendiri, observability penuh (APM + log terpusat), SLO 99,9%. Mulai tier ini managed DB dibayar karena failover otomatis + PITR yang dikelola vendor lebih ekonomis dibanding merekrut satu engineer SRE.
 
 ### 5.5 Pembanding harga pasar (transparansi harga)
 
@@ -251,14 +280,14 @@ Dua konsekuensi: belanja tidak pernah mendahului kebutuhan, dan setiap keputusan
 
 ---
 
-## 7. Uji Ketahanan Rencana (what-if)
+## 7. Uji Ketahanan Rencana (Analisis Skenario)
 
 ### 7.1 Bagaimana kalau estimasi meleset?
 
 | Skenario                                                       | Dampak            | Jawaban                                                                                                                                                                                                                          |
 | -------------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Engagement 2× asumsi (DAU 20%)                                | RPS proyeksi ×2  | Masih < 30% utilisasi Tier 1; tidak mengubah spesifikasi                                                                                                                                                                         |
-| **Spike Munas 20×** nominal (≈ 1.000 RPS sesaat di Y1) | Puncak ekstrem    | Cloudflare men-cache katalog publik (mayoritas trafik) → origin hanya menerima API dinamis ~200–300 RPS → BE Go sanggup; DB terlindungi Redis. Lapis kedua: rate-limit per-IP di nginx. Lapis ketiga: resize vertical < 1 jam |
+| **Lonjakan Munas 20×** nominal (≈ 1.000 RPS sesaat di Y1) | Puncak ekstrem    | Cloudflare men-cache katalog publik (mayoritas trafik) → origin hanya menerima API dinamis ~200–300 RPS → BE Go mampu menanganinya; DB terlindungi Redis. Lapis kedua: rate-limit per-IP di nginx. Lapis ketiga: resize vertical < 1 jam |
 | Pertumbuhan akun 2× lebih cepat                               | Storage & DB naik | R2 & disk punya margin ≥ 3×; trigger §6 menaikkan tier lebih awal — anggaran naik mengikuti*revenue yang juga naik*                                                                                                        |
 | Pilot mundur                                                   | Biaya idle        | Total staging + production pilot hanya ~Rp 1 jt/bln; provisioning bisa ditunda (lead time 1–2 hari kerja)                                                                                                                 |
 
@@ -268,7 +297,7 @@ Dua konsekuensi: belanja tidak pernah mendahului kebutuhan, dan setiap keputusan
 | --------------- | ---------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | Staging         | best-effort            | ≤ 1 hari              | Redeploy dari CI/CD + seed; tidak ada data jamaah                                                                                            |
 | Prod 1 — Pilot | **≤ 15 menit**  | **≤ 4 jam**     | WAL archiving ke R2 tiap 15 mnt + basebackup harian; rebuild dari compose + restore —**diuji sebelum go-live, bukan setelah insiden** |
-| Prod 2 — Y1    | ≤ 5 menit             | ≤ 1 jam               | DB node terpisah + streaming archive; app stateless tinggal redeploy                                                                         |
+| Prod 2 — Y1    | ≤ 5 menit             | ≤ 1 jam               | DB node terpisah + streaming archive; aplikasi stateless cukup di-redeploy                                                                         |
 | Prod 3 — Y3    | ≈ 0                   | ≤ 15 menit            | Managed HA failover otomatis + replica                                                                                                       |
 
 Target SLO production: 99,5% (pilot) → 99,8% (Y1) → 99,9% (Y3). Single point of failure di Tier 1 **diterima secara sadar** untuk fase pilot karena RPO/RTO di atas memadai untuk volume 500–2.000 akun — dan dihilangkan bertahap justru saat volumenya membenarkan biayanya.
@@ -297,7 +326,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 | Google OAuth · data BPS · seluruh library OSS (Next.js, Go/Echo, Postgres, Redis, gopdf, dsb.) | Login, zonasi, akad PDF, seluruh stack | Gratis / open-source | Rp 0 | Rp 0 | Rp 0 |
 | **Subtotal software** | | | **Rp 0,05–0,56 jt** | **Rp 1,2–3,8 jt** | **Rp 4,2–8,8 jt** |
 
-> Ujung atas subtotal mengandaikan **semua** layanan menyentuh paket berbayar maksimalnya bersamaan — jarang terjadi. Nilai realistis (dipakai untuk proyeksi §8.3): Pilot ~Rp 100 rb · Y1 ~Rp 1,6 jt · Y3 ~Rp 5,5 jt.
+> Batas atas subtotal mengandaikan **semua** layanan menyentuh paket berbayar maksimalnya bersamaan — jarang terjadi. Nilai realistis (dipakai untuk proyeksi §8.3): Pilot ~Rp 100 rb · Y1 ~Rp 1,6 jt · Y3 ~Rp 5,5 jt.
 
 ### 8.2 Ringkasan biaya bulanan (server + software)
 
@@ -342,7 +371,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 - [ ] Jenkins job production diarahkan ke host baru (approval gate tetap)
 - [ ] WAL archiving 15-menit + basebackup harian ke R2 + **uji restore penuh** (gate go-live — bukan opsional)
 - [ ] Sentry env `production` + uptime monitor eksternal + alert
-- [ ] k6 ulang **terhadap box production**: gate hijau 500 VUs, pool 40
+- [ ] k6 ulang **terhadap server production**: gate hijau 500 VUs, pool 40
 - [ ] DNS cutover + smoke test E2E (auth, KYC, booking, akad PDF)
 - [ ] Runbook insiden 1 halaman: restart, rollback image, restore DB, kontak eskalasi
 
@@ -355,7 +384,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 | A1 | DAU = 10% akun             | 10%          | ×2 → tetap < 30% utilisasi Tier 1 (§7.1)       |
 | A2 | Concurrent = 10% DAU       | 10%          | idem                                              |
 | A3 | 6 req/menit/user aktif     | 0,1 RPS      | idem                                              |
-| A4 | Faktor spike               | 10×         | Munas 20× dianalisis terpisah (§7.1)            |
+| A4 | Faktor lonjakan trafik     | 10×         | Munas 20× dianalisis terpisah (§7.1)            |
 | A5 | CDN offload halaman publik | 70%          | Konservatif; realita biasanya > 85% untuk katalog |
 | A6 | KYC 6 MB/akun              | 4 dok        | ×2 → R2 Y3 tetap < Rp 600 rb/bln                |
 | A7 | Kurs USD                   | Rp 16.000    | Buffer 10% di §8.3                               |
@@ -379,7 +408,8 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 
 | Versi | Tanggal    | Perubahan                                                                                                                                                                                                                                                                                                                     |
 | ----- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v2.3  | 2026-07-07 | **Rekapitulasi Kebutuhan — Tabel Satu Pandang** ditambahkan setelah ringkasan eksekutif (seluruh kebutuhan server + software + total per fase + anggaran 12 bulan dalam satu tabel); standardisasi istilah formal di seluruh dokumen (lonjakan trafik, analisis skenario, uji kewajaran anggaran, acuan praktik industri, dsb.) |
 | v2.2  | 2026-07-07 | **Inventaris langganan software LENGKAP** (§8.1): Mapbox, Resend/SES, Sentry, Cloudflare, uptime, registry, domain, + item Rp 0 (Jenkins/GitHub/OAuth/OSS) dengan basis perhitungan per tier; opsi server fisik ditolak eksplisit (§5.2) + catatan backup R2 (§4.1) + pernyataan cakupan; anggaran 12 bulan direvisi ≈ Rp 40–45 jt; asumsi A9–A10 + sumber harga software ditambahkan |
 | v2.1  | 2026-07-07 | Scope diperluas: proposal kini mengajukan**staging dedicated** (environment review internal/UAT) + **production** sebagai dua server baru; anggaran 12 bulan ≈ Rp 38–42 jt; justifikasi staging, RTO/RPO staging, dan checklist provisioning staging ditambahkan; dokumen dipindah ke `umrohlovers/proposal/` |
-| v2.0  | 2026-07-07 | Proposal-grade: ringkasan eksekutif dengan keputusan + anggaran 12 bulan, metodologi auditable, jaminan kecukupan kapasitas (utilisasi proyeksi + RTO/RPO/SLO) & jaminan efisiensi biaya (tabel opsi yang dipertimbangkan + pembanding harga 4 provider), trigger upgrade berbasis metrik, analisis what-if, appendix asumsi & sensitivitas                  |
+| v2.0  | 2026-07-07 | Proposal-grade: ringkasan eksekutif dengan keputusan + anggaran 12 bulan, metodologi auditable, jaminan kecukupan kapasitas (utilisasi proyeksi + RTO/RPO/SLO) & jaminan efisiensi biaya (tabel opsi yang dipertimbangkan + pembanding harga 4 provider), trigger upgrade berbasis metrik, analisis skenario, appendix asumsi & sensitivitas                  |
 | v1.0  | 2026-07-07 | Dokumen awal — baseline terukur, model beban, sizing 3 tier, checklist go-live                                                                                                                                                                                                                                               |
