@@ -1,6 +1,6 @@
 # Ringkasan Pengajuan — Infrastruktur umrohlovers
 
-> **Tanggal**: 7 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (Tech Lead)
+> **Tanggal**: 7 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (CTO)
 > **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md)
 
 ---
@@ -64,7 +64,7 @@ Pilot September **tidak memiliki environment production** untuk berjalan, dan re
 | --- | --- | --- | --- |
 | Founder & Chairman/CEO | Lukman | | |
 | Founder & President | Sandhy Krisnamurthi | | |
-| Tech Lead (pengaju) | Aditira Jamhuri | 7 Juli 2026 | ✓ |
+| CTO (pengaju) | Aditira Jamhuri | 7 Juli 2026 | ✓ |
 
 ---
 

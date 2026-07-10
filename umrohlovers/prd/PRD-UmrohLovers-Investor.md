@@ -142,7 +142,7 @@ To be Indonesia's **Rumah Sinergi** for hajj & umroh — the place where every s
 
 ---
 
-#### 💻 Aditira Jamhuri — Tech Lead / CTO
+#### 💻 Aditira Jamhuri — Chief Technology Officer (CTO)
 
 **Role:** Platform architect, full-stack engineering lead, infrastructure & CI/CD ownership, product delivery.
 
@@ -1102,4 +1102,4 @@ Concrete execution log — the entire platform below was designed, built, and E2
 
 *© 2026 umrohlovers.id — PT Arta Cipta Kreasi (ARTASI) · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
 
-*Document version 1.2 · July 2026 (v1.0 June 2026 · v1.1 early July 2026 · v1.2 adds §10.5 Infrastructure Sizing & Capacity Plan + July 5–7 UX/checkout program) · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*
+*Document version 1.2 · July 2026 (v1.0 June 2026 · v1.1 early July 2026 · v1.2 adds §10.5 Infrastructure Sizing & Capacity Plan + July 5–7 UX/checkout program) · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (CTO).*
