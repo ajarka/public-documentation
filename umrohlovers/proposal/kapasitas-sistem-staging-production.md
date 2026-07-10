@@ -1,5 +1,7 @@
 # Proposal Kebutuhan & Kapasitas Infrastruktur Sistem (Staging + Production)
 
+> 📄 **Untuk pengambilan keputusan cepat, baca versi 1 halaman**: [ringkasan-pengajuan.md](ringkasan-pengajuan.md) — dokumen ini adalah rujukan teknis lengkapnya.
+>
 > **Status**: Proposal untuk diajukan & disetujui stakeholder
 > **Tujuan dokumen**: menjawab *"berapa sebenarnya kebutuhan sistem umrohlovers untuk staging & production, dan berapa biayanya"* — dengan perhitungan yang dapat diaudit baris per baris. Setiap angka punya sumber: **terukur dari aplikasi**, **hasil uji beban**, atau **asumsi yang dinyatakan eksplisit** (dan bisa diganti tanpa merusak formula).
 > **Prinsip sizing**: *right-sizing* — tidak kekurangan (headroom (ruang cadangan kapasitas) ≥ 5× beban puncak proyeksi + jalur scale-up < 1 hari), tidak berlebihan (utilisasi steady target 15–40%; upgrade dipicu **metrik**, bukan kalender).
@@ -408,6 +410,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 
 | Versi | Tanggal    | Perubahan                                                                                                                                                                                                                                                                                                                     |
 | ----- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v2.4  | 2026-07-07 | Dokumen dipecah dua lapisan: **[ringkasan-pengajuan.md](ringkasan-pengajuan.md)** (1 halaman untuk pengambilan keputusan — satu angka plafon Rp 45 jt/12 bln, timeline, konsekuensi penundaan, blok persetujuan) + dokumen ini sebagai rujukan teknis lengkap |
 | v2.3  | 2026-07-07 | **Rekapitulasi Kebutuhan — Tabel Satu Pandang** ditambahkan setelah ringkasan eksekutif (seluruh kebutuhan server + software + total per fase + anggaran 12 bulan dalam satu tabel); standardisasi istilah formal di seluruh dokumen (lonjakan trafik, analisis skenario, uji kewajaran anggaran, acuan praktik industri, dsb.) |
 | v2.2  | 2026-07-07 | **Inventaris langganan software LENGKAP** (§8.1): Mapbox, Resend/SES, Sentry, Cloudflare, uptime, registry, domain, + item Rp 0 (Jenkins/GitHub/OAuth/OSS) dengan basis perhitungan per tier; opsi server fisik ditolak eksplisit (§5.2) + catatan backup R2 (§4.1) + pernyataan cakupan; anggaran 12 bulan direvisi ≈ Rp 40–45 jt; asumsi A9–A10 + sumber harga software ditambahkan |
 | v2.1  | 2026-07-07 | Scope diperluas: proposal kini mengajukan**staging dedicated** (environment review internal/UAT) + **production** sebagai dua server baru; anggaran 12 bulan ≈ Rp 38–42 jt; justifikasi staging, RTO/RPO staging, dan checklist provisioning staging ditambahkan; dokumen dipindah ke `umrohlovers/proposal/` |
