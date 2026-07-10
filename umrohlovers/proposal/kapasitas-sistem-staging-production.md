@@ -15,18 +15,18 @@ Platform umrohlovers saat ini **belum memiliki server dedicated** — baik untuk
 1. **Setujui provisioning 2 (dua) VPS dedicated** pada **Agustus 2026** — sebelum pilot September:
    - **Staging** — 2 vCPU / 4 GB: environment review internal + UAT, auto-deploy dari branch `development` via CI/CD
    - **Production** — 4 vCPU / 8 GB, data center Indonesia, terisolasi penuh dari environment uji
-2. **Setujui anggaran infrastruktur 12 bulan pertama ≈ Rp 38–42 juta** (Agu 2026 – Jul 2027, staging + production + semua layanan pendukung, sudah termasuk buffer 10%) — rincian di §8.
+2. **Setujui anggaran infrastruktur 12 bulan pertama ≈ Rp 40–45 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, email, monitoring, CDN, registry, domain — sudah termasuk buffer 10%) — inventaris lengkap di §8.1.
 3. **Setujui prinsip upgrade berbasis trigger metrik** (§6): kapasitas dinaikkan saat ambang terukur terlampaui, bukan karena jadwal — ini yang menjaga anggaran tidak menggelembung sekaligus tidak pernah kekurangan.
 
 ### Anggaran yang diajukan (semua layanan, per bulan)
 
 | Tahap               | Periode        | Infrastruktur                                                             | Biaya/bulan (all-in)     |
 | ------------------- | -------------- | ------------------------------------------------------------------------- | ------------------------ |
-| **Pilot**     | Agu–Okt 2026  | Staging 2 vCPU/4 GB + Production 4 vCPU/8 GB + Cloudflare/R2 + monitoring | **Rp 0,8–1,3 jt** |
-| **Launch Y1** | Nov 2026–2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + CDN Pro + monitoring | **Rp 2,7–5,0 jt** |
-| **Scale Y3**  | 2028           | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica          | **Rp 9–16 jt**    |
+| **Pilot**     | Agu–Okt 2026  | Staging 2 vCPU/4 GB + Production 4 vCPU/8 GB + seluruh software langganan | **Rp 0,6–1,7 jt** (realistis ~Rp 1 jt) |
+| **Launch Y1** | Nov 2026–2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + seluruh software langganan | **Rp 2,7–6,8 jt** (realistis ~Rp 3,6 jt) |
+| **Scale Y3**  | 2028           | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica + software | **Rp 9,5–19 jt** (realistis ~Rp 13 jt) |
 
-**Sanity check**: total tahun ketiga (≈ Rp 110–190 jt/tahun) tetap jauh di bawah alokasi budget PRD §14.3 (Rp 300 jt di 2027, Rp 800 jt di 2028) — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung.
+**Sanity check**: total tahun ketiga (≈ Rp 115–230 jt/tahun, realistis ~Rp 160 jt) tetap jauh di bawah alokasi budget PRD §14.3 (Rp 300 jt di 2027, Rp 800 jt di 2028) — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung.
 
 **Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, monitoring, email, peta). Sengaja **di luar cakupan**: (a) SDM ops/engineering — sudah ada di pos tersendiri PRD §14.3; (b) kanal notifikasi berbayar masa depan seperti WhatsApp Business API — diajukan terpisah saat kanalnya diputuskan; (c) backend mobile app — headroom biayanya sudah tersedia di ruang budget yang tersisa, diajukan saat track-nya dimulai. Server fisik (on-premise/colocation) dievaluasi dan **tidak diperlukan** — lihat §5.2 dan catatan backup §4.1.
 
@@ -260,7 +260,7 @@ Dua konsekuensi: anggaran tidak menggelembung mendahului kebutuhan, dan keputusa
 | Engagement 2× asumsi (DAU 20%)                                | RPS proyeksi ×2  | Masih < 30% utilisasi Tier 1; tidak mengubah spesifikasi                                                                                                                                                                         |
 | **Spike Munas 20×** nominal (≈ 1.000 RPS sesaat di Y1) | Puncak ekstrem    | Cloudflare men-cache katalog publik (mayoritas trafik) → origin hanya menerima API dinamis ~200–300 RPS → BE Go sanggup; DB terlindungi Redis. Lapis kedua: rate-limit per-IP di nginx. Lapis ketiga: resize vertical < 1 jam |
 | Pertumbuhan akun 2× lebih cepat                               | Storage & DB naik | R2 & disk punya margin ≥ 3×; trigger §6 menaikkan tier lebih awal — anggaran naik mengikuti*revenue yang juga naik*                                                                                                        |
-| Pilot mundur                                                   | Biaya idle        | Total staging + production pilot hanya Rp 0,8–1,3 jt/bln; provisioning bisa ditunda (lead time 1–2 hari kerja)                                                                                                                 |
+| Pilot mundur                                                   | Biaya idle        | Total staging + production pilot hanya ~Rp 1 jt/bln; provisioning bisa ditunda (lead time 1–2 hari kerja)                                                                                                                 |
 
 ### 7.2 Bagaimana kalau server mati? (RTO/RPO — komitmen pemulihan)
 
@@ -277,29 +277,50 @@ Target SLO production: 99,5% (pilot) → 99,8% (Y1) → 99,9% (Y3). Single point
 
 ## 8. Anggaran Diajukan — Rincian 12 Bulan Pertama
 
-### 8.1 Biaya bulanan per komponen
+### 8.1 Inventaris langganan software (LENGKAP — semua yang platform pakai)
 
-| Komponen                         | Pilot (Agu–Okt)         | Launch Y1 (Nov→)        | Scale Y3 (2028)       |
-| -------------------------------- | ------------------------ | ------------------------ | --------------------- |
-| **VPS staging dedicated**  | Rp 150–350 rb           | Rp 150–350 rb           | Rp 250–500 rb        |
-| **VPS production**         | Rp 400–800 rb           | Rp 1,3–2,6 jt           | Rp 5–10 jt           |
-| Cloudflare (Tunnel/CDN/WAF) + R2 | ~Rp 30 rb                | ~Rp 450 rb (Pro + R2)    | ~Rp 700 rb            |
-| Monitoring (Sentry + uptime)     | Rp 0 (free tier)         | ~Rp 400 rb               | ~Rp 1 jt              |
-| Email (Resend) + Mapbox          | Rp 0–150 rb             | ~Rp 300–800 rb          | ~Rp 1–2 jt           |
-| **Total/bulan**            | **Rp 0,8–1,3 jt** | **Rp 2,7–5,0 jt** | **Rp 9–16 jt** |
+Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasuk yang **Rp 0**, supaya terlihat tidak ada yang lupa dihitung. Basis perhitungan dicantumkan agar angka bisa diaudit; harga per Juli 2026 (verifikasi saat pengadaan).
 
-### 8.2 Proyeksi 12 bulan (Agustus 2026 – Juli 2027)
+| Layanan | Fungsi | Basis perhitungan | Pilot | Y1 | Y3 |
+| --- | --- | --- | --- | --- | --- |
+| **Cloudflare** (plan) | CDN, WAF, Tunnel, DNS | Free → Pro $20/bln mulai Y1 (WAF + cache analytics) → Business bila perlu | Rp 0 | ~Rp 330 rb | Rp 330 rb–1 jt |
+| **Cloudflare R2** | Storage KYC, e-Visa, foto, backup DB | $0,015/GB/bln, egress gratis (§4.1) | < Rp 10 rb | ~Rp 100 rb | ~Rp 300 rb |
+| **Mapbox** | 8+ peta interaktif + geocoding | 50 rb map-load gratis/bln, lalu ~$5/1.000; loads ≈ DAU × 30 × 15–25% sesi yang membuka peta (A9) | Rp 0 (jauh di bawah free tier) | Rp 0–800 rb (22–45 rb loads — umumnya masih free) | Rp 1–3 jt (67–110 rb loads) — mitigasi: thumbnail statis + lazy-load peta |
+| **Resend** | Email transaksional (verifikasi, reset, notifikasi, reminder H-30/14/7) | Free 3 rb/bln → Pro $20 (50 rb) → Scale $90 (100 rb); volume ≈ 2–6 email/akun aktif/bln (A10) | Rp 0–330 rb | Rp 330 rb–1,5 jt | — (migrasi SES di bawah) |
+| **AWS SES** (pengganti Resend saat volume > 100 rb/bln) | idem | $0,10/1.000 email — 300–500 rb email/bln | — | — | Rp 0,8–2 jt |
+| **Sentry** | Error monitoring FE + BE | Developer free → Team ~$26 → Business ~$80 | Rp 0 | ~Rp 420 rb | ~Rp 1,3 jt |
+| **Uptime monitor** (+ APM di Y3) | Alert eksternal saat situs down | UptimeRobot free → Better Stack ~$25 → + APM | Rp 0 | Rp 0–400 rb | Rp 400 rb–1 jt |
+| **Container registry** | Image Docker FE/BE privat | GHCR (gratis untuk kebutuhan kita) atau Docker Hub Pro ~$11 | Rp 0–180 rb | Rp 0–180 rb | Rp 0–180 rb |
+| **Domain** `umrohlovers.id` | — | ~Rp 500 rb/tahun ÷ 12 | ~Rp 40 rb | ~Rp 40 rb | ~Rp 40 rb |
+| **Jenkins** (CI/CD) | Build + deploy otomatis | Open-source, self-host di VPS staging | Rp 0 | Rp 0 | Rp 0 |
+| **GitHub** | Repo kode privat | Free plan mencukupi (CI di Jenkins, bukan Actions) | Rp 0 | Rp 0 | Rp 0 |
+| Google OAuth · data BPS · seluruh library OSS (Next.js, Go/Echo, Postgres, Redis, gopdf, dsb.) | Login, zonasi, akad PDF, seluruh stack | Gratis / open-source | Rp 0 | Rp 0 | Rp 0 |
+| **Subtotal software** | | | **Rp 0,05–0,56 jt** | **Rp 1,2–3,8 jt** | **Rp 4,2–8,8 jt** |
 
-| Pos                                                               | Perhitungan                                   | Jumlah                    |
-| ----------------------------------------------------------------- | --------------------------------------------- | ------------------------- |
-| Staging dedicated, 12 bulan                                       | 12 × ~Rp 250 rb (titik tengah)               | Rp 3,0 jt                 |
-| Production pilot, 3 bulan (Agu–Okt)                              | 3 × ~Rp 800 rb (titik tengah, VPS + layanan) | Rp 2,4 jt                 |
-| Production launch Y1, 9 bulan (Nov–Jul)                          | 9 × ~Rp 3,4 jt (titik tengah)                | Rp 30,6 jt                |
-| One-time: hardening, drill restore, k6 ulang production           | jam kerja internal + Rp 0 lisensi             | Rp 0                      |
-| Buffer 10% (fluktuasi kurs/harga)                                 |                                               | Rp 3,6 jt                 |
-| **Total 12 bulan pertama (staging + production + layanan)** |                                               | **≈ Rp 38–42 jt** |
+> Ujung atas subtotal mengandaikan **semua** layanan menyentuh paket berbayar maksimalnya bersamaan — jarang terjadi. Nilai realistis (dipakai untuk proyeksi §8.3): Pilot ~Rp 100 rb · Y1 ~Rp 1,6 jt · Y3 ~Rp 5,5 jt.
 
-> **Konteks**: ≈ 1–2 booking umroh (AOV Rp 30 jt) menutup infrastruktur setahun penuh — **sudah termasuk environment review internal (staging)**. Dibanding alokasi PRD §14.3 (infra 2026: Rp 50 jt; 2027: Rp 300 jt), proposal ini memakai **< 15% ruang budget 2027** — sisanya tetap tersedia untuk mobile app, environment tambahan, dan kebutuhan tak terduga, **tanpa perlu diajukan sekarang**.
+### 8.2 Ringkasan biaya bulanan (server + software)
+
+| Komponen | Pilot (Agu–Okt) | Launch Y1 (Nov→) | Scale Y3 (2028) |
+| --- | --- | --- | --- |
+| **VPS staging dedicated** | Rp 150–350 rb | Rp 150–350 rb | Rp 250–500 rb |
+| **VPS production** | Rp 400–800 rb | Rp 1,3–2,6 jt | Rp 5–10 jt |
+| **Subtotal software** (§8.1) | Rp 0,05–0,56 jt | Rp 1,2–3,8 jt | Rp 4,2–8,8 jt |
+| **Total/bulan (rentang penuh)** | **Rp 0,6–1,7 jt** | **Rp 2,7–6,8 jt** | **Rp 9,5–19 jt** |
+| **Titik tengah realistis** | **~Rp 1,0 jt** | **~Rp 3,6 jt** | **~Rp 13 jt** |
+
+### 8.3 Proyeksi 12 bulan (Agustus 2026 – Juli 2027)
+
+| Pos | Perhitungan | Jumlah |
+| --- | --- | --- |
+| Staging dedicated, 12 bulan | 12 × ~Rp 250 rb | Rp 3,0 jt |
+| Production pilot + software, 3 bulan (Agu–Okt) | 3 × ~Rp 950 rb (titik tengah §8.2) | Rp 2,9 jt |
+| Production launch Y1 + software, 9 bulan (Nov–Jul) | 9 × ~Rp 3,6 jt (titik tengah §8.2) | Rp 32,4 jt |
+| One-time: hardening, drill restore, k6 ulang production | jam kerja internal + Rp 0 lisensi | Rp 0 |
+| Buffer 10% (fluktuasi kurs/harga/volume) | | Rp 3,8 jt |
+| **Total 12 bulan pertama (server + seluruh software langganan)** | | **≈ Rp 40–45 jt** |
+
+> **Konteks**: ≈ 1–2 booking umroh (AOV Rp 30 jt) menutup infrastruktur setahun penuh — **sudah termasuk environment review internal (staging) dan seluruh langganan software**. Dibanding alokasi PRD §14.3 (infra 2026: Rp 50 jt; 2027: Rp 300 jt), proposal ini memakai **≈ 15% ruang budget 2027** — sisanya tetap tersedia untuk mobile app, environment tambahan, dan kebutuhan tak terduga, **tanpa perlu diajukan sekarang**.
 
 ---
 
@@ -337,15 +358,20 @@ Target SLO production: 99,5% (pilot) → 99,8% (Y1) → 99,9% (Y3). Single point
 | A4 | Faktor spike               | 10×         | Munas 20× dianalisis terpisah (§7.1)            |
 | A5 | CDN offload halaman publik | 70%          | Konservatif; realita biasanya > 85% untuk katalog |
 | A6 | KYC 6 MB/akun              | 4 dok        | ×2 → R2 Y3 tetap < Rp 600 rb/bln                |
-| A7 | Kurs USD                   | Rp 16.000    | Buffer 10% di §8.2                               |
-| A8 | Harga provider             | per Jul 2026 | **Wajib verifikasi ulang saat pengadaan**   |
+| A7 | Kurs USD                   | Rp 16.000    | Buffer 10% di §8.3                               |
+| A8 | Harga provider & software  | per Jul 2026 | **Wajib verifikasi ulang saat pengadaan**   |
+| A9 | % sesi yang membuka peta (basis biaya Mapbox) | 15–25% | Y1 tetap di free tier hingga ~30%; Y3 dimitigasi thumbnail statis + lazy-load |
+| A10 | Email per akun aktif per bulan | 2–6 | Volume > 100 rb/bln → migrasi Resend → AWS SES ($0,10/1.000) memangkas biaya email ~80% |
 
 ## Appendix B — Sumber Harga Publik
 
 - IDCloudHost — halaman pricing publik (Cloud VPS pay-as-you-go; 2 vCPU/2 GB Rp 87–149 rb/bln sebagai anchor ekstrapolasi): https://idcloudhost.com/pricing/
 - DigitalOcean — Droplet pricing (Basic 4 vCPU/8 GB ≈ $48/bln; General Purpose mulai $63/bln): https://www.digitalocean.com/pricing/droplets
 - Cloudflare R2 ($0,015/GB/bln, egress $0) & Cloudflare Pro ($20/bln): halaman pricing publik Cloudflare
-- Sentry Team (~$26/bln), Resend Pro (~$20/bln): halaman pricing publik masing-masing
+- Mapbox — 50.000 map load gratis/bln, lalu ~$5/1.000: https://www.mapbox.com/pricing
+- Resend — Free 3 rb → Pro $20 (50 rb) → Scale $90 (100 rb email/bln): https://resend.com/pricing · AWS SES $0,10/1.000 email (jalur migrasi volume tinggi)
+- Sentry — Developer free → Team ~$26 → Business ~$80/bln: halaman pricing publik Sentry
+- Docker Hub Pro ~$11/bln vs GitHub Container Registry (gratis untuk kebutuhan kita): halaman pricing publik masing-masing
 
 ---
 
@@ -353,6 +379,7 @@ Target SLO production: 99,5% (pilot) → 99,8% (Y1) → 99,9% (Y3). Single point
 
 | Versi | Tanggal    | Perubahan                                                                                                                                                                                                                                                                                                                     |
 | ----- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v2.2  | 2026-07-07 | **Inventaris langganan software LENGKAP** (§8.1): Mapbox, Resend/SES, Sentry, Cloudflare, uptime, registry, domain, + item Rp 0 (Jenkins/GitHub/OAuth/OSS) dengan basis perhitungan per tier; opsi server fisik ditolak eksplisit (§5.2) + catatan backup R2 (§4.1) + pernyataan cakupan; anggaran 12 bulan direvisi ≈ Rp 40–45 jt; asumsi A9–A10 + sumber harga software ditambahkan |
 | v2.1  | 2026-07-07 | Scope diperluas: proposal kini mengajukan**staging dedicated** (environment review internal/UAT) + **production** sebagai dua server baru; anggaran 12 bulan ≈ Rp 38–42 jt; justifikasi staging, RTO/RPO staging, dan checklist provisioning staging ditambahkan; dokumen dipindah ke `umrohlovers/proposal/` |
 | v2.0  | 2026-07-07 | Proposal-grade: ringkasan eksekutif dengan keputusan + anggaran 12 bulan, metodologi auditable, bukti anti-kekurangan (utilisasi proyeksi + RTO/RPO/SLO) & anti-markup (tabel opsi ditolak + pembanding harga 4 provider), trigger upgrade berbasis metrik, analisis what-if, appendix asumsi & sensitivitas                  |
 | v1.0  | 2026-07-07 | Dokumen awal — baseline terukur, model beban, sizing 3 tier, checklist go-live                                                                                                                                                                                                                                               |
