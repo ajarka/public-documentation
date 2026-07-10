@@ -1,5 +1,5 @@
 # umrohlovers.id — Product Requirements Document
-### Investor Edition · v1.1 · July 2026
+### Investor Edition · v1.2 · July 2026
 
 > **Status** — Full platform live on staging (`staging.umrohlovers.id`) · All payment, escrow, and agency-network mechanics finalized in the 1 July 2026 stakeholder meeting are **implemented and deployed to staging (3 July 2026)** · Amani Bank integration in MoU stage (mock client shipped, technical spec delivered & accepted) · Pilot target Q3 2026 · Full public launch target November 2026 (Munas Syarikat Islam, Surabaya)
 >
@@ -385,13 +385,13 @@ flowchart TB
 
 | Feature | Description | Status |
 |---|---|---|
-| **Premium landing + public catalogs** | `/paket` (group package bursa with grid/list/map views), `/paket-mandiri` (wizard), `/brand` (branch directory), `/mitra` (vendor ecosystem), `/daftar-cabang` (branch-claim page with Muslim-population choropleth, per-zone tariff, fullscreen map) | ✅ Shipped |
+| **Premium landing + public catalogs** | `/paket` (group package bursa with grid/list/map views and a Traveloka-style hero filter: departure month · traveler count · city — jamaah land here directly after login), `/paket-mandiri` (wizard), `/brand` (branch directory), `/mitra` (vendor ecosystem), `/daftar-cabang` (branch-claim page with Muslim-population choropleth, per-zone tariff, fullscreen map) | ✅ Shipped |
 | **8+ interactive Mapbox maps** | Native clustering, two-way card↔marker sync, geolocation "nearest branch", Haram/Nabawi landmark spoke-lines, Indonesia/Saudi toggle, per-card Google Maps CTA | ✅ Shipped |
 | **Transparent pricing, gated transaction** | Guests see retail prices (no blur — trust + SEO); booking requires membership. Member prices below retail | ✅ Shipped |
 | **Member tier system** | Guest → Registered (Member Umrohlovers, free) → Anggota Koperasi (auto-upgrade at first confirmed booking + bank account) | ✅ Shipped (tier model) / 📋 (full benefit matrix) |
 | **Verifikasi Identitas (KYC)** | Document upload (KTP/KK/passport/selfie) → admin Kanban review → approval gates account opening and booking | ✅ Shipped |
 | **Tabungan haji/umroh** | Auto-opened account on KYC approval, top-up, savings target picker against real package prices, history | 🟡 Mock bank (full UX shipped) |
-| **Booking grup 4-step flow** | Review → Akad → Payment → Done, with akad PDF download | ✅ Shipped / 🟡 mock payment |
+| **Booking grup 4-step flow** | Review → Akad → Payment → Done, with akad PDF download and per-pax passenger biodata at checkout (Traveloka-style; NIK/passport encrypted at rest) | ✅ Shipped / 🟡 mock payment |
 | **Paket Mandiri wizard** | Date-first à la carte assembly — see §6.3 | ✅ Shipped |
 | **Manasik RSVP** | Browse branch sessions, RSVP, attendance tracked | ✅ Shipped |
 | **Agent anonymization** | Travel agent names hidden on public surfaces (rating + tenure shown); revealed at the jamaah's first payment, once escrow opens — prevents inter-agent price war | ✅ Shipped |
@@ -775,6 +775,21 @@ graph TB
 | Caching | gzip + Redis, observed 18× cache-hit improvement on hot catalog endpoints |
 | E2E flows verified | Auth, KYC, savings, grup booking, mandiri wizard (10/10), commission ledger (11/11), escrow lifecycle incl. webhook-driven transitions, RTBF purge |
 
+### 10.5 Infrastructure Sizing & Capacity Plan (high-level)
+
+> Full calculation — measured baseline, load model with explicit assumptions, per-tier container sizing, storage/bandwidth math, and the production go-live checklist — lives in the companion document **[Kapasitas Sistem & Kebutuhan Infrastruktur](../docs/kapasitas-sistem.md)**.
+
+The platform is deliberately lightweight: the measured staging footprint is **~150 MB RAM total** (Go backend ~46 MB, Next.js frontend ~101 MB) with a 21 MB database, and it has already passed a **k6 load test at 1,000 virtual users** on a shared 2-vCPU box. Infrastructure is therefore a small, predictable cost line that scales in three planned tiers:
+
+| Environment | When | Spec (summary) | Est. cost / month | Status |
+|---|---|---|---|---|
+| **Staging** | today | Shared 2 vCPU / 8 GB VPS (existing, co-hosted) | ~Rp 0 marginal | ✅ Live, sufficient |
+| **Production — Pilot** (≤2,000 accounts) | provision Aug 2026, ahead of the Sep pilot | Dedicated Indonesian VPS 4 vCPU / 8 GB / 160 GB NVMe — own Postgres + Redis, daily backups to R2, isolated from other workloads | **Rp 0.4–0.8 M** (~$25–50) | 📋 Not yet provisioned |
+| **Production — Launch Y1** (20–50k accounts, Munas spike) | Oct–Nov 2026 | App node 8 vCPU / 16 GB + **separate DB node** 4 vCPU / 8 GB NVMe, PgBouncer, Cloudflare CDN/WAF, external uptime monitoring | **Rp 1.5–3.5 M** (~$95–220) | 📋 |
+| **Production — Scale Y3** (100–150k accounts) | 2028 | 2× app nodes + load balancer, managed HA PostgreSQL + read replica, dedicated Redis, full observability, ≥99.9% SLO | **Rp 8–15 M** (~$500–950) | 📋 |
+
+Key facts for due diligence: sizing is driven by **availability, not throughput** (Go handles thousands of RPS/core; the k6-identified bottleneck is the DB connection pool, with a staged mitigation plan); object storage (Cloudflare R2, zero egress fees) stays under ~$20/month even at Year-3 volumes (~1.2 TB of KYC documents and e-Visas); and the full Year-3 infrastructure spend (~Rp 110–190 M/year) sits comfortably inside the §14.3 infrastructure budget line (Rp 0.8 B for 2028).
+
 ---
 
 ## 11. Competitive Landscape
@@ -1081,9 +1096,10 @@ Concrete execution log — the entire platform below was designed, built, and E2
 | Staged payment mechanics (doc 62, Jun) | Min-25% first payment → escrow opens + travel identity reveal, free-form installments, full-payment-before-visa rule, departure dates + reminders | Full stack (🟡 mock bank) |
 | e-Visa module (Jun–Jul) | Per-jamaah Saudi e-Visa PDF upload → notification → jamaah download gated after full payment, UU PDP access logging | Full stack |
 | Final mechanics Waves 1–3 (Jul, post 1-Jul stakeholder meeting) | 10% platform fee + electronic fee-terms acceptance (`fee_terms_accepted_at`, `fee_pct_agreed`), H-30 auto-cancel worker (full refund), H-14 release hold + mirrored travel credits, withdraw (10% fee) / voluntary cancel (10% penalty) / pay-from-saldo / two-pot locked-balance display, Kasbon Amani card, cabang photos + inheritance, Rapot Agen leaderboard, accounts for all roles, paid package promotion tiers, hajj gate | Full stack (🟡 mock bank) |
+| UX & checkout program (Jul 5–7, stakeholder feedback) | Etalase-first UX (post-login jamaah lands on `/paket` with a Traveloka-style hero filter; dashboard moved to an avatar profile menu with verification alerting), per-pax passenger biodata at checkout (encrypted), nearest-branch geo-suggestion with dead-end fallback, day-by-day itinerary editor in B2B assembly, and a full dark-mode readability audit across all 11 role dashboards | FE + BE |
 
 ---
 
 *© 2026 umrohlovers.id — PT Arta Cipta Kreasi (ARTASI) · KOPSIMARI. All projections are forward-looking illustrations based on stated assumptions and comparable Indonesian travel-industry benchmarks; actual results may differ materially. The platform is pre-revenue; bank integration is pending MoU. For investor discussion purposes only.*
 
-*Document version 1.1 · July 2026 (v1.0 June 2026) · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*
+*Document version 1.2 · July 2026 (v1.0 June 2026 · v1.1 early July 2026 · v1.2 adds §10.5 Infrastructure Sizing & Capacity Plan + July 5–7 UX/checkout program) · Prepared by the umrohlovers founding team — Lukman (Founder & Chairman/CEO), Sandhy Krisnamurthi (Founder & President), Aditira Jamhuri (Tech Lead/CTO).*
