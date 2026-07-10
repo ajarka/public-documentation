@@ -38,6 +38,7 @@ Platform umrohlovers sudah selesai dibangun dan teruji, namun **belum memiliki s
 | **Harga pasar, tanpa margin** | Spesifikasi dibandingkan dengan harga publik 4 provider (Indonesia & regional) — tabel pembanding ada di dokumen rujukan |
 | **Kenaikan hanya berdasarkan bukti** | Kapasitas dinaikkan hanya saat metrik pemakaian melewati ambang tertulis — bukan berdasarkan jadwal, sehingga belanja tidak pernah mendahului kebutuhan |
 | **Sudah teruji sebelum diajukan** | Aplikasi lulus uji beban 1.000 pengguna simultan; kebutuhan server dihitung dari data terukur, bukan perkiraan |
+| **Jaga-jaga sudah termasuk** | Plafon memuat buffer 10% (fluktuasi kurs/harga/volume) dan kapasitas server disiapkan ≥ 5× beban puncak proyeksi; bila realisasi mendekati plafon, pengeluaran berikutnya kembali dimintakan persetujuan — anggaran tidak dapat terlampaui tanpa sepengetahuan stakeholder |
 
 ---
 
