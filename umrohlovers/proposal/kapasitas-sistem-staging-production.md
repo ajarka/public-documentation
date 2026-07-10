@@ -16,7 +16,7 @@ Platform umrohlovers saat ini **belum memiliki server dedicated** — baik untuk
    - **Staging** — 2 vCPU / 4 GB: environment review internal + UAT, auto-deploy dari branch `development` via CI/CD
    - **Production** — 4 vCPU / 8 GB, data center Indonesia, terisolasi penuh dari environment uji
 2. **Setujui anggaran infrastruktur 12 bulan pertama ≈ Rp 40–45 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, email, monitoring, CDN, registry, domain — sudah termasuk buffer 10%) — inventaris lengkap di §8.1.
-3. **Setujui prinsip upgrade berbasis trigger metrik** (§6): kapasitas dinaikkan saat ambang terukur terlampaui, bukan karena jadwal — ini yang menjaga anggaran tidak menggelembung sekaligus tidak pernah kekurangan.
+3. **Setujui prinsip upgrade berbasis trigger metrik** (§6): kapasitas dinaikkan saat ambang terukur terlampaui, bukan karena jadwal — ini yang menjaga anggaran tetap terkendali sekaligus kapasitas tidak pernah kekurangan.
 
 ### Anggaran yang diajukan (semua layanan, per bulan)
 
@@ -41,12 +41,12 @@ Empat langkah, masing-masing bisa diverifikasi:
 | 1. Ukur baseline              | Footprint riil aplikasi (RAM/CPU/DB) dari environment uji — bukan estimasi                                                            | §2    |
 | 2. Modelkan beban             | Formula eksplisit dari target bisnis PRD §13–14; setiap asumsi dinyatakan                                                            | §3    |
 | 3. Petakan kapasitas komponen | Rule-of-thumb industri yang konservatif +**divalidasi silang dengan uji k6 milik sendiri**                                       | §3.3  |
-| 4. Sizing + headroom          | Spesifikasi = beban proyeksi × faktor aman; ditolak jika utilisasi proyeksi < 10% (kemahalan) atau > 50% steady (kekurangan headroom) | §5    |
+| 4. Sizing + headroom          | Spesifikasi = beban proyeksi × faktor aman; ditolak jika utilisasi proyeksi < 10% (kapasitas berlebih) atau > 50% steady (kekurangan headroom) | §5    |
 
 **Dua penjaga kewajaran** yang dipakai di seluruh dokumen:
 
-- **Anti-kekurangan**: setiap tier harus (a) menampung ≥ 5× beban puncak proyeksi tahapnya, (b) punya jalur scale-up < 1 hari kerja, dan (c) memenuhi target RTO/RPO (§7.2) — karena ini platform yang memegang perjalanan ibadah & dana jamaah.
-- **Anti-markup**: setiap spesifikasi dibandingkan dengan (a) harga publik ≥ 3 provider (§5.5), (b) opsi satu tingkat lebih murah — dan bila opsi murah ditolak, alasannya ditulis (§5.1–5.2), (c) utilisasi proyeksi dicantumkan supaya kelebihan kapasitas terlihat.
+- **Jaminan kecukupan kapasitas**: setiap tier harus (a) menampung ≥ 5× beban puncak proyeksi tahapnya, (b) punya jalur scale-up < 1 hari kerja, dan (c) memenuhi target RTO/RPO (§7.2) — karena ini platform yang memegang perjalanan ibadah & dana jamaah.
+- **Jaminan efisiensi biaya**: setiap spesifikasi dibandingkan dengan (a) harga publik ≥ 3 provider (§5.5), (b) opsi satu tingkat lebih hemat — dan bila opsi tersebut tidak dipilih, alasannya ditulis (§5.1–5.2), (c) utilisasi proyeksi dicantumkan supaya kelebihan kapasitas terlihat.
 
 ---
 
@@ -203,9 +203,9 @@ Box ini bahkan sanggup menampung beban **awal Y1** — upgrade ke Tier 2 dipicu 
 | Opsi                                          | Biaya/bln                | Keputusan            | Alasan                                                                                                                                                                                      |
 | --------------------------------------------- | ------------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1 VPS digabung staging + production           | −Rp 250 rb              | ❌ Ditolak           | Uang jamaah riil tidak boleh satu mesin dengan environment uji: uji beban/eksperimen bisa menjatuhkan production, dan audit UU PDP/PP 38 menuntut pemisahan data uji vs data pribadi jamaah |
-| VPS production 2 vCPU / 4 GB (Rp 250–350 rb) | −Rp 300 rb              | ❌ Ditolak           | Postgres dedicated 2 GB + stack + OS = RAM mepet tanpa headroom spike; gagal syarat anti-kekurangan (a)                                                                                     |
-| **VPS 4 vCPU / 8 GB**                   | **Rp 400–800 rb** | ✅**Diajukan** | Titik seimbang: isolasi penuh + headroom ≥ 5× + masih murah                                                                                                                               |
-| VPS 8 vCPU / 16 GB (Rp 0,9–1,3 jt)           | +Rp 500 rb               | ❌ Belum             | Utilisasi proyeksi < 8% = bayar kapasitas nganggur; resize vertical < 1 jam tersedia kapan pun trigger terpicu                                                                              |
+| VPS production 2 vCPU / 4 GB (Rp 250–350 rb) | −Rp 300 rb              | ❌ Ditolak           | Postgres dedicated 2 GB + stack + OS menyisakan RAM sangat terbatas tanpa headroom lonjakan; gagal syarat jaminan kecukupan (a)                                                                                     |
+| **VPS 4 vCPU / 8 GB**                   | **Rp 400–800 rb** | ✅**Diajukan** | Titik seimbang: isolasi penuh + headroom ≥ 5× + biaya tetap efisien                                                                                                                               |
+| VPS 8 vCPU / 16 GB (Rp 0,9–1,3 jt)           | +Rp 500 rb               | ❌ Belum             | Utilisasi proyeksi < 8% = membayar kapasitas yang tidak terpakai; resize vertical < 1 jam tersedia kapan pun trigger terpicu                                                                              |
 | Cloud managed penuh / Kubernetes              | ≥ Rp 3–5 jt            | ❌ Belum             | Kompleksitas + biaya tidak sepadan untuk 1 box; dipertimbangkan lagi di Tier 3                                                                                                              |
 | Server fisik (colocation / on-premise) — termasuk untuk backup | CapEx Rp 30–80 jt + rak DC Rp 1–2 jt/bln | ❌ Ditolak | CapEx besar di muka tidak cocok untuk fase pre-revenue; pengadaan hardware berminggu-minggu bertentangan dengan prinsip upgrade-by-trigger (resize VPS < 1 jam); maintenance hardware jadi tanggungan sendiri; UU PDP data residency sudah terpenuhi via DC Indonesia bersertifikat (ISO 27001) — dan kebutuhan backup sudah terjawab lebih baik oleh R2 off-site (§4.1, §7.2). Dana jamaah dipegang bank partner, bukan platform — tidak ada tuntutan regulasi kontrol fisik di sisi kita |
 
@@ -219,7 +219,7 @@ Kapasitas hasil: spike Munas 250–500 RPS tertampung dengan cache hangat pada u
 
 Pendorongnya **availability**, bukan throughput: 2× app node + load balancer, **managed PostgreSQL HA + 1 read replica** (leaderboard/laporan pindah ke replica), Redis node sendiri, observability penuh (APM + log terpusat), SLO 99,9%. Mulai tier ini managed DB dibayar karena failover otomatis + PITR yang dikelola vendor lebih murah daripada 1 SRE.
 
-### 5.5 Pembanding harga pasar (bukti bebas markup)
+### 5.5 Pembanding harga pasar (transparansi harga)
 
 Harga publik per Juli 2026 (⚠️ verifikasi ulang saat pengadaan — harga cloud berubah):
 
@@ -247,7 +247,7 @@ Kapasitas **tidak** dinaikkan karena jadwal — hanya saat ambang berikut terlam
 | Disk            | > 70%                                            | Expand volume                                      |
 | Error rate 5xx  | > 0,5% berkelanjutan                             | Insiden — runbook §9                             |
 
-Dua konsekuensi: anggaran tidak menggelembung mendahului kebutuhan, dan keputusan upgrade selalu punya bukti tertulis (metrik) — bukan perasaan.
+Dua konsekuensi: belanja tidak pernah mendahului kebutuhan, dan setiap keputusan upgrade selalu punya bukti tertulis (metrik) — bukan perkiraan subjektif.
 
 ---
 
@@ -381,5 +381,5 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 | ----- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | v2.2  | 2026-07-07 | **Inventaris langganan software LENGKAP** (§8.1): Mapbox, Resend/SES, Sentry, Cloudflare, uptime, registry, domain, + item Rp 0 (Jenkins/GitHub/OAuth/OSS) dengan basis perhitungan per tier; opsi server fisik ditolak eksplisit (§5.2) + catatan backup R2 (§4.1) + pernyataan cakupan; anggaran 12 bulan direvisi ≈ Rp 40–45 jt; asumsi A9–A10 + sumber harga software ditambahkan |
 | v2.1  | 2026-07-07 | Scope diperluas: proposal kini mengajukan**staging dedicated** (environment review internal/UAT) + **production** sebagai dua server baru; anggaran 12 bulan ≈ Rp 38–42 jt; justifikasi staging, RTO/RPO staging, dan checklist provisioning staging ditambahkan; dokumen dipindah ke `umrohlovers/proposal/` |
-| v2.0  | 2026-07-07 | Proposal-grade: ringkasan eksekutif dengan keputusan + anggaran 12 bulan, metodologi auditable, bukti anti-kekurangan (utilisasi proyeksi + RTO/RPO/SLO) & anti-markup (tabel opsi ditolak + pembanding harga 4 provider), trigger upgrade berbasis metrik, analisis what-if, appendix asumsi & sensitivitas                  |
+| v2.0  | 2026-07-07 | Proposal-grade: ringkasan eksekutif dengan keputusan + anggaran 12 bulan, metodologi auditable, jaminan kecukupan kapasitas (utilisasi proyeksi + RTO/RPO/SLO) & jaminan efisiensi biaya (tabel opsi yang dipertimbangkan + pembanding harga 4 provider), trigger upgrade berbasis metrik, analisis what-if, appendix asumsi & sensitivitas                  |
 | v1.0  | 2026-07-07 | Dokumen awal — baseline terukur, model beban, sizing 3 tier, checklist go-live                                                                                                                                                                                                                                               |
