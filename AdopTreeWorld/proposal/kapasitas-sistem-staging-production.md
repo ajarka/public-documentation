@@ -1,6 +1,7 @@
 # Proposal Kebutuhan & Kapasitas Infrastruktur Sistem AdopTree (Staging + Production)
 
 > 📄 **Untuk pengambilan keputusan cepat, baca versi 1 halaman**: [ringkasan-pengajuan.md](ringkasan-pengajuan.md) — dokumen ini adalah rujukan teknis lengkapnya.
+> 📊 **Model perhitungan interaktif (Excel, formula hidup)**: [perhitungan-kapasitas-anggaran.xlsx](perhitungan-kapasitas-anggaran.xlsx) — ubah asumsi di sheet Asumsi, seluruh angka menghitung ulang.
 >
 > **Status**: Proposal untuk diajukan & disetujui stakeholder
 > **Tanggal**: 11 Juli 2026 · **Disusun oleh**: Aditira Jamhuri (CTO)
@@ -18,7 +19,7 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end (web + Andr
 1. **Setujui provisioning 2 (dua) VPS dedicated** pada **Agustus 2026** — sebelum first paying merchant (target Q3 2026) dan public launch H2 2026:
    - **Staging** — 2 vCPU / 4 GB: environment review internal + UAT, auto-deploy dari branch `development` via CI/CD
    - **Production** — 4 vCPU / 8 GB, data center Indonesia, terisolasi penuh dari environment uji
-2. **Setujui anggaran infrastruktur 12 bulan pertama ≈ Rp 35–40 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, email, AI, monitoring, CDN, storage, registry, domain — sudah termasuk buffer 10%) — inventaris lengkap di §8.1.
+2. **Setujui plafon anggaran infrastruktur 12 bulan pertama Rp 50 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, email, AI, monitoring, CDN, storage, registry, domain — sudah termasuk buffer 10%). Realisasi proyeksi **≈ Rp 40 juta** (upgrade tier mengikuti trigger §6, perkiraan awal 2027); plafon menampung **skenario upgrade dini** — bila lonjakan pasca-public-launch memicu trigger sejak Nov 2026, kebutuhan ≈ Rp 47,5 juta — sehingga momentum launch tidak pernah menunggu persetujuan ulang. Inventaris lengkap di §8.1, rincian di §8.3.
 3. **Setujui prinsip upgrade berbasis trigger metrik** (§6): kapasitas dinaikkan saat ambang terukur terlampaui, bukan karena jadwal — ini yang menjaga anggaran tetap terkendali sekaligus kapasitas tidak pernah kekurangan.
 
 ### Anggaran yang diajukan (semua layanan, per bulan)
@@ -26,10 +27,10 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end (web + Andr
 | Tahap | Periode | Infrastruktur | Biaya/bulan (all-in) |
 | --- | --- | --- | --- |
 | **Launch** (≤ 2.000 akun) | Agu–Des 2026 | Staging 2 vCPU/4 GB + Production 4 vCPU/8 GB + seluruh software langganan | **Rp 0,6–1,7 jt** (realistis ~Rp 1 jt) |
-| **Growth Y1** (hingga 25 rb akun) | 2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + seluruh software langganan | **Rp 2,8–7,5 jt** (realistis ~Rp 3,8 jt) |
-| **Scale Y2** (hingga 120 rb akun) | 2028 | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica + node ML + software | **Rp 10–21 jt** (realistis ~Rp 14 jt) |
+| **Growth Y1** (hingga 25 rb akun) | 2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + seluruh software langganan | **Rp 2,8–7,5 jt** (realistis ~Rp 4,5 jt) |
+| **Scale Y2** (hingga 120 rb akun) | 2028 | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica + node ML + software | **Rp 10–21 jt** (realistis ~Rp 17 jt) |
 
-**Uji kewajaran anggaran**: PRD §14.4 mengalokasikan biaya infrastruktur **$3.600 (≈ Rp 57 jt) untuk 2026** dan **$12.000 (≈ Rp 190 jt) untuk 2027**. Pengajuan 12 bulan pertama (≈ Rp 35–40 jt) memakai **< 70% alokasi 2026** dan **≈ 21% alokasi 2027** — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung; sisa alokasi tetap tersedia tanpa perlu diajukan sekarang.
+**Uji kewajaran anggaran**: PRD §14.4 mengalokasikan biaya infrastruktur **$3.600 (≈ Rp 57 jt) untuk 2026** dan **$12.000 (≈ Rp 190 jt) untuk 2027**. Plafon 12 bulan pertama (Rp 50 jt) ≈ **26% alokasi 2027**; realisasi proyeksi (≈ Rp 40 jt) ≈ **21%** — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung plus ruang skenario upgrade dini; sisa alokasi tetap tersedia tanpa perlu diajukan sekarang.
 
 **Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, peta, email, AI, monitoring). Sengaja **di luar cakupan**: (a) **biaya payment gateway Midtrans** (per transaksi ±2,9% — sudah menjadi pos tersendiri di PRD §14.4, mengikuti volume penjualan, bukan langganan); (b) **biaya program Tukar Poin** (pembelian pulsa/kuota untuk redemption kontributor — biaya program insentif, bukan infrastruktur); (c) **Solana RPC berbayar** untuk pipeline NFT mint — diajukan terpisah bersama sprint mint Q3 2026 (saat ini memakai RPC publik, Rp 0); (d) SDM ops/engineering — pos tersendiri di PRD §14.4. Server fisik (on-premise/colocation) dievaluasi dan **tidak diperlukan** — lihat §5.2 dan catatan backup §4.1.
 
@@ -53,14 +54,14 @@ Seluruh kebutuhan yang diajukan, dalam satu tabel. Kolom fase menunjukkan biaya 
 | **Software** | 10 | Domain `adoptreeworld.com` | ~Rp 300 rb/tahun | ~Rp 25 rb | ~Rp 25 rb | ~Rp 25 rb | §8.1 |
 | **Software** | 11 | Jenkins (CI/CD) · GitHub · Google OAuth · Instagram Graph API · Meilisearch · Redis · PostgreSQL+PostGIS · ML Tree Service (self-host) · citra Sentinel-2 (Copernicus) · seluruh library open-source | Self-host / free plan | Rp 0 | Rp 0 | Rp 0 | §8.1 |
 | **TOTAL** | | **Per bulan (rentang penuh)** | | **Rp 0,6–1,7 jt** | **Rp 2,8–7,5 jt** | **Rp 10–21 jt** | §8.2 |
-| **TOTAL** | | **Per bulan (titik tengah realistis)** | | **~Rp 1,0 jt** | **~Rp 3,8 jt** | **~Rp 14 jt** | §8.2 |
+| **TOTAL** | | **Per bulan (titik tengah realistis)** | | **~Rp 1,0 jt** | **~Rp 4,5 jt** | **~Rp 17 jt** | §8.2 |
 
 | Ringkasan akhir | Nilai |
 | --- | --- |
 | Biaya one-time (setup, hardening, uji restore, uji beban) | **Rp 0** — jam kerja internal, tanpa lisensi |
-| **Anggaran 12 bulan pertama** (Agu 2026 – Jul 2027, termasuk buffer 10%) | **≈ Rp 35–40 juta** |
-| Proyeksi tahun 2028 (skala penuh) | ≈ Rp 120–250 jt/tahun (realistis ~Rp 170 jt) |
-| Perbandingan terhadap alokasi budget PRD §14.4 | < 70% alokasi 2026 ($3.600); ≈ 21% alokasi 2027 ($12.000); < 45% alokasi 2028 ($36.000) |
+| **Plafon 12 bulan pertama** (Agu 2026 – Jul 2027, termasuk buffer 10%) | **Rp 50 juta** — realisasi proyeksi ≈ Rp 40 jt; skenario upgrade dini ≈ Rp 47,5 jt (§8.3) |
+| Proyeksi tahun 2028 (skala penuh) | ≈ Rp 120–250 jt/tahun (realistis ~Rp 200 jt) |
+| Perbandingan terhadap alokasi budget PRD §14.4 | Plafon ≈ 26% alokasi 2027 ($12.000); realisasi proyeksi ≈ 21%; proyeksi 2028 < 40% alokasi 2028 ($36.000) |
 
 ---
 
@@ -345,6 +346,7 @@ Dua konsekuensi: belanja tidak pernah mendahului kebutuhan, dan setiap keputusan
 | Pertumbuhan akun 2× lebih cepat | Storage & DB naik | R2 & disk punya margin ≥ 3×; trigger §6 menaikkan tier lebih awal — anggaran naik mengikuti *volume adopsi yang juga naik* |
 | **Volume konten media 5× proyeksi** (adopsi video sangat agresif) | Storage Y2 ~7,5 TB | Biaya R2 ≈ Rp 1,8 jt/bln — tetap < 15% anggaran bulanan Y2 dan tertampung rentang §8.2; egress tetap Rp 0 berapa pun penayangan; bila butuh adaptive streaming → jalur Cloudflare Stream diajukan sebagai revisi anggaran (§4.1) |
 | Biaya AI Tira melampaui perkiraan | Biaya variabel naik | **Cap harian fail-closed sudah built-in** (bila cache budget mati, permintaan mahal ditolak — bukan berjalan tanpa batas); cap dan model dapat disetel admin tanpa deploy; multi-provider = pindah ke model termurah yang memadai |
+| Trigger Tier 2 terpicu lebih awal (lonjakan pasca-public-launch, Nov 2026) | Biaya 12 bulan naik ke ≈ Rp 47,5 jt | **Sudah tercakup plafon Rp 50 jt** — upgrade berjalan tanpa proses persetujuan ulang di tengah momentum launch; tetap dilaporkan ke stakeholder dengan bukti metrik |
 | Launch mundur | Biaya idle | Total staging + production launch hanya ~Rp 1 jt/bln; provisioning bisa ditunda (lead time 1–2 hari kerja) |
 
 ### 7.2 Bagaimana kalau server mati? (RTO/RPO — komitmen pemulihan)
@@ -400,20 +402,22 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 | **VPS production** | Rp 400–800 rb | Rp 1,3–2,6 jt | Rp 5–10 jt |
 | **Subtotal software** (§8.1) | Rp 0,1–0,8 jt | Rp 1,3–4,7 jt | Rp 4,7–11 jt |
 | **Total/bulan (rentang penuh)** | **Rp 0,6–1,7 jt** | **Rp 2,8–7,5 jt** | **Rp 10–21 jt** |
-| **Titik tengah realistis** | **~Rp 1,0 jt** | **~Rp 3,8 jt** | **~Rp 14 jt** |
+| **Titik tengah realistis** | **~Rp 1,0 jt** | **~Rp 4,5 jt** | **~Rp 17 jt** |
 
 ### 8.3 Proyeksi 12 bulan (Agustus 2026 – Juli 2027)
 
 | Pos | Perhitungan | Jumlah |
 | --- | --- | --- |
 | Staging dedicated, 12 bulan | 12 × ~Rp 250 rb | Rp 3,0 jt |
-| Production launch + software, 5 bulan (Agu–Des 2026) | 5 × ~Rp 800 rb (titik tengah §8.2 dikurangi bulan ramp-up) | Rp 4,0 jt |
-| Production growth Y1 + software, 7 bulan (Jan–Jul 2027) | 7 × ~Rp 3,8 jt (titik tengah §8.2) | Rp 26,6 jt |
+| Production launch + software, 5 bulan (Agu–Des 2026) | 5 × ~Rp 720 rb (Prod Tier 1 + software Launch) | Rp 3,6 jt |
+| Production growth Y1 + software, 7 bulan (Jan–Jul 2027) | 7 × ~Rp 4,2 jt (Prod Tier 2 + software Y1) | Rp 29,6 jt |
 | One-time: hardening, drill restore, k6 gate go-live | jam kerja internal + Rp 0 lisensi | Rp 0 |
-| Buffer 10% (fluktuasi kurs/harga/volume) | | Rp 3,4 jt |
-| **Total 12 bulan pertama (server + seluruh software langganan)** | | **≈ Rp 35–40 jt** |
+| Buffer 10% (fluktuasi kurs/harga/volume) | | Rp 3,6 jt |
+| **Total proyeksi realisasi (base — upgrade mengikuti trigger, perkiraan Jan 2027)** | | **≈ Rp 39,8 jt** |
+| **Skenario upgrade dini** — trigger terpicu Nov 2026 seiring lonjakan pasca-public-launch (3 bln launch + 9 bln growth) | 12×0,25 + 3×0,72 + 9×4,2 + buffer 10% | **≈ Rp 47,5 jt** |
+| **PLAFON DIAJUKAN** (menampung base maupun skenario dini) | | **Rp 50 jt** |
 
-> **Konteks**: satu paket CSR korporasi rata-rata di PRD §7.2 bernilai $10.000 (≈ Rp 160 jt) — infrastruktur setahun penuh ≈ **seperempat dari satu deal CSR**, sudah termasuk environment review internal (staging) dan seluruh langganan software. Dibanding alokasi PRD §14.4 (infra 2026: $3.600 ≈ Rp 57 jt; 2027: $12.000 ≈ Rp 190 jt), proposal ini memakai **< 70% ruang 2026 dan ≈ 21% ruang 2027** — sisanya tetap tersedia untuk sprint NFT (RPC berbayar), lonjakan tak terduga, dan environment tambahan, **tanpa perlu diajukan sekarang**.
+> **Konteks**: satu paket CSR korporasi rata-rata di PRD §7.2 bernilai $10.000 (≈ Rp 160 jt) — plafon infrastruktur setahun penuh ≈ **sepertiga dari satu deal CSR**, sudah termasuk environment review internal (staging) dan seluruh langganan software. Dibanding alokasi PRD §14.4 (infra 2026: $3.600 ≈ Rp 57 jt; 2027: $12.000 ≈ Rp 190 jt), plafon ini ≈ **26% ruang 2027** (realisasi proyeksi ≈ 21%) — sisanya tetap tersedia untuk sprint NFT (RPC berbayar), lonjakan tak terduga, dan environment tambahan, **tanpa perlu diajukan sekarang**. Prinsip pengendalian tetap berlaku: realisasi mengikuti trigger §6, dan bila mendekati plafon, pengeluaran berikutnya kembali dimintakan persetujuan.
 
 ---
 
@@ -480,5 +484,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 
 | Versi | Tanggal | Perubahan |
 | --- | --- | --- |
+| v1.3 | 2026-07-11 | **Plafon direvisi Rp 40 jt → Rp 50 jt berbasis skenario** (menjawab telaah stakeholder): biaya bulanan fase growth AdopTree lebih tinggi dari platform sejenis (~Rp 4,5 jt vs ~Rp 3,6 jt — Tira AI + konten video + stack geospasial/ML), dan plafon lama hanya menampung asumsi upgrade Jan 2027; skenario upgrade dini Nov 2026 (lonjakan pasca-public-launch) ≈ Rp 47,5 jt kini tercakup plafon sehingga momentum launch tidak menunggu persetujuan ulang. Titik tengah realistis diselaraskan dengan model Excel (Y1 ~Rp 4,5 jt; Y2 ~Rp 17 jt); realisasi proyeksi base ≈ Rp 39,8 jt tidak berubah |
+| v1.2 | 2026-07-11 | Model perhitungan Excel ([perhitungan-kapasitas-anggaran.xlsx](perhitungan-kapasitas-anggaran.xlsx)) ditambahkan: 8 sheet (Ringkasan · Asumsi · Beban · StorageR2 · Software · Server · Anggaran12Bln · Pembanding) dengan formula hidup — seluruh asumsi A1–A12 + anchor volume menjadi sel input; total 12 bulan terhitung ≈ Rp 39,8 jt ≤ plafon Rp 40 jt |
 | v1.1 | 2026-07-11 | **Anggaran konten media dieksplisitkan** (§4.1): baris video + photo sphere 360° dengan basis volume per item, skenario media 5× (tetap < 15% anggaran Y2 — egress R2 gratis), jalur eskalasi Cloudflare Stream via revisi anggaran; asumsi A12 baru. **§5.0b Pemisahan peran server** ditambahkan: peta Builder · Aplikasi · Database · Backup per tier + dua keputusan eksplisit (builder tidak pernah menumpang production; backup = object storage off-site, bukan VM) — menegaskan pemisahan multi-VM di fase growth sudah tercantum dalam anggaran per fase |
 | v1.0 | 2026-07-11 | Dokumen awal — dua lapisan ([ringkasan-pengajuan.md](ringkasan-pengajuan.md) 1 halaman + rujukan teknis ini): baseline terukur dari aplikasi berjalan (docker stats/psql/df), model beban dari target PRD §14.2, inventaris software lengkap (termasuk Tira AI usage-based dengan cap fail-closed, Mapbox dengan formula + mitigasi, item Rp 0), jaminan kecukupan (utilisasi proyeksi + RTO/RPO/SLO) & efisiensi biaya (tabel opsi ditolak + pembanding 4 provider), trigger upgrade berbasis metrik, analisis skenario, anggaran 12 bulan ≈ Rp 35–40 jt dengan uji kewajaran terhadap PRD §14.4, checklist provisioning, appendix asumsi A1–A11 + sumber harga |

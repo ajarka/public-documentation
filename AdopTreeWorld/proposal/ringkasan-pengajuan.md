@@ -2,6 +2,7 @@
 
 > **Tanggal**: 11 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (CTO)
 > **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md)
+> **Model perhitungan interaktif** (Excel, formula hidup): [perhitungan-kapasitas-anggaran.xlsx](perhitungan-kapasitas-anggaran.xlsx)
 
 ---
 
@@ -19,13 +20,13 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 | Fase | Periode | Biaya per bulan |
 | --- | --- | --- |
 | **Launch** (hingga 2.000 akun) | Agustus – Desember 2026 | **Rp 1 juta** |
-| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 3,8 juta** |
+| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 4,5 juta** |
 
 <br>
 
-> ## Persetujuan yang diminta: **plafon Rp 40 juta** untuk 12 bulan pertama
+> ## Persetujuan yang diminta: **plafon Rp 50 juta** untuk 12 bulan pertama
 >
-> Realisasi diproyeksikan **≈ Rp 35 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software (peta GIS, email, AI Tira, monitoring, CDN, domain), dan buffer 10%. Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
+> Realisasi diproyeksikan **≈ Rp 40 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software (peta GIS, email, AI Tira, monitoring, CDN, domain), buffer 10%, **dan ruang skenario upgrade dini** — bila lonjakan pasca-public-launch memicu kenaikan kapasitas lebih awal (kebutuhan ≈ Rp 47,5 juta), upgrade berjalan tanpa menunggu persetujuan ulang di tengah momentum. Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
 
 ---
 
@@ -34,7 +35,7 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 | | |
 | --- | --- |
 | **≈ ¼ dari satu deal CSR** | Satu tahun infrastruktur penuh ≈ seperempat nilai satu paket CSR korporasi rata-rata (PRD §7.2: $10.000 ≈ Rp 160 juta) |
-| **≈ 21% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — pengajuan ini memakai sekitar 21%-nya |
+| **≈ 26% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — plafon ini ≈ 26%-nya (realisasi proyeksi ≈ 21%) |
 | **Harga pasar, tanpa margin** | Spesifikasi dibandingkan dengan harga publik 4 provider (Indonesia & regional) — tabel pembanding ada di dokumen rujukan |
 | **Kenaikan hanya berdasarkan bukti** | Kapasitas dinaikkan hanya saat metrik pemakaian melewati ambang tertulis — bukan berdasarkan jadwal, sehingga belanja tidak pernah mendahului kebutuhan |
 | **Dihitung dari data terukur** | Kebutuhan server dihitung dari footprint aplikasi yang diukur langsung (backend Rust hanya 46 MB RAM), bukan perkiraan; biaya AI dibatasi cap harian; storage konten (foto/video) dianggarkan dengan formula volume — bahkan skenario media 5× tetap < 15% anggaran bulanan |
