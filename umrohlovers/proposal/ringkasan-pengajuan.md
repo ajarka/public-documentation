@@ -1,7 +1,7 @@
 # Ringkasan Pengajuan — Infrastruktur umrohlovers
 
 > **Tanggal**: 7 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (CTO)
-> **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md)
+> **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md) · **Model perhitungan Excel** (formula interaktif): [perhitungan-kapasitas-anggaran.xlsx](perhitungan-kapasitas-anggaran.xlsx)
 
 ---
 

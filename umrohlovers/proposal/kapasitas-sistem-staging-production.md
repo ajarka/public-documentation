@@ -1,6 +1,7 @@
 # Proposal Kebutuhan & Kapasitas Infrastruktur Sistem (Staging + Production)
 
 > 📄 **Untuk pengambilan keputusan cepat, baca versi 1 halaman**: [ringkasan-pengajuan.md](ringkasan-pengajuan.md) — dokumen ini adalah rujukan teknis lengkapnya.
+> 📊 **Model perhitungan interaktif (Excel, lengkap dengan formula)**: [perhitungan-kapasitas-anggaran.xlsx](perhitungan-kapasitas-anggaran.xlsx) — ubah sel asumsi (kuning), seluruh anggaran menghitung ulang.
 >
 > **Status**: Proposal untuk diajukan & disetujui stakeholder
 > **Tujuan dokumen**: menjawab *"berapa sebenarnya kebutuhan sistem umrohlovers untuk staging & production, dan berapa biayanya"* — dengan perhitungan yang dapat diaudit baris per baris. Setiap angka punya sumber: **terukur dari aplikasi**, **hasil uji beban**, atau **asumsi yang dinyatakan eksplisit** (dan bisa diganti tanpa merusak formula).
