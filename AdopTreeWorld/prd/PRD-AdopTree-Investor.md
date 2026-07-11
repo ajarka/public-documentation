@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.7 · July 2026
+### Investor Edition · v2.8 · July 2026
 
-> **Status** — Staging platform live · Android Field App live (Build 30) · Public Launch target H2 2026
+> **Status** — Staging platform live · Android Field App live (Build 32) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.8 highlights** — **Field operations go truly zero-signal, and the trust stack hardens for corporate money.** (1) **Offline Lands (Build 31)** — field teams now *download a land for offline*: tagging **new** trees, inspections, and inside/outside-boundary validation all work with zero connectivity, with per-land cache management (ready-status, size estimate, refresh/remove, 14-day auto-cleanup) and the on-device database now **encrypted with SQLCipher** (a lost phone leaks no GPS trails or inspection data). (2) **AR Tree-Marker wayfinding (Build 32)** — point the camera and per-tree AR markers float at each tree's real direction (code + distance, species-colored dots for neighbors, edge arrows when off-frame; tap a near marker to start the inspection) — a GPS+compass geospatial billboard that works offline, with QR remaining the identity gate at close range. (3) **Web Push notifications** — browsers now receive transaction and primary notifications (adoption confirmed, payment, certificates, partnership, support) even with the tab closed — standards-based Web Push (VAPID, RFC 8030/8291), no third-party SDK on the web, with a two-step opt-in prompt after login; the same dispatch hook auto-pushes to mobile FCM. (4) **Corporate ESG reporting made real** — the Corporate ESG Dashboard now generates a **real PDF report** (previously stubbed), carbon accounting fixed across both adoption paths, honest Scope-3 labeling, and a public MRV summary; report access is gated on a complete corporate legal profile (legal name + NPWP), with auto-provisioned corporate onboarding hardened against duplicates. (5) **Security hardening pass** — a 10-item defensive audit (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, SQL-error redaction, secret hygiene) closed before public launch, on top of v2.6's 2FA. (6) **Land-manager flow refined** — the KTP-verified Pengelola is now *optional at creation*: a land can be drafted first but **stays unpublished until its manager identity is complete** (draft-until-complete guard), and a land-owner accepting a partnership invite completes the KTP form as part of acceptance.
 >
 > **v2.7 highlights** — **Final product restructuring (founder decision, 5–6 Jul 2026) — shipped in code.** The customer-facing lineup is now **two categories × three products**: **Donasi** *(charitable giving to a land — free amount, no asset reservation)* · **AdopTree** *(exclusive reservation of a tree/coordinate, annual — B2C)* · **Adop Lahan** *(full stewardship of an entire land parcel with MRV/surveillance/ESG periodic reporting — CSR/B2B)*, mirrored on the Shariah side as **Wakaf · Wakaf Eksklusif · Wakaf Lahan**. This opens **three revenue streams per land steward** and radically **simplifies occupancy management** (a whole-land adoption does not lock individual trees — overlapping occupancy by design). Supporting engine shipped with it: scope-aware milestone escrow (donations/land run a single 100% settlement milestone under the same admin double-gate), **percentage platform fees for variable-amount products** (donation 5% · land 3% capped, admin-tunable), server-enforced **price-consent guard** (409 on any price drift between page-load and checkout), merchant **per-tier pricing finally consumed by checkout** with a single price source exposed to every surface, and proportional **partial-refund** handling. New §6.3 Product Structure; ADOP3's nine platform benefits added to §4. See also §7.1 (restructured Stream 1).
 >
@@ -113,11 +115,11 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 ### Current traction
 
 - Web platform fully operational at `staging.adoptreeworld.com`
-- **Android Field App live** — APK Build 30 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, watermarked anti-tamper camera, crowdsourced contributor tier system, live GPS session tracking, and 2FA-aware login
+- **Android Field App live** — APK Build 32 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, **downloadable offline lands (zero-signal tagging + inspection, SQLCipher-encrypted local DB)**, **AR tree-marker wayfinding**, watermarked anti-tamper camera, crowdsourced contributor tier system, live GPS session tracking, and 2FA-aware login
 - **Milestone Escrow live (v2.6)** — donor funds held in escrow and released to merchants only per field-verified + admin-approved milestone (40/30/30), on an append-only financial ledger — the anti-fraud thesis (§0 #3/#4/#7) is now enforced by the payment rail itself, not by policy documents
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
 - **Payment infrastructure**: Midtrans live for production (bank transfer, QRIS, e-wallet, credit card). Solana (SOL) payment UI built — backend wire-up scheduled Q3 2026 alongside on-chain NFT minting
-- 30+ product phases delivered between v2.0 and v2.6 (Apr → Jul 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual), **Milestone Escrow disbursement**, **Tira-First Support**, **2FA**, and **KTP-verified land managers**
+- 35+ product phases delivered between v2.0 and v2.8 (Apr → Jul 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual), **Milestone Escrow disbursement**, **Tira-First Support**, **2FA**, and **KTP-verified land managers**
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
@@ -464,9 +466,9 @@ flowchart TB
 | **Tira AI Assistant** | Multi-provider AI (OpenAI/Gemini/Claude, runtime-switchable) with function-calling against live data; bilingual to the platform locale (id/en/ar); abuse-protected (rate limits + budget). See §6.6 | ✅ Built |
 | **Instant Donation** *(updated v2.7)* | One-tap free-amount donation modal — Rupiah quick chips, a trust-weighted land recommendation algorithm, a logged-in "1-click" path, and a "Tira pick for me" auto-fill; no land selected → platform allocates a public land | ✅ Built |
 | **Multi-language** | English, Indonesian, Arabic (RTL) — UI + AI replies both follow the platform locale | ✅ Built |
-| **Notifications** | In-app, email, and Firebase Cloud Messaging push (Phase 2.9) with deeplink routing | ✅ Built |
+| **Notifications** | In-app, email, Firebase Cloud Messaging push (Phase 2.9) with deeplink routing, and **browser Web Push** *(new v2.8)* — standards-based VAPID push for transactions & primary events, opt-in prompt after login, works with the tab closed | ✅ Built |
 | **Realtime Chat** *(new)* | WebSocket-based 1:1 chat — voice notes, WhatsApp-style optimistic send, conversation actions (Phase 2.26) | ✅ Built |
-| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 30 latest) | ✅ Built |
+| **APK Download Center** *(new)* | `/download/releases` — versioned APK distribution with changelog (Build 32 latest) | ✅ Built |
 | **"Perjalanan Danamu" Fund Journey** *(new v2.6)* | Per-adoption escrow journey stepper in My Forest: Paid → Planted (✓40%) → Verified Alive (✓30%) → Thriving — % disbursed shown, milestone dates linked to field evidence. See §6.8 | ✅ Built |
 | **Support Center (Tira-first)** *(new v2.6)* | `/support` — ask Tira 24/7 first (answers from live data); unresolved → structured ticket with status tracking + direct chat with the support team. See §6.9 | ✅ Built |
 | **Two-Factor Authentication** *(new v2.6)* | TOTP (Google Authenticator) + one-time backup codes; encrypted secrets; challenge-based login on web & mobile. See §6.9 | ✅ Built |
@@ -510,7 +512,7 @@ flowchart TB
 | **Species Request Workflow** *(new)* | Request new species → admin approval, with AI "fill for me" data autofill | ✅ Built |
 | **Dark Mode Dashboard** *(new)* | Scoped dark mode for merchant/admin/land-owner dashboards (public stays light) | ✅ Built |
 | **Escrow & Pencairan** *(new v2.6)* | Cash-pipeline funnel (Held → Awaiting Admin → Ready → Paid) + actionable "what unlocks your money" insights + per-adoption milestone table + payout history with bank references. Passive by design — no withdrawal requests. See §6.8 | ✅ Built |
-| **Pengelola Lahan (KTP-verified Land Manager)** *(new v2.6)* | Every new land registers its accountable field PIC — full name, 16-digit national ID + ID-card photo, contact — required at creation, editable on a dedicated tab; Tira co-pilot fills it conversationally (ID number privacy-masked in chat) | ✅ Built |
+| **Pengelola Lahan (KTP-verified Land Manager)** *(updated v2.8)* | Every land has an accountable, identity-verified field PIC — full name, 16-digit national ID + ID-card photo, contact; *optional at creation* but the land **stays unpublished (draft) until the manager identity is complete**; a land-owner accepting a partnership invite completes the KTP form as part of acceptance; Tira co-pilot fills it conversationally (ID number privacy-masked in chat) | ✅ Built |
 | **Full-coverage Notifications** *(new v2.6)* | Every inspection/observation/planting submission, new sale, milestone event, and verification outcome lands in the merchant's inbox — no more polling the dashboard to discover work | ✅ Built |
 
 <table>
@@ -546,6 +548,8 @@ flowchart TB
 | **Support Inbox** *(new v2.6)* | Ticket queue with status/priority filters, AI triage summary + full Tira transcript per ticket, claim → spawns direct user↔admin chat, mandatory resolution notes. See §6.9 | ✅ Built |
 | **2FA Recovery** *(new v2.6)* | Admin reset path for users locked out of two-factor (lost device + exhausted backup codes) | ✅ Built |
 | **Super Admin Role** *(new v2.6)* | Elevated capabilities behind an append-only audit log: user↔user & Tira chat monitoring (read-only) and guarded hard-delete (money-linked entities always refused) | ✅ Built |
+| **Corporate ESG Dashboard + PDF Report** *(new v2.8)* | Corporate adopters get a dedicated ESG dashboard (carbon, MRV, surveillance summary) that exports a real, auditable PDF report; access gated on complete corporate legal profile (legal name + NPWP); dual onboarding paths (manual apply→approve & auto-provision on Adop Lahan purchase) hardened against duplicates | ✅ Built |
+| **Web Push Delivery Rail** *(new v2.8)* | Standards-based Web Push (VAPID) for browsers + FCM for mobile behind one auto-dispatch hook — every primary notification (transactions, adoption, certificates, partnership, support) reaches subscribed devices even with the app closed | ✅ Built |
 
 <table>
   <tr>
@@ -625,7 +629,7 @@ masih terbuka"*).
 
 > The web platform handles **online** adoption & monitoring. The mobile app handles **on-the-ground fulfillment** — without it, "GPS-verified tree ownership" is a promise; with it, it's evidence.
 
-**Status:** Live · APK Build 30 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
+**Status:** Live · APK Build 32 distributed via `/download/releases` · Phase 1 (MVP) feature-complete · Phase 2 (Public Contributor) in production · Phase 1 delivered **5 weeks ahead of original 8-week schedule**.
 
 <table>
   <tr>
@@ -664,6 +668,8 @@ masih terbuka"*).
 | **Realtime Chat** | WebSocket-backed chat with merchants — voice notes, read receipts, conversation actions | 2.26 |
 | **In-app Notifications** | Bell icon, deeplink routing (web routes auto-open browser) | Build 8 + |
 | **Tree Density & Distance Tools** | Custom radius radar (1–200 km), distance measurement, density preview | 2.21 |
+| **Offline Lands** *(new v2.8)* | Download a land for offline: new-tree tagging, inspections, and boundary validation fully functional with zero signal; per-land cache management + 14-day auto-cleanup; local DB SQLCipher-encrypted | Build 31 |
+| **AR Tree-Marker Wayfinding** *(new v2.8)* | Camera overlay with per-tree markers at each tree's real GPS direction (code + distance, species-colored neighbor dots, edge arrows) — marker↔arrow toggle, tap-to-inspect at close range; works offline | Build 32 |
 
 <table>
   <tr>
@@ -676,7 +682,7 @@ masih terbuka"*).
 
 **Stack:**
 - **Flutter 3.24** + Dart · **Riverpod** state management
-- **Drift SQLite** for offline-first storage + `mobile_sync_queue` table for idempotent batch sync
+- **SQLite + SQLCipher (encrypted at rest)** for offline-first storage — downloadable per-land offline packs + `mobile_sync_queue` table for idempotent batch sync
 - **Dio** HTTP client with JWT auto-refresh interceptor
 - **Geolocator** + `flutter_compass` for GPS + heading dual-gate
 - **Camera + `image` (pure-Dart)** to burn watermark (timestamp + coord + mini-map from Mapbox Static API) directly into JPEG pixels
@@ -686,7 +692,7 @@ masih terbuka"*).
 
 **Distribution:** Android APK via Cloudflare R2 (versioned releases + `latest` alias for auto-update). iOS distribution via TestFlight.
 
-**Build cadence:** 30 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 30 (July 2026 — live GPS tracking pipeline fix + Two-Factor Authentication login).
+**Build cadence:** 32 builds released since Phase 1 kickoff (3 May 2026). Latest = Build 32 (July 2026 — AR tree-marker wayfinding); Build 31 (offline lands + SQLCipher database encryption); Build 30 (live GPS tracking pipeline fix + Two-Factor Authentication login).
 
 ---
 
@@ -1258,7 +1264,7 @@ gantt
 | **Staging Live** | ✅ April 2026 | Full platform accessible at staging domain |
 | **End-to-end Flow Validated** | ✅ April 2026 | Demo merchant ("Akademi Buah Nusantara") exercises every flow — land → tree → campaign → checkout → earnings → withdrawal |
 | **First Paying Merchant** | Target Q3 2026 | Move from demo data to first real merchant transacting with real donors — primary objective of this raise |
-| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational (now Build 30) |
+| **Mobile Field App MVP** | ✅ May 2026 (5wk ahead) | APK Build 14 live, GPS-tagging + offline sync operational (now Build 32) |
 | **Public Contributor System** | ✅ May 2026 | Tier 1 + Tier 2 auto-promotion live, leaderboard operational |
 | **Review Queue (Quality Gate)** | ✅ May 2026 | Admin/merchant approval workflow for all field submissions |
 | **QR Tree Identity Verification** | ✅ May 2026 (Phase 2.23) | Anti-misidentification QR system live |
@@ -1270,6 +1276,11 @@ gantt
 | **Two-Factor Authentication** | ✅ July 2026 | TOTP + backup codes, encrypted secrets, web + mobile login challenge, admin recovery |
 | **KTP-Verified Land Manager** | ✅ July 2026 | Every new land requires an identity-verified field PIC (Pengelola Lahan) — supply-side trust layer |
 | **Live Contributor GPS Tracking** | ✅ July 2026 | Field App Build 30 ping pipeline fix — real telemetry on the flat activity map with history replay |
+| **Offline Lands + Encrypted Mobile DB** | ✅ July 2026 | Build 31 — zero-signal tagging/inspection on downloaded lands; SQLCipher encryption at rest |
+| **AR Tree-Marker Wayfinding** | ✅ July 2026 | Build 32 — per-tree AR markers (GPS+compass billboard), offline-capable |
+| **Web Push Notifications (Browser)** | ✅ July 2026 | Standards-based VAPID push for transactions & primary events; auto-push hook covers web + mobile |
+| **Corporate ESG Report (Real PDF)** | ✅ July 2026 | ESG dashboard generates auditable PDF; carbon accounting unified; public MRV summary; access gated on complete legal profile |
+| **Pre-launch Security Hardening** | ✅ July 2026 | 10-item defensive audit closed (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, error redaction) |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
 | **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
@@ -1425,7 +1436,7 @@ Beyond capital, the ideal investor brings:
 
 ### 16.5 Why Now?
 
-1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, the mobile Field App is shipping (Build 30), and the codebase has shipped 30+ phases — including the **Tira AI Co-Pilot** and AI tree-count estimation — in the months before this raise, all on a Jenkins push-to-deploy pipeline
+1. **Platform is built and live** — we're not raising to build; we're raising to grow. Staging is live at `staging.adoptreeworld.com`, the mobile Field App is shipping (Build 32), and the codebase has shipped 30+ phases — including the **Tira AI Co-Pilot** and AI tree-count estimation — in the months before this raise, all on a Jenkins push-to-deploy pipeline
 2. **End-to-end flow is proven, not just promised** — a demonstration merchant ("Akademi Buah Nusantara") on staging exercises every step from land registration through donor adoption, payment processing, and merchant payout. The product is ready to onboard a real merchant the day Sales & BD funding is deployed; we are not pre-product or pre-flow, we are pre-revenue
 3. **IDX Carbon launched 2023** — Indonesia's regulated carbon market is forming; early platform players will capture the registry advantage
 4. **Indonesia's NDC commitments** (29% emission reduction by 2030) create immediate regulatory pressure on corporations to invest in verifiable green programs
@@ -1441,7 +1452,7 @@ Beyond capital, the ideal investor brings:
 | Layer | Technology |
 |---|---|
 | Web Frontend | Next.js 16 (App Router), TypeScript, Tailwind CSS v4, shadcn/ui, Zustand, sonner |
-| Mobile App | Flutter 3.24 (Dart), Riverpod, go_router, Drift SQLite (offline-first), Dio + JWT interceptor |
+| Mobile App | Flutter 3.24 (Dart), Riverpod, go_router, SQLite + **SQLCipher encryption** (offline-first, downloadable land packs), Dio + JWT interceptor |
 | Backend | Rust, Axum, SQLx (compile-time SQL verification) |
 | Database | PostgreSQL + PostGIS |
 | Cache & Sessions | Redis |
@@ -1453,7 +1464,7 @@ Beyond capital, the ideal investor brings:
 | Blockchain | Solana (SPL NFT) — minting Q3 2026 |
 | AI | Bot Tira — Gemini + function-calling against live platform data |
 | Auth | JWT (4h access + 30d refresh, mutex queue), Google OAuth, Solana SIWS, **2FA TOTP (AES-256-GCM-encrypted secrets + backup codes)** |
-| Push Notifications | Firebase Cloud Messaging (FCM v1) — web + mobile, deeplink routing |
+| Push Notifications | **Web Push (VAPID, RFC 8030/8291)** for browsers + Firebase Cloud Messaging (FCM v1) for mobile — one auto-dispatch hook, deeplink routing |
 | Realtime | WebSocket (chat, presence) |
 | Field Evidence | In-app camera with pixel-burned watermark (GPS + timestamp + mini-map), dual-gate inspection (proximity + heading) |
 | CI/CD | Jenkins + Docker (auto-build + deploy on push to `development` → staging) |
@@ -1540,8 +1551,14 @@ Concrete execution log between PRD revisions. Each phase ships through developme
 | — | **Pengelola Lahan** — KTP-verified land manager required at land creation; 6-step wizard (Legal merged into Identity); merchant-side rename | BE + Web |
 | — | **Notification overhaul** — enum sync fix (list-vs-badge bug), snake_case serialization, bridge-trigger repair + backfill, merchant review-queue/sale/verification hooks | BE + Web |
 | — | **Contributor tracking fixed end-to-end** — mobile session-id parse bug (0 pings ever → live telemetry), flat mercator map, merchant-scoped lands, 30-day history | BE + Web + Mobile |
+| — | **Offline Lands** — downloadable per-land offline packs (new-tree tagging + inspection + boundary validation, zero-signal) + SQLCipher database encryption | Mobile + BE (Build 31) |
+| — | **AR Tree-Marker Wayfinding** — per-tree camera markers via GPS+compass geospatial billboard, marker↔arrow toggle, tap-to-inspect | Mobile (Build 32) |
+| — | **Web Push (VAPID)** — browser push for transactions & primary notifications + unified auto-dispatch hook (web + mobile FCM) | BE + Web |
+| — | **Corporate ESG Reporting** — real PDF generator, unified carbon accounting, Scope-3 honest labeling, public MRV summary, legal-profile gate + dual-path onboarding hardening | BE + Web |
+| — | **Security hardening pass** — 10-item defensive audit (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, SQL-error redaction, secret hygiene) | BE + Web |
+| — | **Pengelola draft-until-complete** — manager optional at creation with unpublished-until-complete guard; KTP capture on partnership-invite acceptance | BE + Web |
 
-**APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → Build 29 (photo-based land verification, June 2026) → **Build 30 (latest — live GPS tracking pipeline fix + 2FA login, July 2026)**.
+**APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → Build 29 (photo-based land verification, June 2026) → Build 30 (live GPS tracking pipeline fix + 2FA login, July 2026) → Build 31 (offline lands + SQLCipher encryption, July 2026) → **Build 32 (latest — AR tree-marker wayfinding, July 2026)**.
 
 ---
 
