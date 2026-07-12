@@ -30,6 +30,19 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 
 ---
 
+## Arah 3 Tahun (keputusan founder: cloud dulu → on-premise saat skala terbukti)
+
+| Periode | Skema | Anggaran |
+| --- | --- | --- |
+| Tahun 1 | Cloud (proposal ini) | **Plafon Rp 50 jt** |
+| Tahun 2 | Cloud, naik mengikuti trigger metrik | ≈ Rp 155 jt |
+| Tahun 3 | Transisi **on-premise**: CapEx server ≈ Rp 230 jt + migrasi | ≈ Rp 450 jt |
+| Tahun 4+ | On-premise steady — **lebih hemat dari tetap cloud** | ≈ Rp 195 jt/th |
+
+Total 3 tahun ≈ **Rp 655 jt** — masih ≈ 79% dari alokasi infrastruktur PRD §14.4 (≈ Rp 825 jt). Kalkulasi lengkap (spesifikasi hardware, TCO, titik impas, kriteria eksekusi) di dokumen rujukan §10. **Yang dimintakan persetujuan hari ini tetap hanya plafon tahun pertama**; CapEx on-premise diputuskan pada gate evaluasi akhir tahun ke-2 dengan data pemakaian riil.
+
+---
+
 ## Mengapa Angka Ini Wajar
 
 | | |

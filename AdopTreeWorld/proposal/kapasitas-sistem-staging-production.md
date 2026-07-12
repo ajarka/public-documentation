@@ -32,7 +32,7 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end (web + Andr
 
 **Uji kewajaran anggaran**: PRD §14.4 mengalokasikan biaya infrastruktur **$3.600 (≈ Rp 57 jt) untuk 2026** dan **$12.000 (≈ Rp 190 jt) untuk 2027**. Plafon 12 bulan pertama (Rp 50 jt) ≈ **26% alokasi 2027**; realisasi proyeksi (≈ Rp 40 jt) ≈ **21%** — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung plus ruang skenario upgrade dini; sisa alokasi tetap tersedia tanpa perlu diajukan sekarang.
 
-**Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, peta, email, AI, monitoring). Sengaja **di luar cakupan**: (a) **biaya payment gateway Midtrans** (per transaksi ±2,9% — sudah menjadi pos tersendiri di PRD §14.4, mengikuti volume penjualan, bukan langganan); (b) **biaya program Tukar Poin** (pembelian pulsa/kuota untuk redemption kontributor — biaya program insentif, bukan infrastruktur); (c) **Solana RPC berbayar** untuk pipeline NFT mint — diajukan terpisah bersama sprint mint Q3 2026 (saat ini memakai RPC publik, Rp 0); (d) SDM ops/engineering — pos tersendiri di PRD §14.4. Server fisik (on-premise/colocation) dievaluasi dan **tidak diperlukan** — lihat §5.2 dan catatan backup §4.1.
+**Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, peta, email, AI, monitoring). Sengaja **di luar cakupan**: (a) **biaya payment gateway Midtrans** (per transaksi ±2,9% — sudah menjadi pos tersendiri di PRD §14.4, mengikuti volume penjualan, bukan langganan); (b) **biaya program Tukar Poin** (pembelian pulsa/kuota untuk redemption kontributor — biaya program insentif, bukan infrastruktur); (c) **Solana RPC berbayar** untuk pipeline NFT mint — diajukan terpisah bersama sprint mint Q3 2026 (saat ini memakai RPC publik, Rp 0); (d) SDM ops/engineering — pos tersendiri di PRD §14.4. Server fisik (on-premise/colocation) **tidak diperlukan pada fase launch** (§5.2) — namun menjadi **arah jangka panjang tahun ke-3** sesuai keputusan founder; kalkulasi lengkap CapEx/OpEx/TCO + plot dana 3 tahun ada di **§10**.
 
 ---
 
@@ -290,7 +290,7 @@ Server ini bahkan mampu menampung beban **awal Y1** — upgrade ke Tier 2 dipicu
 | **VPS 4 vCPU / 8 GB** | **Rp 400–800 rb** | ✅ **Diajukan** | Titik seimbang: isolasi penuh + headroom ≥ 5× + biaya tetap efisien |
 | VPS 8 vCPU / 16 GB (Rp 0,9–1,3 jt) | +Rp 500 rb | ❌ Belum | Utilisasi proyeksi < 8% = membayar kapasitas yang tidak terpakai; resize vertical < 1 jam tersedia kapan pun trigger terpicu |
 | Cloud managed penuh / Kubernetes | ≥ Rp 3–5 jt | ❌ Belum | Kompleksitas + biaya tidak sepadan untuk satu server; dipertimbangkan lagi di Tier 3 |
-| Server fisik (colocation / on-premise) — termasuk untuk backup | CapEx Rp 30–80 jt + rak DC Rp 1–2 jt/bln | ❌ Ditolak | CapEx besar di muka tidak cocok untuk fase pre-revenue; pengadaan hardware berminggu-minggu bertentangan dengan prinsip upgrade-by-trigger (resize VPS < 1 jam); maintenance hardware jadi tanggungan sendiri; UU PDP data residency sudah terpenuhi via DC Indonesia bersertifikat (ISO 27001) — dan kebutuhan backup sudah terjawab lebih baik oleh R2 off-site (§4.1, §7.2). Dana pembayaran diproses Midtrans (gateway berlisensi), bukan disimpan platform — tidak ada tuntutan regulasi kontrol fisik di sisi kita |
+| Server fisik (colocation / on-premise) — termasuk untuk backup | CapEx Rp 30–80 jt + rak DC Rp 1–2 jt/bln | ❌ Ditolak **untuk fase launch** (arah tahun ke-3: lihat §10) | CapEx besar di muka tidak cocok untuk fase pre-revenue; pengadaan hardware berminggu-minggu bertentangan dengan prinsip upgrade-by-trigger (resize VPS < 1 jam); maintenance hardware jadi tanggungan sendiri; UU PDP data residency sudah terpenuhi via DC Indonesia bersertifikat (ISO 27001) — dan kebutuhan backup sudah terjawab lebih baik oleh R2 off-site (§4.1, §7.2). Dana pembayaran diproses Midtrans (gateway berlisensi), bukan disimpan platform — tidak ada tuntutan regulasi kontrol fisik di sisi kita |
 
 ### 5.3 Production Tier 2 — Growth Y1
 
@@ -446,6 +446,67 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 
 ---
 
+## 10. Rencana Jangka Panjang — Transisi On-Premise Tahun ke-3 (Plot Dana 3 Tahun)
+
+> **Keputusan arah (founder, 12 Juli 2026)**: platform berjalan di cloud pada 2–3 tahun pertama, lalu bertransisi ke server milik sendiri (on-premise/colocation). Bagian ini menyajikan **seluruh kalkulasinya di awal** — CapEx, OpEx, TCO, titik impas, kriteria eksekusi, dan plot dana 3 tahun — sehingga proposal pendanaan dapat memuat angka lengkap sejak hari pertama. Catatan konsistensi: penolakan server fisik di §5.2 berlaku untuk **fase launch (pre-revenue)**; bagian ini adalah kelanjutannya untuk fase skala, saat volume mulai membenarkan CapEx.
+
+### 10.1 Kebutuhan hardware pada skala tahun ke-3 (setara Prod Tier 3)
+
+| Komponen | Spesifikasi | Estimasi CapEx |
+| --- | --- | --- |
+| 2× server aplikasi + database (HA) | AMD EPYC/Xeon 16–32 core, 128 GB RAM, 2× 2 TB NVMe (RAID 1), PSU redundan | Rp 120–180 jt |
+| 1× server utilitas (ML, staging internal, monitoring) | 8–16 core, 64 GB RAM, NVMe | Rp 30–50 jt |
+| Perangkat jaringan | Switch managed, firewall appliance, akses IPMI/KVM | Rp 15–30 jt |
+| Suku cadang (disk, PSU, RAM cadangan) | wajib untuk komitmen RTO tanpa vendor | Rp 15–25 jt |
+| **Total CapEx** | | **Rp 180–285 jt (titik tengah ≈ Rp 230 jt)** |
+
+Amortisasi 4 tahun → **≈ Rp 4,8 jt/bulan** ekuivalen. Sizing presisi dilakukan saat eksekusi memakai data pemakaian riil 2 tahun (bukan tebakan hari ini) — salah satu alasan transisi justru lebih aman dilakukan belakangan.
+
+### 10.2 Biaya operasional bulanan on-premise
+
+| Pos | Basis | Per bulan |
+| --- | --- | --- |
+| Colocation ~4U, DC Indonesia bersertifikat ISO 27001 (listrik redundan, pendingin, bandwidth) | server tidak dapat ditempatkan di kantor bila menjanjikan SLO 99,9% | Rp 3–6 jt |
+| SDM operasional / on-call 24/7 (±0,5 FTE) | pekerjaan yang di cloud dikerjakan vendor: failover, penggantian hardware, patch | Rp 5–8 jt |
+| Backup off-site (tetap R2) + monitoring | backup tidak boleh satu lokasi dengan servernya (§4.1) | ~Rp 0,5 jt |
+| **Total OpEx** | | **Rp 8,5–14,5 jt (titik tengah ≈ Rp 11,5 jt)** |
+
+### 10.3 Perbandingan TCO pada skala tahun ke-3
+
+| | Cloud (Tier 3) | On-premise (colocation) |
+| --- | --- | --- |
+| Biaya bulanan efektif | **~Rp 17 jt** (realistis; rentang 10–21) | **~Rp 16,3 jt** (OpEx 11,5 + amortisasi CapEx 4,8; rentang 13–20) |
+| CapEx di muka | Rp 0 | **Rp 180–285 jt** |
+| Failover & penggantian hardware | vendor, otomatis | tim sendiri + suku cadang |
+| Menaikkan kapasitas | < 1 jam (resize) | pengadaan berminggu-minggu (harus dibeli mendahului kebutuhan) |
+| Payback CapEx | — | **±1,5–2,5 tahun** setelah cutover (dari selisih vs biaya cloud yang terus tumbuh) |
+
+**Pembacaan yang jujur**: pada titik masuk tahun ke-3, keduanya **setara**. Keunggulan on-premise baru terwujud **tahun ke-4 dan seterusnya**, saat (a) beban baseline sudah besar dan stabil sehingga utilisasi hardware tinggi, dan (b) belanja cloud yang terus tumbuh melewati TCO on-premise yang relatif datar. Titik impas praktis: **belanja cloud sustained > Rp 20–25 jt/bulan**. Itulah sebabnya urutan *cloud dulu → on-premise saat skala terbukti* adalah urutan yang benar secara finansial — CapEx dikeluarkan saat pasti terpakai, dengan sizing dari data nyata.
+
+### 10.4 Kriteria eksekusi & rencana migrasi
+
+Transisi dieksekusi saat **seluruh** kriteria berikut terpenuhi (gate formal: evaluasi Q3–Q4 2028, akhir tahun ke-2 operasi):
+
+1. Belanja cloud sustained > Rp 20 jt/bulan selama ≥ 2 kuartal berturut-turut, dengan beban baseline stabil (bukan lonjakan musiman);
+2. Tim memiliki kapasitas ops (minimal 0,5 FTE khusus) — SDM-nya dianggarkan di pos tim PRD §14.4;
+3. Proyeksi payback CapEx ≤ 2,5 tahun berdasarkan data pemakaian riil.
+
+Rencana migrasi (seluruh aplikasi sudah containerized — Docker — sehingga portabel tanpa penulisan ulang): pengadaan + burn-in hardware (4–6 minggu) → replikasi data & **parallel run cloud + on-premise 2–3 bulan** (biaya dobel sementara ±Rp 30–50 jt, sudah di-plot §10.5) → cutover DNS bertahap → cloud diturunkan ke DR (disaster recovery) minimum atau dimatikan. Backup tetap di R2 (off-site) — tidak ikut pindah, sesuai prinsip §4.1.
+
+### 10.5 Plot Dana 3 Tahun (untuk proposal pendanaan)
+
+| Periode | Skema | Anggaran (realistis) | Rentang |
+| --- | --- | --- | --- |
+| **Tahun 1** (Agu 2026 – Jul 2027) | Cloud — plafon proposal ini | **Rp 50 jt** (plafon; realisasi ≈ Rp 40 jt) | §8.3 |
+| **Tahun 2** (Agu 2027 – Jul 2028) | Cloud — Growth → Scale mengikuti trigger | **≈ Rp 155 jt** | Rp 120–190 jt |
+| **Tahun 3** (Agu 2028 – Jul 2029) | Cloud berjalan + **CapEx on-premise + parallel run + cutover** | **≈ Rp 450 jt** (cloud ±8 bln ≈ 136 + CapEx ≈ 230 + OpEx on-prem & parallel ≈ 46 + buffer) | Rp 350–560 jt |
+| **Total 3 tahun** | | **≈ Rp 655 jt** | Rp 520–800 jt |
+| **Tahun 4+** (steady on-premise) | OpEx + amortisasi | **≈ Rp 195 jt/tahun** — vs tetap cloud yang diproyeksikan > Rp 240–300 jt/tahun → **penghematan mulai tahun ke-4** | |
+
+**Uji kewajaran**: total 3 tahun (≈ Rp 655 jt) ≈ **79% dari alokasi infrastruktur PRD §14.4 tiga tahun** (2026 $3.600 + 2027 $12.000 + 2028 $36.000 ≈ Rp 825 jt) — rencana transisi on-premise **muat di dalam alokasi yang sudah ada**, tanpa menambah pos anggaran baru. Model interaktifnya ada di sheet **OnPremise** file Excel.
+
+---
+
 ## Appendix A — Daftar Asumsi (untuk diaudit/diganti)
 
 | # | Asumsi | Nilai | Sensitivitas bila meleset |
@@ -484,6 +545,7 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 
 | Versi | Tanggal | Perubahan |
 | --- | --- | --- |
+| v1.4 | 2026-07-12 | **§10 Rencana Transisi On-Premise + Plot Dana 3 Tahun** (permintaan founder: seluruh kalkulasi di awal untuk proposal pendanaan): CapEx hardware Rp 180–285 jt, OpEx colocation+SDM Rp 8,5–14,5 jt/bln, TCO setara cloud di titik masuk tahun ke-3 dengan payback 1,5–2,5 th, kriteria eksekusi berbasis metrik (gate Q3–Q4 2028), rencana migrasi parallel-run, plot 3 tahun ≈ Rp 655 jt (79% alokasi PRD); sheet Excel OnPremise ditambahkan |
 | v1.3 | 2026-07-11 | **Plafon direvisi Rp 40 jt → Rp 50 jt berbasis skenario** (menjawab telaah stakeholder): biaya bulanan fase growth AdopTree lebih tinggi dari platform sejenis (~Rp 4,5 jt vs ~Rp 3,6 jt — Tira AI + konten video + stack geospasial/ML), dan plafon lama hanya menampung asumsi upgrade Jan 2027; skenario upgrade dini Nov 2026 (lonjakan pasca-public-launch) ≈ Rp 47,5 jt kini tercakup plafon sehingga momentum launch tidak menunggu persetujuan ulang. Titik tengah realistis diselaraskan dengan model Excel (Y1 ~Rp 4,5 jt; Y2 ~Rp 17 jt); realisasi proyeksi base ≈ Rp 39,8 jt tidak berubah |
 | v1.2 | 2026-07-11 | Model perhitungan Excel ([perhitungan-kapasitas-anggaran-adoptree.xlsx](perhitungan-kapasitas-anggaran-adoptree.xlsx)) ditambahkan: 8 sheet (Ringkasan · Asumsi · Beban · StorageR2 · Software · Server · Anggaran12Bln · Pembanding) dengan formula hidup — seluruh asumsi A1–A12 + anchor volume menjadi sel input; total 12 bulan terhitung ≈ Rp 39,8 jt ≤ plafon Rp 40 jt |
 | v1.1 | 2026-07-11 | **Anggaran konten media dieksplisitkan** (§4.1): baris video + photo sphere 360° dengan basis volume per item, skenario media 5× (tetap < 15% anggaran Y2 — egress R2 gratis), jalur eskalasi Cloudflare Stream via revisi anggaran; asumsi A12 baru. **§5.0b Pemisahan peran server** ditambahkan: peta Builder · Aplikasi · Database · Backup per tier + dua keputusan eksplisit (builder tidak pernah menumpang production; backup = object storage off-site, bukan VM) — menegaskan pemisahan multi-VM di fase growth sudah tercantum dalam anggaran per fase |
