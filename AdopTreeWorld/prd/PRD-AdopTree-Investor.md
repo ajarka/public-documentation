@@ -1,8 +1,10 @@
 # AdopTree World — Product Requirements Document
-### Investor Edition · v2.8 · July 2026
+### Investor Edition · v2.9 · July 2026
 
 > **Status** — Staging platform live · Android Field App live (Build 32) · Public Launch target H2 2026
 > **Prepared by** — Sandhy Krisnamurthi (CEO) · Aditira Jamhuri (CTO) · Subekti Febriansyah (C.Media & Design)
+>
+> **v2.9 highlights** — **The blockchain trust layer goes live on Solana Mainnet, and corporate ESG reporting reaches investor-grade depth.** (1) **Public Evidence Anchoring — LIVE on Mainnet** — every field-inspection photo is SHA-256-hashed *on the device at capture*, server re-verified, and batched daily into a Merkle tree whose root is written to a **Solana Mainnet memo transaction** (funded ops treasury; cost ≈ $0.00001/day). Anyone can verify a proof end-to-end on the public `/verify` pages — §10.5 fully rewritten to reflect this (the old "no Solana SDK integrated yet" disclosure is obsolete). (2) **Two-Way Blockchain Verification tool** (`/tools/blockchain-verify`) — the 4th public tool: verify from *your* side (upload a file — hashed **in the browser via WebCrypto, never uploaded** — or paste a SHA-256) or from the *chain's* side (paste a Solana tx signature). Verification is **trustless**: the Merkle proof is recomputed client-side (byte-identical port of the backend algorithm) and the root is matched against the on-chain memo fetched directly from a public Solana RPC by the user's browser — no need to trust AdopTree's servers. Eligible accounts (adopter / land steward / corporate member / admin) can open the underlying asset behind a verified proof; financial ledger entries are never exposed. (3) **Corporate ESG Command Center** — the dashboard is redesigned as a one-page executive "digital twin" (carbon growth time-series, dominant live GIS map, data matrix) and the report engine now maps every contribution to **UN SDG targets** (in-app + PDF), tracks a self-set **Climate Contribution Target** (honestly labeled — *not* SBTi validation), renders a Scope 1/2/3 breakdown donut with explicit "not measured" labeling, and stamps each completed report with its **Mainnet anchor badge + explorer link**; units follow the official tCO₂e convention. (4) **Decarbonization Glossary** — an 84-term public glossary page (`/glossary`, searchable, 4 categories) plus a 20-term appendix in every ESG PDF — a shared professional vocabulary (GHGP, MRV, FLAG, SPE-GRK, SRN-PPI, IDXCarbon…) aligned with the founder's carbon-market glossary, with platform copy audited against overclaiming (no "carbon neutral"/"net-zero certification" language anywhere). (5) **Financial Governance (maker-checker)** — every financially-sensitive admin action lands in an append-only audit log with before/after diffs, and fee/config/price changes now require **four-eyes approval**: an admin *proposes*, a super-admin *approves with a fresh 2FA challenge*; 2FA is mandatory for all admin roles. (6) **Contact-the-steward goes direct** — every "Hubungi Pengelola" button now opens a direct chat with the land's steward instead of a profile page. *Context: Indonesia launched its national carbon-unit registry (SRUK, 9 Jul 2026) — see §10.5 for how AdopTree positions as an MRV/aggregator partner, not a competitor.*
 >
 > **v2.8 highlights** — **Field operations go truly zero-signal, and the trust stack hardens for corporate money.** (1) **Offline Lands (Build 31)** — field teams now *download a land for offline*: tagging **new** trees, inspections, and inside/outside-boundary validation all work with zero connectivity, with per-land cache management (ready-status, size estimate, refresh/remove, 14-day auto-cleanup) and the on-device database now **encrypted with SQLCipher** (a lost phone leaks no GPS trails or inspection data). (2) **AR Tree-Marker wayfinding (Build 32)** — point the camera and per-tree AR markers float at each tree's real direction (code + distance, species-colored dots for neighbors, edge arrows when off-frame; tap a near marker to start the inspection) — a GPS+compass geospatial billboard that works offline, with QR remaining the identity gate at close range. (3) **Web Push notifications** — browsers now receive transaction and primary notifications (adoption confirmed, payment, certificates, partnership, support) even with the tab closed — standards-based Web Push (VAPID, RFC 8030/8291), no third-party SDK on the web, with a two-step opt-in prompt after login; the same dispatch hook auto-pushes to mobile FCM. (4) **Corporate ESG reporting made real** — the Corporate ESG Dashboard now generates a **real PDF report** (previously stubbed), carbon accounting fixed across both adoption paths, honest Scope-3 labeling, and a public MRV summary; report access is gated on a complete corporate legal profile (legal name + NPWP), with auto-provisioned corporate onboarding hardened against duplicates. (5) **Security hardening pass** — a 10-item defensive audit (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, SQL-error redaction, secret hygiene) closed before public launch, on top of v2.6's 2FA. (6) **Land-manager flow refined** — the KTP-verified Pengelola is now *optional at creation*: a land can be drafted first but **stays unpublished until its manager identity is complete** (draft-until-complete guard), and a land-owner accepting a partnership invite completes the KTP form as part of acceptance.
 >
@@ -38,7 +40,7 @@
 8. [User Personas](#8-user-personas)
 9. [User Flows](#9-user-flows)
 10. [Technology Architecture](#10-technology-architecture)
-    - 10.1 Stack · 10.2 Why Rust · 10.3 Differentiators · 10.4 Mobile Architecture *(new in v2.1)* · 10.5 Blockchain Status Disclosure *(new in v2.3)*
+    - 10.1 Stack · 10.2 Why Rust · 10.3 Differentiators · 10.4 Mobile Architecture *(new in v2.1)* · 10.5 Blockchain Status Disclosure *(new in v2.3 · rewritten in v2.9 — anchoring live on Mainnet)*
 11. [Competitive Landscape](#11-competitive-landscape)
 12. [Go-to-Market Strategy](#12-go-to-market-strategy)
 13. [Roadmap & Milestones](#13-roadmap--milestones)
@@ -104,7 +106,7 @@ All stakeholders are **trusted and verified** — making tree adoption transpare
 
 ### Why it's defensible today
 
-Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. On the supply side, the **Tira AI Co-Pilot** lets a merchant onboard a land *by chatting* — filling the form, importing geo files (KML/GPX/CSV → AdopTree standard), and proposing species — which directly attacks the biggest growth bottleneck (supply onboarding friction). **Blockchain infrastructure (Solana SIWS wallet authentication + NFT metadata schema)** is in place; on-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
+Unlike conventional CSR programs where environmental impact is opaque and unverifiable, AdopTree delivers **GPS-pinned tree ownership**, **real-time GIS satellite tracking**, **field-evidence anti-tamper inspection (mobile app with watermarked camera)**, and **per-tree carbon credit allocation** — all in one integrated platform, built and live on staging today. On the supply side, the **Tira AI Co-Pilot** lets a merchant onboard a land *by chatting* — filling the form, importing geo files (KML/GPX/CSV → AdopTree standard), and proposing species — which directly attacks the biggest growth bottleneck (supply onboarding friction). **The blockchain trust layer is live on Solana Mainnet**: every inspection photo is hashed at capture and anchored in daily Merkle batches to a Mainnet memo transaction, publicly verifiable end-to-end via a two-way verification tool — no trust in AdopTree's servers required. On-chain NFT minting for the AdopTree tier is the next major engineering milestone (see §10.5 Blockchain Status).
 
 ### The opportunity is significant
 
@@ -117,9 +119,10 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 - Web platform fully operational at `staging.adoptreeworld.com`
 - **Android Field App live** — APK Build 32 distributed via R2 (`/download`), with GPS-tagged inspection, offline-first sync, **downloadable offline lands (zero-signal tagging + inspection, SQLCipher-encrypted local DB)**, **AR tree-marker wayfinding**, watermarked anti-tamper camera, crowdsourced contributor tier system, live GPS session tracking, and 2FA-aware login
 - **Milestone Escrow live (v2.6)** — donor funds held in escrow and released to merchants only per field-verified + admin-approved milestone (40/30/30), on an append-only financial ledger — the anti-fraud thesis (§0 #3/#4/#7) is now enforced by the payment rail itself, not by policy documents
+- **Blockchain evidence anchoring live on Solana Mainnet (v2.9)** — field-evidence hashes (device-computed at capture) are Merkle-batched daily and anchored in a Mainnet memo transaction; a public two-way verification tool lets anyone — donor, auditor, or regulator — verify a file, a hash, or a transaction **without trusting AdopTree's servers** (client-side proof recompute + direct public-RPC match)
 - **Merchant base today:** 0 paying merchants. Staging is populated with a demonstration merchant (**"Akademi Buah Nusantara"**) that exercises every end-to-end flow — land registration → tree management → campaign → adoption checkout → earnings → withdrawal — so the platform is proven against a realistic merchant profile. Onboarding real merchant partners is one of the explicit objectives of this raise (see §16.2 — 35% of funds allocated to Sales & BD).
 - **Payment infrastructure**: Midtrans live for production (bank transfer, QRIS, e-wallet, credit card). Solana (SOL) payment UI built — backend wire-up scheduled Q3 2026 alongside on-chain NFT minting
-- 35+ product phases delivered between v2.0 and v2.8 (Apr → Jul 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual), **Milestone Escrow disbursement**, **Tira-First Support**, **2FA**, and **KTP-verified land managers**
+- 40+ product phases delivered between v2.0 and v2.9 (Apr → Jul 2026): review queue, public contributor system, QR tree verification, multi-stage inspection evidence, realtime chat, dark mode dashboards, refreshed brand identity, **AI tree-count estimation**, the **Tira AI Co-Pilot** (create-land/campaign/registration by chat + AI geo-import + bilingual), **Milestone Escrow disbursement**, **Tira-First Support**, **2FA**, **KTP-verified land managers**, **Solana Mainnet evidence anchoring + two-way verification**, the **Corporate ESG Command Center**, and **financial maker-checker governance**
 - **3-year commercial target: 100,000 Ha land under management → 500 million trees reserved**
 
 **AdopTree is positioned at the intersection of greentech, ESG infrastructure, Web3, and Islamic finance** — serving every segment from an individual $1/tree annual fee to multi-year corporate CSR packages.
@@ -159,7 +162,7 @@ Unlike conventional CSR programs where environmental impact is opaque and unveri
 - **17 product phases delivered** between v2.0 → v2.1 (Apr → May 2026)
 - **9 production APK builds** shipped across the Field App in **5 weeks** (Build 6 → Build 14)
 - Platform live on staging 24/7 at `staging.adoptreeworld.com` — not a prototype, not a slide
-- Designed Solana SIWS wallet authentication + NFT metadata schema; minting pipeline scoped for Q3 2026 (see §10.5)
+- Shipped the Solana evidence-anchoring rail live on **Mainnet** (device hash-at-capture → daily Merkle batch → memo tx + trustless public verification); designed SIWS wallet authentication + NFT metadata schema; minting pipeline scoped for Q3 2026 (see §10.5)
 
 **Why this matters for investors:** AdopTree is **CTO-led from day one**, not founder-promised. The "Will they actually build it?" risk — the single most common reason pre-seed greentech investments stall — is already retired. Aditira built the platform lean and solo to prove the architecture; with seed capital his immediate next move is scaling a small, senior team around the proven foundation rather than rewriting it.
 
@@ -456,7 +459,7 @@ flowchart TB
 | **NFT Metadata Schema & API** | Database tables + REST endpoints (`GET /nfts/{mint}`, `GET /nfts/{mint}/history`, `POST /nfts/refresh`) | ✅ Built |
 | **On-chain NFT Minting (AdopTree tier)** | Metaplex mint pipeline triggered on AdopTree-tier payment success | 📋 Q3 2026 milestone — see §10.5 |
 | **360° Tree View** | Photo sphere viewer for immersive tree experience | ✅ Built |
-| **Public Tools Hub** *(new)* | `/tools` — a public interactive-tools page (no login) hosting the three tools below; an acquisition + SEO surface. See §6.7 | ✅ Built |
+| **Public Tools Hub** *(new)* | `/tools` — a public interactive-tools page (no login) hosting the four tools below; an acquisition + SEO surface. See §6.7 | ✅ Built |
 | **Carbon Calculator** *(new)* | `/tools/carbon-calculator` — estimate annual CO₂ absorbed by plant type (forest tree vs. agriculture) × tree count | ✅ Built |
 | **3D Tree Tracker** *(new)* | `/track` — cinematic 3D journey from globe to ground to find an adopted tree by code (or a sample tree); the "digital twin" experience made tangible | ✅ Built |
 | **Land Analyzer** *(new)* | `/tools/land-analyzer` — draw a land polygon or upload an image; AI estimates tree count + canopy cover from Sentinel-2 satellite imagery (the public-facing front of the AI tree-baseline engine) | ✅ Built |
@@ -472,6 +475,9 @@ flowchart TB
 | **"Perjalanan Danamu" Fund Journey** *(new v2.6)* | Per-adoption escrow journey stepper in My Forest: Paid → Planted (✓40%) → Verified Alive (✓30%) → Thriving — % disbursed shown, milestone dates linked to field evidence. See §6.8 | ✅ Built |
 | **Support Center (Tira-first)** *(new v2.6)* | `/support` — ask Tira 24/7 first (answers from live data); unresolved → structured ticket with status tracking + direct chat with the support team. See §6.9 | ✅ Built |
 | **Two-Factor Authentication** *(new v2.6)* | TOTP (Google Authenticator) + one-time backup codes; encrypted secrets; challenge-based login on web & mobile. See §6.9 | ✅ Built |
+| **Blockchain Evidence Anchoring** *(new v2.9)* | Inspection-photo hashes (device-computed at capture, server re-verified), ESG-report hashes, and escrow-ledger entries are Merkle-batched daily and anchored via memo tx on **Solana Mainnet**; public `/verify` proof pages with Merkle proof + explorer link. See §10.5 | ✅ Live on Mainnet |
+| **Blockchain Verify Tool (2-way)** *(new v2.9)* | `/tools/blockchain-verify` — verify by **file** (SHA-256 computed in-browser, file never uploaded), by **hash**, or by **Solana tx signature**; trustless client-side Merkle recompute + direct public-RPC memo match; eligible accounts (adopter/steward/corporate/admin) can open the underlying asset | ✅ Built |
+| **Decarbonization Glossary** *(new v2.9)* | Public `/glossary` — 84 curated carbon-market terms (searchable, 4 categories: global standards, Indonesian regulation, platform, grassroots actors) + 20-term appendix in every ESG PDF; shared vocabulary aligned with the founder's glossary | ✅ Built |
 
 <table>
   <tr>
@@ -548,7 +554,8 @@ flowchart TB
 | **Support Inbox** *(new v2.6)* | Ticket queue with status/priority filters, AI triage summary + full Tira transcript per ticket, claim → spawns direct user↔admin chat, mandatory resolution notes. See §6.9 | ✅ Built |
 | **2FA Recovery** *(new v2.6)* | Admin reset path for users locked out of two-factor (lost device + exhausted backup codes) | ✅ Built |
 | **Super Admin Role** *(new v2.6)* | Elevated capabilities behind an append-only audit log: user↔user & Tira chat monitoring (read-only) and guarded hard-delete (money-linked entities always refused) | ✅ Built |
-| **Corporate ESG Dashboard + PDF Report** *(new v2.8)* | Corporate adopters get a dedicated ESG dashboard (carbon, MRV, surveillance summary) that exports a real, auditable PDF report; access gated on complete corporate legal profile (legal name + NPWP); dual onboarding paths (manual apply→approve & auto-provision on Adop Lahan purchase) hardened against duplicates | ✅ Built |
+| **Financial Governance — Audit Log + Maker-Checker** *(new v2.9)* | Every financially-sensitive admin action (fees, escrow config, tier prices…) recorded in an append-only audit log with before/after diffs; fee/config/price changes require **four-eyes approval** — admin proposes, super-admin approves with a fresh 2FA challenge; 2FA mandatory for all admin roles | ✅ Built |
+| **Corporate ESG Command Center + PDF Report** *(new v2.8 · upgraded v2.9)* | One-page executive dashboard (carbon growth time-series, dominant live GIS map, data matrix, Scope 1/2/3 donut with honest "not measured" labels, self-set Climate Contribution Target — explicitly non-SBTi) exporting a real, auditable PDF with **UN SDG contribution mapping**, a decarbonization glossary appendix, tCO₂e units, and a per-report **Solana Mainnet anchor badge**; access gated on complete corporate legal profile (legal name + NPWP); dual onboarding paths hardened against duplicates | ✅ Built |
 | **Web Push Delivery Rail** *(new v2.8)* | Standards-based Web Push (VAPID) for browsers + FCM for mobile behind one auto-dispatch hook — every primary notification (transactions, adoption, certificates, partnership, support) reaches subscribed devices even with the app closed | ✅ Built |
 
 <table>
@@ -761,7 +768,7 @@ Tira began as a donor-facing Q&A chatbot. It is now an **AI co-pilot that does w
 
 ### 6.7 Public Tools Hub (Live)
 
-A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acquisition + SEO surface: visitors get value before signing up, and each tool seeds intent for adoption or land registration. Three tools are live.
+A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acquisition + SEO surface: visitors get value before signing up, and each tool seeds intent for adoption or land registration. Four tools are live.
 
 <table>
   <tr>
@@ -774,7 +781,9 @@ A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acqu
   </tr>
 </table>
 
-*Figure 5d — Public Tools Hub. Each tool is a value-first acquisition surface: the Carbon Calculator quantifies impact for prospective donors, the 3D Tree Tracker showcases the digital-twin experience, and the Land Analyzer converts curious land owners into supply-side leads.*
+**5. Blockchain Verification** (`/tools/blockchain-verify`) *(new v2.9)* — the trust layer made self-service. Three entry doors: drop a **file** (an inspection photo or an ESG report PDF — SHA-256 is computed *inside the browser* via WebCrypto; the file never leaves the user's device), paste a **hash**, or paste a **Solana transaction signature**. The result shows the full Merkle proof and then verifies it **trustlessly**: the proof is recomputed client-side and the root is matched against the on-chain memo fetched by the user's browser directly from a public Solana RPC — AdopTree's servers could lie and the check would still catch it. Logged-in eligible accounts (the tree's adopter, the land's steward, the corporate report owner, admins) can open the underlying asset behind a verified proof. For auditors and corporate due-diligence teams, this turns "trust us" into "check it yourself."
+
+*Figure 5d — Public Tools Hub. Each tool is a value-first acquisition surface: the Carbon Calculator quantifies impact for prospective donors, the 3D Tree Tracker showcases the digital-twin experience, the Land Analyzer converts curious land owners into supply-side leads, and the Blockchain Verification tool converts auditors and corporate due-diligence teams into believers.*
 
 ---
 
@@ -1113,40 +1122,59 @@ graph TB
 ![APK release history page — Build 14 down to Build 6 with changelog cards](assets/prd/web/apk-release-history.png)
 *Figure 7 — Live release page. 9 production builds shipped in 5 weeks (Build 6 → 14, late April through end of May 2026) — concrete engineering velocity. Each card shows version, build number, release date, file size, and changelog. Latest build is auto-promoted as the default download.*
 
-### 10.5 Blockchain & NFT — Honest Status Disclosure
+### 10.5 Blockchain & NFT — Honest Status Disclosure *(rewritten in v2.9)*
 
-> **Why this section exists.** Blockchain claims are easy to overstate and easy to verify. This section gives investors the unvarnished status so technical due diligence finds no surprises.
+> **Why this section exists.** Blockchain claims are easy to overstate and easy to verify. This section gives investors the unvarnished status so technical due diligence finds no surprises. **v2.9 note:** earlier editions of this section disclosed that no Solana SDK was integrated yet — that disclosure is now obsolete in the best way: the evidence-anchoring layer went **live on Solana Mainnet in July 2026**.
 
-#### What is shipped today (~15% of the long-term blockchain scope)
+#### LIVE on Solana Mainnet today — Public Evidence Anchoring (B0, shipped July 2026)
 
 | Component | Status | Evidence |
 |---|---|---|
-| **Solana Wallet Authentication (SIWS)** | ✅ Production-ready | Full ed25519 signature verification, nonce generation, JWT issuance, expiry handling. Phantom wallet supported. |
+| **Hash-at-capture** | ✅ Live | Every inspection photo is SHA-256-hashed **on the device at the moment of capture** (watermarked bytes), sent with the upload, and re-verified server-side against the stored file — a tamper-evident chain from camera shutter to database |
+| **Daily Merkle anchoring** | ✅ Live on **Mainnet** | A daily cron batches new photo hashes, completed ESG-report hashes, and escrow-ledger entries into a Merkle tree (domain-separated leaf/node hashing); the root is written to a Solana Mainnet **memo transaction** (`adoptree:v1:merkle:<root>`) from a funded ops treasury. Cost ≈ 5,000 lamports/day — **about $0.004/year** for the whole platform's evidence integrity |
+| **Public proof pages** | ✅ Live | `GET /verify/:type/:id` + `/verify/anchor/...` pages: leaf, Merkle proof path, root, tx signature, Solana Explorer link — verifiable by any third party |
+| **Two-way verification tool** | ✅ Live | `/tools/blockchain-verify` (§6.7): verify by file (hashed in-browser — never uploaded), by hash, or by tx signature. **Trustless by construction** — the browser recomputes the Merkle proof client-side and matches the root against the on-chain memo fetched directly from a public Solana RPC. Eligibility-gated asset detail (adopter / steward / corporate / admin); financial entries never exposed |
+| **ESG report anchor badges** | ✅ Live | Every completed corporate ESG report shows its Mainnet anchor status + explorer link in the Corporate Command Center |
+| **Solana SDK integration** | ✅ Live | `solana-client` + `solana-sdk` v2 integrated in the Rust backend (transaction build, send, confirmation polling) — the same rail the NFT mint pipeline will reuse |
+
+**What is deliberately *not* on-chain:** raw photos, personal data, or money. Only hashes (digital fingerprints) are anchored — privacy-safe, and honest: we say "evidence anchored on blockchain," never "assets on blockchain."
+
+#### Shipped earlier (SIWS + NFT foundation)
+
+| Component | Status | Evidence |
+|---|---|---|
+| **Solana Wallet Authentication (SIWS)** | ✅ Backend production-ready | Full ed25519 signature verification, nonce generation, JWT issuance, expiry handling |
 | **NFT Metadata Database Schema** | ✅ Production-ready | Three tables (`nft_metadata`, `nft_transactions`, `tree_health_records`) with proper indexes on mint address, owner wallet, and transaction signature |
 | **NFT Metadata REST API** | ✅ Production-ready | Endpoints `GET /nfts/{mint}`, `GET /nfts/{mint}/history`, `POST /nfts/refresh` |
-| **Frontend Solana UI Components** | ✅ Production-ready | Wallet connection UI, Phantom detection, SOL balance display, payment flow scaffolding |
+| **Frontend Solana wallet UI** | ⚠️ Scaffolding only | Wallet-adapter dependencies installed but not yet wired to the SIWS backend — honest correction of earlier editions that listed this as production-ready. Slated with the mint sprint |
 
-#### What is stubbed / mock today (~35% of the long-term scope)
+#### Stubbed / mock today
 
 | Component | Reality | Why it ships post-Q3 2026 |
 |---|---|---|
-| **Solana SOL Payment Processing** | UI complete; backend handler returns a mock wallet address and a 2-second simulated transaction | Backend wire-up requires adding `solana-client` + transaction verification — bundled with the NFT mint sprint |
-| **NFT Metadata Refresh** | API endpoint live; on-chain refresh logic only increments a counter (no Solana RPC call) | Activated alongside the mint pipeline (shares RPC client) |
+| **Solana SOL Payment Processing** | UI complete; backend handler returns a mock wallet address and a simulated transaction | Transaction verification wire-up bundled with the NFT mint sprint (RPC rail now exists — see above) |
+| **NFT Metadata Refresh** | API endpoint live; on-chain refresh logic only increments a counter | Activated alongside the mint pipeline (shares the live RPC client) |
 | **NFT Mint Trigger on AdopTree Adoption** | Database columns (`nft_mint_tx`, `nft_minted_at`) reserved; all code paths currently set them to `None` | Awaits the Metaplex mint service |
 
-#### What is planned but not yet started (~50%)
+#### Planned but not yet started
 
-- **Solana SDK integration** — `Cargo.toml` does not yet include `solana-client`, `solana-sdk`, `mpl-token-metadata`, or `spl-token`. Only signature-verification crates (`ed25519-dalek`, `bs58`, `base64`) are in use today.
-- **On-chain NFT minting pipeline** — Metaplex Token Metadata program integration, mint authority key management, treasury wallet hardening
+- **On-chain NFT minting pipeline** — Metaplex Token Metadata program integration, mint authority key management (the funded Mainnet treasury + key-handling discipline from anchoring de-risks this)
 - **Secondary NFT marketplace** (peer-to-peer tree ownership trading) — roadmap Q1–Q3 2028
 - **Blockchain volatility handling** — Stablecoin fallback / SOL price circuit-breaker for AdopTree tier pricing
 
+#### Regulatory alignment — Indonesia's carbon registry & tokenization *(new v2.9)*
+
+- **SRUK** (Sistem Registri Unit Karbon, KemenLH) launched **9 July 2026** — the state registry for every carbon unit in Indonesia (CCCDM/CDSC data standard, API-based, *no blockchain in the registry itself*). **OJK's POJK 10/2026** signals a decentralized/blockchain-backed registry direction connected to SRUK — regulation issued, implementation not yet live.
+- **AdopTree's position is deliberate: MRV / aggregator / integrity-layer partner — never a DIY carbon-token issuer.** Tokenizing carbon units without registry consent is the Verra–Toucan (2022) failure mode and would burn the official-registry path. Our anchored-evidence rail is *complementary* infrastructure the registry ecosystem currently lacks — and it is already live while the regulator's blockchain layer is still on paper.
+- Practical consequence: platform carbon numbers stay honestly labeled as **contributions/estimates** (not units) until lands graduate into registered SPE-GRK projects via SRN-PPI → SRUK.
+
 #### What this means for the raise
 
-- **No claim in this PRD assumes NFT minting is live today.** Every NFT-related phrase is qualified with "(Q3 2026)" or scoped to the SIWS/metadata layer that is genuinely shipped.
+- **The trust-critical half of the blockchain story is no longer roadmap — it is live on Mainnet** at negligible operating cost, and independently verifiable by any auditor in a browser.
+- **No claim in this PRD assumes NFT minting is live today.** Every NFT-related phrase is qualified with "(Q3 2026)" or scoped to the layers genuinely shipped (anchoring, SIWS backend, metadata schema).
 - **Core product works without Web3.** Donasi, AdopTree, and Adop Lahan — and all merchant/admin/mobile flows — are entirely web2 today and remain functional regardless of NFT mint timing.
-- **NFT minting is a Q3 2026 engineering milestone**, included in the **Product & Technology** allocation of the seed round (§16.2 — 25% / $125K covers Solana mint + surveillance system + mobile app). Estimated 6–8 engineering weeks for mint pipeline + treasury hardening.
-- **Roadmap honesty is itself a moat.** Greentech buyers and Indonesian regulators (BAPPENAS, KLHK, BWI) consistently penalize over-claimed blockchain narratives. A platform that ships SIWS today and discloses the mint gap is more durable to due diligence than one that paints over the gap.
+- **NFT minting is a Q3 2026 engineering milestone**, included in the **Product & Technology** allocation of the seed round (§16.2 — 25% / $125K covers Solana mint + surveillance system + mobile app). The anchoring work already shipped the hardest prerequisites: a live RPC rail, a funded treasury, and key-management discipline.
+- **Roadmap honesty is itself a moat.** Greentech buyers and Indonesian regulators (BAPPENAS, KLHK/KemenLH, OJK, BWI) consistently penalize over-claimed blockchain narratives. This edition *downgrades* one earlier claim (frontend wallet UI) while *upgrading* the anchoring layer to live-on-Mainnet — both in the same honesty pass.
 
 ---
 
@@ -1281,8 +1309,11 @@ gantt
 | **Web Push Notifications (Browser)** | ✅ July 2026 | Standards-based VAPID push for transactions & primary events; auto-push hook covers web + mobile |
 | **Corporate ESG Report (Real PDF)** | ✅ July 2026 | ESG dashboard generates auditable PDF; carbon accounting unified; public MRV summary; access gated on complete legal profile |
 | **Pre-launch Security Hardening** | ✅ July 2026 | 10-item defensive audit closed (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, error redaction) |
+| **Public Evidence Anchoring — Solana Mainnet** | ✅ July 2026 | Device hash-at-capture → daily Merkle batches anchored via Mainnet memo tx; public `/verify` proof pages + two-way verification tool (file/hash/tx) with trustless in-browser proof recompute + direct public-RPC match |
+| **Corporate ESG Command Center** | ✅ July 2026 | One-page executive dashboard (carbon time-series, live GIS, data matrix, Scope donut) + PDF with UN SDG mapping, climate contribution target (non-SBTi, honest), glossary appendix, per-report Mainnet anchor badge |
+| **Financial Governance (Audit Log + Maker-Checker)** | ✅ July 2026 | Append-only audit trail with before/after diffs on financial actions; four-eyes approval (admin proposes → super-admin approves w/ fresh 2FA) for fee/config/price changes; 2FA mandatory for admin roles |
 | **Public Production Launch** | H2 2026 | Platform live, real payments processing |
-| **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API (see §10.5) |
+| **Solana On-chain NFT Minting Live** | Q3 2026 | Metaplex mint pipeline + Solana SOL payment activation. Foundation already shipped: SIWS wallet auth, metadata schema, REST API, and — since v2.9 — a **live Mainnet transaction rail** (funded treasury, RPC client, confirmation pipeline) from the anchoring layer (see §10.5) |
 | **First 100 Paid Adoptions** | Q4 2026 | Revenue from real transactions |
 | **First Corporate CSR Deal** | Q4 2026 | Adop Lahan / Wakaf Lahan contract signed |
 | **30 Active Merchants** | Q4 2026 | Supply-side diversity established |
@@ -1510,7 +1541,7 @@ All visuals are embedded inline at the sections referenced below.
 | **APK** | Android Package — Field App distribution format |
 | **Contributor Tier** | Trust-tier system gating field submissions (Public → Verified → Field Inspector) |
 
-### D. Delivered Phases (v2.0 → v2.5, April → June 2026)
+### D. Delivered Phases (v2.0 → v2.9, April → July 2026)
 
 Concrete execution log between PRD revisions. Each phase ships through development branch → Jenkins auto-build → auto-deploy to staging.
 
@@ -1557,6 +1588,13 @@ Concrete execution log between PRD revisions. Each phase ships through developme
 | — | **Corporate ESG Reporting** — real PDF generator, unified carbon accounting, Scope-3 honest labeling, public MRV summary, legal-profile gate + dual-path onboarding hardening | BE + Web |
 | — | **Security hardening pass** — 10-item defensive audit (XSS, IDOR, webhook idempotency, fail-closed rate limiting, path traversal, SQL-error redaction, secret hygiene) | BE + Web |
 | — | **Pengelola draft-until-complete** — manager optional at creation with unpublished-until-complete guard; KTP capture on partnership-invite acceptance | BE + Web |
+| — | **Hash-at-capture (Fase P)** — device-side SHA-256 of watermarked inspection photos + server re-verification (tamper-evident chain) | Mobile + BE |
+| — | **Public Evidence Anchoring (B0) — Solana Mainnet** — daily Merkle batch (photos + ESG reports + escrow ledger) → Mainnet memo tx; public `/verify` proof pages; funded ops treasury | BE + Web |
+| — | **Two-way Blockchain Verification tool** — file (in-browser hash) / hash / tx doors; trustless client-side Merkle recompute + direct public-RPC memo match; eligibility-gated asset detail | BE + Web |
+| — | **Corporate ESG Command Center** — one-page executive redesign; carbon time-series; UN SDG mapping (in-app + PDF); climate contribution target (non-SBTi); Scope donut; per-report anchor badges | BE + Web |
+| — | **Decarbonization Glossary** — 84-term public `/glossary` + 20-term ESG-PDF appendix; tCO₂e units; overclaim-free copy audit | BE + Web |
+| — | **Financial Governance** — append-only audit log (before/after diffs) + maker-checker four-eyes approval w/ 2FA re-auth + mandatory admin 2FA | BE + Web |
+| — | **Direct steward chat** — every "Hubungi Pengelola" contact button opens a direct chat with the land steward | Web |
 
 **APK releases shipped:** Build 6 (initial beta) → … → Build 14 (brand rebrand, 29 May 2026) → Build 29 (photo-based land verification, June 2026) → Build 30 (live GPS tracking pipeline fix + 2FA login, July 2026) → Build 31 (offline lands + SQLCipher encryption, July 2026) → **Build 32 (latest — AR tree-marker wayfinding, July 2026)**.
 
@@ -1564,4 +1602,4 @@ Concrete execution log between PRD revisions. Each phase ships through developme
 
 *© 2026 AdopTree World. All projections are forward-looking estimates based on comparable greentech platforms in Southeast Asia. Actual results may differ.*
 
-*Document version 2.6 · July 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
+*Document version 2.9 · July 2026 · Prepared by the AdopTree World founding team — Sandhy Krisnamurthi, Aditira Jamhuri, Subekti Febriansyah. For investor discussion purposes only.*
