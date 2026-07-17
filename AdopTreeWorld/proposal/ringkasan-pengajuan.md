@@ -3,6 +3,7 @@
 > **Tanggal**: 11 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (CTO)
 > **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md)
 > **Model perhitungan interaktif** (Excel, formula hidup): [perhitungan-kapasitas-anggaran-adoptree.xlsx](perhitungan-kapasitas-anggaran-adoptree.xlsx)
+> **Dokumen pasangan — SDM/manpower** (roster + anggaran menuju production, termasuk skenario on-premise): [anggaran-sdm-manpower.md](anggaran-sdm-manpower.md)
 
 ---
 
