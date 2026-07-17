@@ -772,7 +772,7 @@ A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acqu
 
 <table>
   <tr>
-    <td width="50%"><img src="assets/prd/web/tools-hub.png" alt="Tools hub — Interactive Tools page listing Carbon Calculator, 3D Tree Tracker, Land Analyzer"/><br/><sub><b>1. Tools Hub</b> (<code>/tools</code>) — public landing for the interactive tools: Kalkulator Karbon, Lacak Pohon 3D, Analisis Lahan. No login required — value-first acquisition surface.</sub></td>
+    <td width="50%"><img src="assets/prd/web/tools-hub.png" alt="Tools hub — Interactive Tools page listing Carbon Calculator, 3D Tree Tracker, Land Analyzer, Blockchain Verification"/><br/><sub><b>1. Tools Hub</b> (<code>/tools</code>) — public landing for the interactive tools: Kalkulator Karbon, Lacak Pohon 3D, Analisis Lahan, Verifikasi Blockchain *(new v2.9)*. No login required — value-first acquisition surface.</sub></td>
     <td width="50%"><img src="assets/prd/web/carbon-calculator.png" alt="Carbon Calculator — plant type picker, tree count, live CO2 estimate"/><br/><sub><b>2. Carbon Calculator</b> (<code>/tools/carbon-calculator</code>) — pick plant type (Forest Tree 15.5 vs. Agriculture 2.5 kg CO₂/tree/yr) × tree count → live annual CO₂ estimate. Turns "impact" into a concrete number before adoption.</sub></td>
   </tr>
   <tr>
@@ -782,6 +782,17 @@ A no-login **Interactive Tools** page (`/tools`) doubles as a top-of-funnel acqu
 </table>
 
 **5. Blockchain Verification** (`/tools/blockchain-verify`) *(new v2.9)* — the trust layer made self-service. Three entry doors: drop a **file** (an inspection photo or an ESG report PDF — SHA-256 is computed *inside the browser* via WebCrypto; the file never leaves the user's device), paste a **hash**, or paste a **Solana transaction signature**. The result shows the full Merkle proof and then verifies it **trustlessly**: the proof is recomputed client-side and the root is matched against the on-chain memo fetched by the user's browser directly from a public Solana RPC — AdopTree's servers could lie and the check would still catch it. Logged-in eligible accounts (the tree's adopter, the land's steward, the corporate report owner, admins) can open the underlying asset behind a verified proof. For auditors and corporate due-diligence teams, this turns "trust us" into "check it yourself."
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/blockchain-verify-hash.png" alt="Blockchain Verify tool — hash door: ESG report proof found, both trustless checks green"/><br/><sub><b>5a. Verify by hash</b> — an ESG report's content hash resolves to its full proof bundle: Merkle root, anchoring tx, explorer link, and <b>two green trustless checks</b> — "Verifikasi independen di browser" (client-side proof recompute) and "Cocokkan dengan data on-chain" (root matched against the memo fetched from a public RPC by the browser itself, with the on-chain block time).</sub></td>
+    <td width="50%"><img src="assets/prd/web/blockchain-verify-tx.png" alt="Blockchain Verify tool — transaction door: Mainnet anchoring batch confirmed on-chain"/><br/><sub><b>5b. Verify from the chain's side</b> — pasting a Solana <b>Mainnet</b> transaction signature identifies it as an AdopTree anchoring batch (aggregate contents only — no item IDs leak) and re-confirms the Merkle root against the on-chain memo. Note the honest footer on every result: <i>only hashes are anchored — never photos, reports, or personal data</i>.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="assets/prd/web/verify-anchor.png" alt="Public proof page — evidence verified on Solana with full technical detail"/><br/><sub><b>5c. Public proof page</b> (<code>/verify/anchor/…</code>) — the deeplink target from certificates and inspection badges: verdict banner ("Terverifikasi di Blockchain"), Merkle root, proof validity, network, tx signature, anchor time, and a Solana Explorer button.</sub></td>
+    <td width="50%"><img src="assets/prd/web/glossary.png" alt="Decarbonization glossary — 84 searchable terms with category filters"/><br/><sub><b>Bonus public surface: Decarbonization Glossary</b> (<code>/glossary</code>) *(new v2.9)* — 84 curated carbon-market terms, searchable with 4 category filters; the same shared vocabulary that ships as an appendix in every corporate ESG PDF.</sub></td>
+  </tr>
+</table>
 
 *Figure 5d — Public Tools Hub. Each tool is a value-first acquisition surface: the Carbon Calculator quantifies impact for prospective donors, the 3D Tree Tracker showcases the digital-twin experience, the Land Analyzer converts curious land owners into supply-side leads, and the Blockchain Verification tool converts auditors and corporate due-diligence teams into believers.*
 
@@ -1138,6 +1149,8 @@ graph TB
 | **Solana SDK integration** | ✅ Live | `solana-client` + `solana-sdk` v2 integrated in the Rust backend (transaction build, send, confirmation polling) — the same rail the NFT mint pipeline will reuse |
 
 **What is deliberately *not* on-chain:** raw photos, personal data, or money. Only hashes (digital fingerprints) are anchored — privacy-safe, and honest: we say "evidence anchored on blockchain," never "assets on blockchain."
+
+*Screenshots of the live verification tool (both trustless checks green against a Mainnet transaction) and the public proof page are in §6.7 (Figure 5d, panels 5a–5c).*
 
 #### Shipped earlier (SIWS + NFT foundation)
 
