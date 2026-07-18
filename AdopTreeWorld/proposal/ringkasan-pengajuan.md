@@ -1,6 +1,6 @@
 # Ringkasan Pengajuan — Infrastruktur AdopTree World
 
-> **Tanggal**: 11 Juli 2026 · **Diajukan oleh**: Aditira Jamhuri (CTO)
+> **Tanggal**: 11 Juli 2026 (revisi v1.6 — 18 Juli 2026: + ArcGIS · AccuWeather · DeepSeek · AI internal engineering, keputusan founder) · **Diajukan oleh**: Aditira Jamhuri (CTO)
 > **Dokumen rujukan** (perhitungan lengkap & dapat diaudit): [kapasitas-sistem-staging-production.md](kapasitas-sistem-staging-production.md)
 > **Model perhitungan interaktif** (Excel, formula hidup): [perhitungan-kapasitas-anggaran-adoptree.xlsx](perhitungan-kapasitas-anggaran-adoptree.xlsx)
 > **Dokumen pasangan — SDM/manpower** (roster + anggaran menuju production, termasuk skenario on-premise): [anggaran-sdm-manpower.md](anggaran-sdm-manpower.md)
@@ -20,14 +20,14 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 
 | Fase | Periode | Biaya per bulan |
 | --- | --- | --- |
-| **Launch** (hingga 2.000 akun) | Agustus – Desember 2026 | **Rp 1 juta** |
-| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 4,5 juta** |
+| **Launch** (hingga 2.000 akun) | Agustus – Desember 2026 | **Rp 4,3 juta** |
+| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 6,9 juta** |
 
 <br>
 
-> ## Persetujuan yang diminta: **plafon Rp 50 juta** untuk 12 bulan pertama
+> ## Persetujuan yang diminta: **plafon Rp 85 juta** untuk 12 bulan pertama
 >
-> Realisasi diproyeksikan **≈ Rp 40 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software (peta GIS, email, AI Tira, monitoring, CDN, domain), buffer 10%, **dan ruang skenario upgrade dini** — bila lonjakan pasca-public-launch memicu kenaikan kapasitas lebih awal (kebutuhan ≈ Rp 47,5 juta), upgrade berjalan tanpa menunggu persetujuan ulang di tengah momentum. Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
+> Realisasi diproyeksikan **≈ Rp 76 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal; lisensi ArcGIS dibayar tahunan di muka ≈ Rp 11–19 jt dan sudah termasuk plafon). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software — peta GIS web (Mapbox), **analisis GIS profesional (ArcGIS)**, **data cuaca per lahan (AccuWeather)**, **AI komersial Tira (DeepSeek — dipilih karena paling ekonomis) + AI internal engineering (Claude/GPT)**, email, monitoring, CDN, domain — buffer 10%, **dan ruang skenario upgrade dini** (≈ Rp 82 juta) sehingga upgrade berjalan tanpa menunggu persetujuan ulang di tengah momentum. Empat langganan strategis tersebut adalah keputusan founder 18 Juli 2026 (revisi v1.6 — sebelumnya plafon Rp 50 juta tanpa keempatnya). Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
 
 ---
 
@@ -35,12 +35,12 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 
 | Periode | Skema | Anggaran |
 | --- | --- | --- |
-| Tahun 1 | Cloud (proposal ini) | **Plafon Rp 50 jt** |
-| Tahun 2 | Cloud, naik mengikuti trigger metrik | ≈ Rp 155 jt |
-| Tahun 3 | Transisi **on-premise**: CapEx server ≈ Rp 230 jt + migrasi | ≈ Rp 450 jt |
-| Tahun 4+ | On-premise steady — **lebih hemat dari tetap cloud** | ≈ Rp 195 jt/th |
+| Tahun 1 | Cloud (proposal ini, termasuk langganan strategis) | **Plafon Rp 85 jt** |
+| Tahun 2 | Cloud, naik mengikuti trigger metrik | ≈ Rp 205 jt |
+| Tahun 3 | Transisi **on-premise**: CapEx server ≈ Rp 230 jt + migrasi | ≈ Rp 505 jt |
+| Tahun 4+ | On-premise steady — **lebih hemat dari tetap cloud** | ≈ Rp 250 jt/th |
 
-Total 3 tahun ≈ **Rp 655 jt** — masih ≈ 79% dari alokasi infrastruktur PRD §14.4 (≈ Rp 825 jt). Kalkulasi lengkap (spesifikasi hardware, TCO, titik impas, kriteria eksekusi) di dokumen rujukan §10. **Yang dimintakan persetujuan hari ini tetap hanya plafon tahun pertama**; CapEx on-premise diputuskan pada gate evaluasi akhir tahun ke-2 dengan data pemakaian riil.
+Total 3 tahun ≈ **Rp 795 jt** — ≈ 96% dari alokasi infrastruktur PRD §14.4 (≈ Rp 825 jt); kenaikan dari 79% (v1.5) sepenuhnya berasal dari langganan strategis keputusan founder (ArcGIS · AccuWeather · AI) yang berjalan di semua skema. Kalkulasi lengkap (spesifikasi hardware, TCO, titik impas, kriteria eksekusi) di dokumen rujukan §10. **Yang dimintakan persetujuan hari ini tetap hanya plafon tahun pertama**; CapEx on-premise diputuskan pada gate evaluasi akhir tahun ke-2 dengan data pemakaian riil.
 
 ---
 
@@ -48,8 +48,8 @@ Total 3 tahun ≈ **Rp 655 jt** — masih ≈ 79% dari alokasi infrastruktur PRD
 
 | | |
 | --- | --- |
-| **≈ ¼ dari satu deal CSR** | Satu tahun infrastruktur penuh ≈ seperempat nilai satu paket CSR korporasi rata-rata (PRD §7.2: $10.000 ≈ Rp 160 juta) |
-| **≈ 26% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — plafon ini ≈ 26%-nya (realisasi proyeksi ≈ 21%) |
+| **≈ ½ dari satu deal CSR** | Satu tahun infrastruktur + seluruh langganan software (termasuk ArcGIS, AccuWeather, AI) ≈ setengah nilai satu paket CSR korporasi rata-rata (PRD §7.2: $10.000 ≈ Rp 160 juta) |
+| **≈ 45% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — plafon ini ≈ 45%-nya (realisasi proyeksi ≈ 40%) |
 | **Harga pasar, tanpa margin** | Spesifikasi dibandingkan dengan harga publik 4 provider (Indonesia & regional) — tabel pembanding ada di dokumen rujukan |
 | **Kenaikan hanya berdasarkan bukti** | Kapasitas dinaikkan hanya saat metrik pemakaian melewati ambang tertulis — bukan berdasarkan jadwal, sehingga belanja tidak pernah mendahului kebutuhan |
 | **Dihitung dari data terukur** | Kebutuhan server dihitung dari footprint aplikasi yang diukur langsung (backend Rust hanya 46 MB RAM), bukan perkiraan; biaya AI dibatasi cap harian; storage konten (foto/video) dianggarkan dengan formula volume — bahkan skenario media 5× tetap < 15% anggaran bulanan |
