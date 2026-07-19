@@ -16,21 +16,22 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end (web + Andr
 
 ### Tiga keputusan yang diminta
 
-1. **Setujui provisioning 2 (dua) VPS dedicated** pada **Agustus 2026** — sebelum first paying merchant (target Q3 2026) dan public launch H2 2026:
+1. **Setujui provisioning 3 (tiga) VPS dedicated** pada **Agustus 2026** — sebelum first paying merchant (target Q3 2026) dan public launch H2 2026:
    - **Staging** — 2 vCPU / 4 GB: environment review internal + UAT, auto-deploy dari branch `development` via CI/CD
    - **Production** — 4 vCPU / 8 GB, data center Indonesia, terisolasi penuh dari environment uji
-2. **Setujui plafon anggaran infrastruktur 12 bulan pertama Rp 125 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, **ArcGIS**, **AccuWeather**, email, **Google Workspace (mailbox domain tim)**, **AI komersial (DeepSeek) + AI internal engineering (Claude/GPT)**, monitoring, CDN, storage, registry, domain — sudah termasuk buffer 10%). Realisasi proyeksi **≈ Rp 114 juta** (upgrade tier mengikuti trigger §6, perkiraan awal 2027); plafon menampung **skenario upgrade dini** (≈ Rp 121 juta) sehingga momentum launch tidak pernah menunggu persetujuan ulang. Empat langganan strategis (ArcGIS · AccuWeather · DeepSeek · AI internal) adalah keputusan founder 18 Jul 2026. Inventaris lengkap di §8.1, rincian di §8.3.
+   - **AI dedicated** — 4 vCPU / 8 GB: seluruh beban AI/inference (ML Tree Service: Sentinel-2 canopy + DeepForest; siap model AI validasi koordinat) terpisah dari jalur trafik publik — sesuai dokumen teknis internal yang mewajibkan environment AI khusus (inferensi CPU-berat tidak boleh berbagi RAM dengan aplikasi produksi)
+2. **Setujui plafon anggaran infrastruktur 12 bulan pertama Rp 140 juta** (Agu 2026 – Jul 2027, staging + production + **seluruh langganan software** — Mapbox, **ArcGIS**, **AccuWeather**, email, **Google Workspace (mailbox domain tim)**, **AI komersial (DeepSeek) + AI internal engineering (Claude/GPT)**, monitoring, CDN, storage, registry, domain — sudah termasuk buffer 10%). Realisasi proyeksi **≈ Rp 127 juta** (upgrade tier mengikuti trigger §6, perkiraan awal 2027); plafon menampung **skenario upgrade dini** (≈ Rp 135 juta) sehingga momentum launch tidak pernah menunggu persetujuan ulang. Empat langganan strategis (ArcGIS · AccuWeather · DeepSeek · AI internal) adalah keputusan founder 18 Jul 2026. Inventaris lengkap di §8.1, rincian di §8.3.
 3. **Setujui prinsip upgrade berbasis trigger metrik** (§6): kapasitas dinaikkan saat ambang terukur terlampaui, bukan karena jadwal — ini yang menjaga anggaran tetap terkendali sekaligus kapasitas tidak pernah kekurangan.
 
 ### Anggaran yang diajukan (semua layanan, per bulan)
 
 | Tahap | Periode | Infrastruktur | Biaya/bulan (all-in) |
 | --- | --- | --- | --- |
-| **Launch** (≤ 2.000 akun) | Agu–Des 2026 | Staging 2 vCPU/4 GB + Production 4 vCPU/8 GB + seluruh software langganan (termasuk ArcGIS/AccuWeather/AI/Workspace) | **Rp 5,3–7,8 jt** (realistis ~Rp 6,7 jt) |
-| **Growth Y1** (hingga 25 rb akun) | 2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + seluruh software langganan | **Rp 8,0–13,4 jt** (realistis ~Rp 10,1 jt) |
+| **Launch** (≤ 2.000 akun) | Agu–Des 2026 | Staging 2 vCPU/4 GB + Production 4 vCPU/8 GB + **VPS AI dedicated 4 vCPU/8 GB** + seluruh software langganan (ArcGIS/AccuWeather/AI/Workspace) | **Rp 5,7–8,6 jt** (realistis ~Rp 7,4 jt) |
+| **Growth Y1** (hingga 25 rb akun) | 2027 | Staging + app node 8 vCPU/16 GB + DB node terpisah + **VPS AI 8 vCPU/16 GB** + seluruh software langganan | **Rp 8,8–15,0 jt** (realistis ~Rp 11,3 jt) |
 | **Scale Y2** (hingga 120 rb akun) | 2028 | Staging + HA penuh: 2× app + LB + managed Postgres HA + replica + node ML + software | **Rp 16–31 jt** (realistis ~Rp 23 jt) |
 
-**Uji kewajaran anggaran**: PRD §14.4 mengalokasikan biaya infrastruktur **$3.600 (≈ Rp 57 jt) untuk 2026** dan **$12.000 (≈ Rp 190 jt) untuk 2027**. Plafon 12 bulan pertama (Rp 125 jt) ≈ **66% alokasi 2027**; realisasi proyeksi (≈ Rp 114 jt) ≈ **60%** — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung plus ruang skenario upgrade dini; sisa alokasi tetap tersedia tanpa perlu diajukan sekarang.
+**Uji kewajaran anggaran**: PRD §14.4 mengalokasikan biaya infrastruktur **$3.600 (≈ Rp 57 jt) untuk 2026** dan **$12.000 (≈ Rp 190 jt) untuk 2027**. Plafon 12 bulan pertama (Rp 140 jt) ≈ **74% alokasi 2027**; realisasi proyeksi (≈ Rp 127 jt) ≈ **67%** — proposal ini **bukan** batas atas budget, melainkan kebutuhan riil terhitung plus ruang skenario upgrade dini; sisa alokasi tetap tersedia tanpa perlu diajukan sekarang.
 
 **Cakupan**: proposal ini murni **biaya infrastruktur & layanan pendukungnya** (server, CDN, storage, peta, email, AI, monitoring). Sengaja **di luar cakupan**: (a) **biaya payment gateway Midtrans** (per transaksi ±2,9% — sudah menjadi pos tersendiri di PRD §14.4, mengikuti volume penjualan, bukan langganan); (b) **biaya program Tukar Poin** (pembelian pulsa/kuota untuk redemption kontributor — biaya program insentif, bukan infrastruktur); (c) **Solana RPC berbayar** untuk pipeline NFT mint — diajukan terpisah bersama sprint mint Q3 2026 (saat ini memakai RPC publik, Rp 0); (d) SDM ops/engineering — pos tersendiri di PRD §14.4, **kini dihitung lengkap di dokumen pasangan [anggaran-sdm-manpower.md](anggaran-sdm-manpower.md)** (roster per fase + trigger + skenario on-premise). Server fisik (on-premise/colocation) **tidak diperlukan pada fase launch** (§5.2) — namun menjadi **arah jangka panjang tahun ke-3** sesuai keputusan founder; kalkulasi lengkap CapEx/OpEx/TCO + plot dana 3 tahun ada di **§10**.
 
@@ -44,6 +45,7 @@ Seluruh kebutuhan yang diajukan, dalam satu tabel. Kolom fase menunjukkan biaya 
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Server** | 1 | VPS Staging dedicated — review internal & UAT + CI/CD | 2 vCPU / 4 GB / 80 GB NVMe | Rp 150–350 rb | Rp 150–350 rb | Rp 250–500 rb | §5.1 |
 | **Server** | 2 | VPS Production | Launch: 4 vCPU / 8 GB / 160 GB NVMe (Indonesia) → Y1: app 8 vCPU/16 GB + DB node 4 vCPU/8 GB → Y2: HA (2× app + LB + managed Postgres + replica + node ML) | Rp 400–800 rb | Rp 1,3–2,6 jt | Rp 5–10 jt | §5.2–5.4 |
+| **Server** | 2b | **VPS AI dedicated** *(v1.6.3 — keputusan founder: seluruh beban AI di server khusus)* — ML Tree Service (Sentinel-2 canopy + DeepForest) + siap model AI berikutnya (validasi koordinat dari data verifikasi) | Launch: 4 vCPU/8 GB (sesuai dok. teknis ml-tree-service-production-environment) → Y1: 8 vCPU/16 GB; Y2: menyatu ke node ML Tier 3 (baris #2, tanpa dobel hitung) | Rp 400–800 rb | Rp 0,8–1,6 jt | — (tercakup #2) | §5.2 |
 | **Software** | 3 | Cloudflare — CDN, WAF, Tunnel, DNS | Free → Pro ($20/bln) | Rp 0 | ~Rp 330 rb | Rp 330 rb–1 jt | §8.1 |
 | **Software** | 4 | Cloudflare R2 — SELURUH konten media (foto inspeksi, **video**, photo sphere 360°, galeri, sertifikat, APK, backup DB) | $0,015/GB/bln, egress gratis | < Rp 25 rb | ~Rp 75 rb | ~Rp 350 rb | §4.1, §8.1 |
 | **Software** | 5 | Mapbox — peta GIS web + Static API (watermark mobile) + geocoding | Free tier besar → ~$5/1.000 loads | Rp 0 | Rp 0–800 rb | Rp 1–5 jt (dgn mitigasi §8.1) | §8.1 |
@@ -57,15 +59,15 @@ Seluruh kebutuhan yang diajukan, dalam satu tabel. Kolom fase menunjukkan biaya 
 | **Software** | 9 | Push notifikasi — FCM (mobile) + Web Push VAPID (browser) | Gratis (FCM) / standar terbuka (VAPID) | Rp 0 | Rp 0 | Rp 0 | §8.1 |
 | **Software** | 10 | Domain `adoptreeworld.com` | ~Rp 300 rb/tahun | ~Rp 25 rb | ~Rp 25 rb | ~Rp 25 rb | §8.1 |
 | **Software** | 11 | Jenkins (CI/CD) · GitHub · Google OAuth · Instagram Graph API · Meilisearch · Redis · PostgreSQL+PostGIS · ML Tree Service (self-host) · citra Sentinel-2 (Copernicus) · seluruh library open-source | Self-host / free plan | Rp 0 | Rp 0 | Rp 0 | §8.1 |
-| **TOTAL** | | **Per bulan (rentang penuh)** | | **Rp 5,3–7,8 jt** | **Rp 8,0–13,4 jt** | **Rp 16–31 jt** | §8.2 |
-| **TOTAL** | | **Per bulan (titik tengah realistis)** | | **~Rp 6,7 jt** | **~Rp 10,1 jt** | **~Rp 23 jt** | §8.2 |
+| **TOTAL** | | **Per bulan (rentang penuh)** | | **Rp 5,7–8,6 jt** | **Rp 8,8–15,0 jt** | **Rp 16–31 jt** | §8.2 |
+| **TOTAL** | | **Per bulan (titik tengah realistis)** | | **~Rp 7,4 jt** | **~Rp 11,3 jt** | **~Rp 23 jt** | §8.2 |
 
 | Ringkasan akhir | Nilai |
 | --- | --- |
 | Biaya one-time (setup, hardening, uji restore, uji beban) | **Rp 0** — jam kerja internal, tanpa lisensi (catatan kas: lisensi ArcGIS dibayar tahunan di muka ≈ Rp 11–19 jt, sudah termasuk dalam plafon) |
-| **Plafon 12 bulan pertama** (Agu 2026 – Jul 2027, termasuk buffer 10%) | **Rp 125 juta** — realisasi proyeksi ≈ Rp 114 jt; skenario upgrade dini ≈ Rp 121 jt (§8.3) |
+| **Plafon 12 bulan pertama** (Agu 2026 – Jul 2027, termasuk buffer 10%) | **Rp 140 juta** — realisasi proyeksi ≈ Rp 127 jt; skenario upgrade dini ≈ Rp 135 jt (§8.3) |
 | Proyeksi tahun 2028 (skala penuh) | ≈ Rp 190–375 jt/tahun (realistis ~Rp 275 jt) |
-| Perbandingan terhadap alokasi budget PRD §14.4 | Plafon ≈ 66% alokasi 2027 ($12.000); realisasi proyeksi ≈ 60%; proyeksi 2028 < 65% alokasi 2028 ($36.000) |
+| Perbandingan terhadap alokasi budget PRD §14.4 | Plafon ≈ 74% alokasi 2027 ($12.000); realisasi proyeksi ≈ 67%; proyeksi 2028 < 65% alokasi 2028 ($36.000) |
 
 ---
 
@@ -408,24 +410,25 @@ Setiap layanan pihak ketiga yang disentuh platform tercantum di sini — termasu
 | --- | --- | --- | --- |
 | **VPS staging dedicated** | Rp 150–350 rb | Rp 150–350 rb | Rp 250–500 rb |
 | **VPS production** | Rp 400–800 rb | Rp 1,3–2,6 jt | Rp 5–10 jt |
+| **VPS AI dedicated** (ML/inference — v1.6.3) | Rp 400–800 rb | Rp 0,8–1,6 jt | — (tercakup node ML Tier 3) |
 | **Subtotal software** (§8.1 — termasuk ArcGIS, AccuWeather, AI, Workspace sejak v1.6) | Rp 4,7–6,6 jt | Rp 6,5–10,4 jt | Rp 10,3–20,9 jt |
-| **Total/bulan (rentang penuh)** | **Rp 5,3–7,8 jt** | **Rp 8,0–13,4 jt** | **Rp 16–31 jt** |
-| **Titik tengah realistis** | **~Rp 6,7 jt** | **~Rp 10,1 jt** | **~Rp 23 jt** |
+| **Total/bulan (rentang penuh)** | **Rp 5,7–8,6 jt** | **Rp 8,8–15,0 jt** | **Rp 16–31 jt** |
+| **Titik tengah realistis** | **~Rp 7,4 jt** | **~Rp 11,3 jt** | **~Rp 23 jt** |
 
 ### 8.3 Proyeksi 12 bulan (Agustus 2026 – Juli 2027)
 
 | Pos | Perhitungan | Jumlah |
 | --- | --- | --- |
 | Staging dedicated, 12 bulan | 12 × ~Rp 250 rb | Rp 3,0 jt |
-| Production launch + software, 5 bulan (Agu–Des 2026) | 5 × ~Rp 6,4 jt (Prod Tier 1 + software Launch — termasuk ArcGIS/AccuWeather/AI/Workspace) | Rp 32,1 jt |
-| Production growth Y1 + software, 7 bulan (Jan–Jul 2027) | 7 × ~Rp 9,8 jt (Prod Tier 2 + software Y1) | Rp 68,4 jt |
+| Production launch + VPS AI + software, 5 bulan (Agu–Des 2026) | 5 × ~Rp 7,0 jt (Prod Tier 1 + VPS AI + software Launch) | Rp 35,0 jt |
+| Production growth Y1 + VPS AI + software, 7 bulan (Jan–Jul 2027) | 7 × ~Rp 11,0 jt (Prod Tier 2 + VPS AI 16 GB + software Y1) | Rp 77,0 jt |
 | One-time: hardening, drill restore, k6 gate go-live | jam kerja internal + Rp 0 lisensi | Rp 0 |
-| Buffer 10% (fluktuasi kurs/harga/volume) | | Rp 10,4 jt |
-| **Total proyeksi realisasi (base — upgrade mengikuti trigger, perkiraan Jan 2027)** | | **≈ Rp 114 jt** |
-| **Skenario upgrade dini** — trigger terpicu Nov 2026 seiring lonjakan pasca-public-launch (3 bln launch + 9 bln growth) | 12×0,25 + 3×6,4 + 9×9,8 + buffer 10% | **≈ Rp 121 jt** |
-| **PLAFON DIAJUKAN** (menampung base maupun skenario dini) | | **Rp 125 jt** |
+| Buffer 10% (fluktuasi kurs/harga/volume) | | Rp 11,5 jt |
+| **Total proyeksi realisasi (base — upgrade mengikuti trigger, perkiraan Jan 2027)** | | **≈ Rp 127 jt** |
+| **Skenario upgrade dini** — trigger terpicu Nov 2026 seiring lonjakan pasca-public-launch (3 bln launch + 9 bln growth) | 12×0,25 + 3×7,0 + 9×11,0 + buffer 10% | **≈ Rp 135 jt** |
+| **PLAFON DIAJUKAN** (menampung base maupun skenario dini) | | **Rp 140 jt** |
 
-> **Konteks**: satu paket CSR korporasi rata-rata di PRD §7.2 bernilai $10.000 (≈ Rp 160 jt) — plafon infrastruktur + seluruh langganan software setahun penuh ≈ **empat perlima dari satu deal CSR**. Dibanding alokasi PRD §14.4 (infra 2026: $3.600 ≈ Rp 57 jt; 2027: $12.000 ≈ Rp 190 jt), plafon ini ≈ **66% ruang 2027** (realisasi proyeksi ≈ 60%) — sisanya tetap tersedia untuk sprint NFT (RPC berbayar), lonjakan tak terduga, dan environment tambahan, **tanpa perlu diajukan sekarang**. Kenaikan plafon dari Rp 50 jt (v1.5) → Rp 125 jt sepenuhnya berasal dari **langganan strategis & produktivitas tim keputusan founder 18 Jul** (AI internal engineering — Claude Max $200/bln ≈ Rp 38 jt/th · ArcGIS ≈ Rp 16 jt/th · Google Workspace seat roster ≈ Rp 15 jt/th-1 · AccuWeather ≈ Rp 5 jt/th · DeepSeek — yang terakhir justru menurunkan biaya AI komersial), bukan dari kenaikan biaya server. Prinsip pengendalian tetap berlaku: realisasi mengikuti trigger §6, dan bila mendekati plafon, pengeluaran berikutnya kembali dimintakan persetujuan.
+> **Konteks**: satu paket CSR korporasi rata-rata di PRD §7.2 bernilai $10.000 (≈ Rp 160 jt) — plafon infrastruktur (3 VPS termasuk AI dedicated) + seluruh langganan software setahun penuh ≈ **sembilan persepuluh dari satu deal CSR**. Dibanding alokasi PRD §14.4 (infra 2026: $3.600 ≈ Rp 57 jt; 2027: $12.000 ≈ Rp 190 jt), plafon ini ≈ **74% ruang 2027** (realisasi proyeksi ≈ 67%) — sisanya tetap tersedia untuk sprint NFT (RPC berbayar), lonjakan tak terduga, dan environment tambahan, **tanpa perlu diajukan sekarang**. Kenaikan plafon dari Rp 50 jt (v1.5) → Rp 125 jt sepenuhnya berasal dari **langganan strategis & produktivitas tim keputusan founder 18 Jul** (AI internal engineering — Claude Max $200/bln ≈ Rp 38 jt/th · ArcGIS ≈ Rp 16 jt/th · Google Workspace seat roster ≈ Rp 15 jt/th-1 · AccuWeather ≈ Rp 5 jt/th · DeepSeek — yang terakhir justru menurunkan biaya AI komersial), bukan dari kenaikan biaya server. Prinsip pengendalian tetap berlaku: realisasi mengikuti trigger §6, dan bila mendekati plafon, pengeluaran berikutnya kembali dimintakan persetujuan.
 
 ---
 
@@ -505,13 +508,13 @@ Rencana migrasi (seluruh aplikasi sudah containerized — Docker — sehingga po
 
 | Periode | Skema | Anggaran (realistis) | Rentang |
 | --- | --- | --- | --- |
-| **Tahun 1** (Agu 2026 – Jul 2027) | Cloud — plafon proposal ini (termasuk langganan strategis v1.6) | **Rp 125 jt** (plafon; realisasi ≈ Rp 114 jt) | §8.3 |
-| **Tahun 2** (Agu 2027 – Jul 2028) | Cloud — Growth → Scale mengikuti trigger + langganan strategis berjalan | **≈ Rp 245 jt** | Rp 200–295 jt |
+| **Tahun 1** (Agu 2026 – Jul 2027) | Cloud — plafon proposal ini (termasuk langganan strategis + VPS AI) | **Rp 140 jt** (plafon; realisasi ≈ Rp 127 jt) | §8.3 |
+| **Tahun 2** (Agu 2027 – Jul 2028) | Cloud — Growth → Scale mengikuti trigger + langganan strategis + VPS AI | **≈ Rp 250 jt** | Rp 205–300 jt |
 | **Tahun 3** (Agu 2028 – Jul 2029) | Cloud berjalan + **CapEx on-premise + parallel run + cutover** + langganan strategis | **≈ Rp 550 jt** (cloud ±8 bln ≈ 152 + CapEx ≈ 230 + OpEx on-prem & parallel ≈ 46 + langganan ≈ 100 + buffer) | Rp 440–670 jt |
-| **Total 3 tahun** | | **≈ Rp 920 jt** | Rp 760–1.090 jt |
+| **Total 3 tahun** | | **≈ Rp 940 jt** | Rp 780–1.110 jt |
 | **Tahun 4+** (steady on-premise) | OpEx + amortisasi + langganan strategis + Workspace | **≈ Rp 300 jt/tahun** — vs tetap cloud yang diproyeksikan > Rp 350–410 jt/tahun → **penghematan mulai tahun ke-4** | |
 
-**Uji kewajaran**: total 3 tahun (≈ Rp 920 jt) ≈ **112% dari alokasi infrastruktur PRD §14.4 tiga tahun** (2026 $3.600 + 2027 $12.000 + 2028 $36.000 ≈ Rp 825 jt) — **melampaui alokasi lama** (selisih ≈ Rp 95 jt/3 th); kenaikan dari 79% (v1.5) sepenuhnya berasal dari langganan strategis & produktivitas keputusan founder 18 Jul (AI internal Claude Max + ArcGIS + AccuWeather + Google Workspace ≈ Rp 75–100 jt per tahun). Konsekuensi jujur: alokasi infrastruktur PRD §14.4 perlu direvisi (+$6.000 untuk 3 tahun) ATAU selisihnya ditutup dari sisa pos lain (mis. pos Team yang realisasinya 66–91%) — diputuskan stakeholder saat persetujuan. Catatan: langganan strategis bersifat OpEx yang tidak ikut hilang saat transisi on-premise — ia berjalan paralel di semua skema. Model interaktifnya ada di sheet **OnPremise** file Excel.
+**Uji kewajaran**: total 3 tahun (≈ Rp 940 jt) ≈ **114% dari alokasi infrastruktur PRD §14.4 tiga tahun** (2026 $3.600 + 2027 $12.000 + 2028 $36.000 ≈ Rp 825 jt) — **melampaui alokasi lama** (selisih ≈ Rp 115 jt/3 th); kenaikan dari 79% (v1.5) sepenuhnya berasal dari langganan strategis & produktivitas keputusan founder 18 Jul (AI internal Claude Max + ArcGIS + AccuWeather + Google Workspace ≈ Rp 75–100 jt per tahun). Konsekuensi jujur: alokasi infrastruktur PRD §14.4 perlu direvisi (+$6.000 untuk 3 tahun) ATAU selisihnya ditutup dari sisa pos lain (mis. pos Team yang realisasinya 66–91%) — diputuskan stakeholder saat persetujuan. Catatan: langganan strategis bersifat OpEx yang tidak ikut hilang saat transisi on-premise — ia berjalan paralel di semua skema. Model interaktifnya ada di sheet **OnPremise** file Excel.
 
 ---
 
@@ -562,6 +565,7 @@ Rencana migrasi (seluruh aplikasi sudah containerized — Docker — sehingga po
 | v1.6 | 2026-07-18 | **Langganan strategis keputusan founder** (WA Cokie 18 Jul): + **ArcGIS Online** Creator $700–1.191/user/th (analisis GIS profesional & peta MRV — pelengkap Mapbox), + **AccuWeather API** (Trial→Standard $25/bln, cuaca per lahan ber-cache), + **AI internal engineering** Claude/GPT ($20–200/bln), dan **Tira AI komersial pindah ke DeepSeek API** (V4 Flash $0,14/$0,28 per 1 jt token → ±Rp 12/percakapan, MENURUNKAN biaya AI komersial 5–10×) + catatan roadmap AI validasi titik koordinat dari data verifikasi. Dampak: software Launch ~Rp 0,2 jt→3,5 jt/bln; **plafon 12 bln Rp 50 jt → Rp 85 jt** (realisasi ≈ 76 jt; 45% alokasi 2027); plot 3 th ≈ Rp 795 jt (96% alokasi PRD). Asumsi baru A13–A15; A11 direvisi; sheet Excel Software/Anggaran12Bln diperbarui |
 | v1.6.1 | 2026-07-18 | AI internal engineering ditetapkan **Claude Max $200/bln** (rekomendasi CTO, disetujui founder) — dari asumsi $100: software Launch ~3,5→5,1 jt/bln; **plafon 12 bln Rp 85 jt → Rp 105 jt** (realisasi ≈ 97 jt = 51% alokasi 2027); plot 3 th ≈ Rp 855 jt (**104% alokasi PRD — perlu revisi minor alokasi §14.4 atau ditutup dari pos lain, diputuskan stakeholder**); A15 dikunci |
 | v1.6.2 | 2026-07-18 | **+ Google Workspace** (temuan telaah founder: email domain tim `support@`/`privacy@`/`security@` sudah tercantum di halaman legal tapi belum dianggarkan — masih Gmail gratis): Business Starter $7/user/bln, seat = roster SDM (7→14→21) ≈ Rp 0,78→2,35 jt/bln. **Plafon 12 bln Rp 105 jt → Rp 125 jt** (realisasi ≈ 114 jt = 60% alokasi 2027); plot 3 th ≈ Rp 920 jt (112% alokasi — disclosure diperbarui); asumsi A16 |
+| v1.6.3 | 2026-07-19 | **+ VPS AI dedicated sejak provisioning Agustus** (keputusan founder: seluruh beban AI/Sentinel/model harus di server khusus — selaras dok. teknis internal `ml-tree-service-production-environment.md` yang mewajibkan environment AI terpisah ≥8 GB; sebelumnya ML diasumsikan menumpang VPS production, node ML terpisah baru di Tier 3 2028): Launch 4 vCPU/8 GB Rp 400–800 rb → Y1 8 vCPU/16 GB Rp 0,8–1,6 jt → Y2 menyatu node ML Tier 3 (tanpa dobel hitung). Provisioning 2→3 VPS. **Plafon 12 bln Rp 125 jt → Rp 140 jt** (realisasi ≈ 127 jt = 67% alokasi 2027); plot 3 th ≈ Rp 940 jt (114% alokasi — disclosure tetap) |
 | v1.3 | 2026-07-11 | **Plafon direvisi Rp 40 jt → Rp 50 jt berbasis skenario** (menjawab telaah stakeholder): biaya bulanan fase growth AdopTree lebih tinggi dari platform sejenis (~Rp 4,5 jt vs ~Rp 3,6 jt — Tira AI + konten video + stack geospasial/ML), dan plafon lama hanya menampung asumsi upgrade Jan 2027; skenario upgrade dini Nov 2026 (lonjakan pasca-public-launch) ≈ Rp 47,5 jt kini tercakup plafon sehingga momentum launch tidak menunggu persetujuan ulang. Titik tengah realistis diselaraskan dengan model Excel (Y1 ~Rp 4,5 jt; Y2 ~Rp 17 jt); realisasi proyeksi base ≈ Rp 39,8 jt tidak berubah |
 | v1.2 | 2026-07-11 | Model perhitungan Excel ([perhitungan-kapasitas-anggaran-adoptree.xlsx](perhitungan-kapasitas-anggaran-adoptree.xlsx)) ditambahkan: 8 sheet (Ringkasan · Asumsi · Beban · StorageR2 · Software · Server · Anggaran12Bln · Pembanding) dengan formula hidup — seluruh asumsi A1–A12 + anchor volume menjadi sel input; total 12 bulan terhitung ≈ Rp 39,8 jt ≤ plafon Rp 40 jt |
 | v1.1 | 2026-07-11 | **Anggaran konten media dieksplisitkan** (§4.1): baris video + photo sphere 360° dengan basis volume per item, skenario media 5× (tetap < 15% anggaran Y2 — egress R2 gratis), jalur eskalasi Cloudflare Stream via revisi anggaran; asumsi A12 baru. **§5.0b Pemisahan peran server** ditambahkan: peta Builder · Aplikasi · Database · Backup per tier + dua keputusan eksplisit (builder tidak pernah menumpang production; backup = object storage off-site, bukan VM) — menegaskan pemisahan multi-VM di fase growth sudah tercantum dalam anggaran per fase |
