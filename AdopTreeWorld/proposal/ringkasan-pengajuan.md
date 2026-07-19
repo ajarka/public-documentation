@@ -20,14 +20,14 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 
 | Fase | Periode | Biaya per bulan |
 | --- | --- | --- |
-| **Launch** (hingga 2.000 akun) | Agustus – Desember 2026 | **Rp 5,9 juta** |
-| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 8,5 juta** |
+| **Launch** (hingga 2.000 akun) | Agustus – Desember 2026 | **Rp 6,7 juta** |
+| **Growth** (hingga 25 rb akun) | Januari – Juli 2027 | **Rp 10,1 juta** |
 
 <br>
 
-> ## Persetujuan yang diminta: **plafon Rp 105 juta** untuk 12 bulan pertama
+> ## Persetujuan yang diminta: **plafon Rp 125 juta** untuk 12 bulan pertama
 >
-> Realisasi diproyeksikan **≈ Rp 97 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal; lisensi ArcGIS dibayar tahunan di muka ≈ Rp 11–19 jt dan sudah termasuk plafon). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software — peta GIS web (Mapbox), **analisis GIS profesional (ArcGIS)**, **data cuaca per lahan (AccuWeather)**, **AI komersial Tira (DeepSeek — dipilih karena paling ekonomis) + AI internal engineering (Claude Code Max $200/bln — rekomendasi CTO)**, email, monitoring, CDN, domain — buffer 10%, **dan ruang skenario upgrade dini** (≈ Rp 103 juta) sehingga upgrade berjalan tanpa menunggu persetujuan ulang di tengah momentum. Empat langganan strategis tersebut adalah keputusan founder 18 Juli 2026 (revisi v1.6 — sebelumnya plafon Rp 50 juta tanpa keempatnya; AI internal ditetapkan Claude Max $200/bln). Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
+> Realisasi diproyeksikan **≈ Rp 114 juta**. Biaya setup/one-time: **Rp 0** (dikerjakan internal; lisensi ArcGIS dibayar tahunan di muka ≈ Rp 11–19 jt dan sudah termasuk plafon). Angka plafon sudah mencakup kedua server, storage **seluruh konten media** (foto bukti lapangan, video, dokumen — dengan formula volume per item), seluruh langganan software — peta GIS web (Mapbox), **analisis GIS profesional (ArcGIS)**, **data cuaca per lahan (AccuWeather)**, **AI komersial Tira (DeepSeek — dipilih karena paling ekonomis) + AI internal engineering (Claude Code Max $200/bln — rekomendasi CTO)**, email, **Google Workspace (mailbox domain tim — seat mengikuti roster SDM)**, monitoring, CDN, domain — buffer 10%, **dan ruang skenario upgrade dini** (≈ Rp 121 juta) sehingga upgrade berjalan tanpa menunggu persetujuan ulang di tengah momentum. Empat langganan strategis tersebut adalah keputusan founder 18 Juli 2026 (revisi v1.6.2 — sebelumnya plafon Rp 50 juta; AI internal ditetapkan Claude Max $200/bln; + Google Workspace seat roster). Pemisahan server tahap lanjut (aplikasi ↔ database ↔ backup) sudah dipetakan per fase di dokumen rujukan — bukan biaya baru yang menyusul.
 
 ---
 
@@ -35,12 +35,12 @@ Platform AdopTree World sudah selesai dibangun dan teruji end-to-end — web, ap
 
 | Periode | Skema | Anggaran |
 | --- | --- | --- |
-| Tahun 1 | Cloud (proposal ini, termasuk langganan strategis) | **Plafon Rp 105 jt** |
-| Tahun 2 | Cloud, naik mengikuti trigger metrik | ≈ Rp 225 jt |
-| Tahun 3 | Transisi **on-premise**: CapEx server ≈ Rp 230 jt + migrasi | ≈ Rp 525 jt |
-| Tahun 4+ | On-premise steady — **lebih hemat dari tetap cloud** | ≈ Rp 270 jt/th |
+| Tahun 1 | Cloud (proposal ini, termasuk langganan strategis) | **Plafon Rp 125 jt** |
+| Tahun 2 | Cloud, naik mengikuti trigger metrik | ≈ Rp 245 jt |
+| Tahun 3 | Transisi **on-premise**: CapEx server ≈ Rp 230 jt + migrasi | ≈ Rp 550 jt |
+| Tahun 4+ | On-premise steady — **lebih hemat dari tetap cloud** | ≈ Rp 300 jt/th |
 
-Total 3 tahun ≈ **Rp 855 jt** — ≈ 104% dari alokasi infrastruktur PRD §14.4 (≈ Rp 825 jt; selisih ≈ Rp 30 jt/3 th perlu revisi minor alokasi PRD atau ditutup dari sisa pos lain — diputuskan stakeholder); kenaikan dari 79% (v1.5) sepenuhnya berasal dari langganan strategis keputusan founder (Claude Max · ArcGIS · AccuWeather) yang berjalan di semua skema. Kalkulasi lengkap (spesifikasi hardware, TCO, titik impas, kriteria eksekusi) di dokumen rujukan §10. **Yang dimintakan persetujuan hari ini tetap hanya plafon tahun pertama**; CapEx on-premise diputuskan pada gate evaluasi akhir tahun ke-2 dengan data pemakaian riil.
+Total 3 tahun ≈ **Rp 920 jt** — ≈ 112% dari alokasi infrastruktur PRD §14.4 (≈ Rp 825 jt; selisih ≈ Rp 95 jt/3 th perlu revisi alokasi PRD +$6.000 atau ditutup dari sisa pos lain, mis. pos Team yang realisasinya 66–91% — diputuskan stakeholder); kenaikan dari 79% (v1.5) sepenuhnya berasal dari langganan strategis keputusan founder (Claude Max · ArcGIS · Google Workspace · AccuWeather) yang berjalan di semua skema. Kalkulasi lengkap (spesifikasi hardware, TCO, titik impas, kriteria eksekusi) di dokumen rujukan §10. **Yang dimintakan persetujuan hari ini tetap hanya plafon tahun pertama**; CapEx on-premise diputuskan pada gate evaluasi akhir tahun ke-2 dengan data pemakaian riil.
 
 ---
 
@@ -48,8 +48,8 @@ Total 3 tahun ≈ **Rp 855 jt** — ≈ 104% dari alokasi infrastruktur PRD §14
 
 | | |
 | --- | --- |
-| **≈ ⅔ dari satu deal CSR** | Satu tahun infrastruktur + seluruh langganan software (termasuk ArcGIS, AccuWeather, AI) ≈ dua pertiga nilai satu paket CSR korporasi rata-rata (PRD §7.2: $10.000 ≈ Rp 160 juta) |
-| **≈ 55% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — plafon ini ≈ 55%-nya (realisasi proyeksi ≈ 51%) |
+| **≈ ⅘ dari satu deal CSR** | Satu tahun infrastruktur + seluruh langganan software (ArcGIS, AccuWeather, AI, Workspace) ≈ empat perlima nilai satu paket CSR korporasi rata-rata (PRD §7.2: $10.000 ≈ Rp 160 juta) |
+| **≈ 66% dari alokasi anggaran** | Rencana anggaran (PRD §14.4) menyediakan $12.000 ≈ Rp 190 juta untuk infrastruktur 2027 — plafon ini ≈ 66%-nya (realisasi proyeksi ≈ 60%) |
 | **Harga pasar, tanpa margin** | Spesifikasi dibandingkan dengan harga publik 4 provider (Indonesia & regional) — tabel pembanding ada di dokumen rujukan |
 | **Kenaikan hanya berdasarkan bukti** | Kapasitas dinaikkan hanya saat metrik pemakaian melewati ambang tertulis — bukan berdasarkan jadwal, sehingga belanja tidak pernah mendahului kebutuhan |
 | **Dihitung dari data terukur** | Kebutuhan server dihitung dari footprint aplikasi yang diukur langsung (backend Rust hanya 46 MB RAM), bukan perkiraan; biaya AI dibatasi cap harian; storage konten (foto/video) dianggarkan dengan formula volume — bahkan skenario media 5× tetap < 15% anggaran bulanan |

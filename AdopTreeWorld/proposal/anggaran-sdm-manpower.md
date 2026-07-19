@@ -188,8 +188,8 @@ Permintaan founder secara spesifik: manpower **bila infra on-premise**. Jawabann
 | Pos | Th-1 (Agu 26–Jul 27) | Th-2 (Agu 27–Jul 28) | Th-3 (Agu 28–Jul 29) | Total 3 th |
 | --- | --- | --- | --- | --- |
 | SDM (dokumen ini)* | ≈ Rp 1,35 M (plafon 1,5 M) | ≈ Rp 3,05 M | ≈ Rp 3,85 M | **≈ Rp 8,25 M** |
-| Infrastruktur (§10.5 dok. infra, rev v1.6 — termasuk langganan strategis ArcGIS/AccuWeather/AI Claude Max) | Rp 105 jt (plafon) | ≈ Rp 225 jt | ≈ Rp 525 jt | **≈ Rp 855 jt** |
-| **Total SDM + Infra** | **≈ Rp 1,46 M** | **≈ Rp 3,28 M** | **≈ Rp 4,38 M** | **≈ Rp 9,11 M** |
+| Infrastruktur (§10.5 dok. infra, rev v1.6.2 — termasuk langganan strategis ArcGIS/AccuWeather/AI Claude Max/Google Workspace) | Rp 125 jt (plafon) | ≈ Rp 245 jt | ≈ Rp 550 jt | **≈ Rp 920 jt** |
+| **Total SDM + Infra** | **≈ Rp 1,48 M** | **≈ Rp 3,30 M** | **≈ Rp 4,40 M** | **≈ Rp 9,17 M** |
 
 <sub>\* Baris ini memakai periode tahun-berjalan proposal (Agu–Jul) agar sejalan §10.5 infra — karenanya totalnya (Rp 8,25 M) lebih besar dari total kalender 2026–2028 (Rp 6,0 M, tabel di atas): periode berjalan mencakup 7 bulan tambahan pada 2029 dengan roster skala penuh. Untuk **uji kewajaran vs PRD §14.4** dipakai angka kalender (408 jt · 1,75 M · 3,8 M = 72% alokasi), karena PRD berbasis tahun kalender. Rekonsiliasi keduanya ada di sheet SDM Excel.</sub>
 
